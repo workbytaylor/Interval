@@ -95,7 +95,9 @@
 			isa = PBXGroup;
 			children = (
 				95ACF50E2922026E00E9B2AF /* IntervalApp.swift */,
-				95ACF5102922026E00E9B2AF /* ContentView.swift */,
+				95ACF5342922050B00E9B2AF /* Models */,
+				95ACF532292202E800E9B2AF /* Views */,
+				95ACF533292202EE00E9B2AF /* ViewModels */,
 				95ACF5122922027000E9B2AF /* Assets.xcassets */,
 				95ACF5142922027000E9B2AF /* Preview Content */,
 			);
@@ -127,6 +129,28 @@
 				95ACF5272922027100E9B2AF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		95ACF532292202E800E9B2AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				95ACF5102922026E00E9B2AF /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		95ACF533292202EE00E9B2AF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		95ACF5342922050B00E9B2AF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
