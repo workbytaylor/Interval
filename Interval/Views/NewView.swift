@@ -17,23 +17,32 @@ struct NewView: View {
             VStack(spacing: .zero) {
                 List {
                     Section {
-                        TextField("Title", text: $title)
-                            .overlay(alignment: .trailing) {
-                                if title != "" {
-                                    Button {
-                                        title = ""
-                                    } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                    }
-                                    .foregroundStyle(.secondary)
+                        TextField("Workout title", text: $title)
+                        .overlay(alignment: .trailing) {
+                            if title != "" {
+                                Button {
+                                    title = ""
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
                                 }
+                                .foregroundStyle(.secondary)
                             }
+                        }
                     }
                     
                     Section(header: Text("Steps")) {
                         Text("Steps...")
                     }
                 }
+                
+                Divider()
+                
+                List {
+                    Section(header: Text("Suggested steps")) {
+                        
+                    }
+                }
+                .frame(maxHeight: 250)
                 
                 //grid of buttons
                 // similar to notion?
@@ -56,6 +65,8 @@ struct NewView: View {
                     }
                 }
             }
+            //.sheet()
+            
         }
         
     }

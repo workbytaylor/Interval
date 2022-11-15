@@ -18,15 +18,25 @@ struct ContentView: View {
             
             List {
                 ForEach(workouts, id: \.title) { workout in
+                    
+                    NavigationLink {
+                        WorkoutView(/*workout: workout*/)
+                    } label: {
+                        Text(workout.title)
+                    }
+                    
+                    
                     Text(workout.title) // empty because there is no sample data
                 }
                 
+                //TODO: Delete this navigationLink after sample data added
                 NavigationLink {
-                    Text("Workout 1")
+                    WorkoutView()
                 } label: {
                     Text("Workout title")
                         .font(.headline)
                 }
+                
             }
             .navigationTitle("Workouts")
             .toolbar {
@@ -51,13 +61,14 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-
+//TODO: Move to ViewModels folder
 extension ContentView {
     @MainActor class ViewModel: ObservableObject {
         @Published var workouts: [Workout]
         
         init() {
             workouts = []
+            //TODO: Provide sample data for a workout
         }
         
     }

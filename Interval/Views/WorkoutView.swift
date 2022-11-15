@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WorkoutView: View {
+    
+    //var workout: Workout
+    
     var body: some View {
         VStack(spacing: .zero) {
             List {
@@ -24,9 +27,18 @@ struct WorkoutView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.primary)
-            .padding(.horizontal)
+            .padding([.horizontal, .bottom])
         }
         .navigationTitle("Workout details")
+        .toolbar {
+            ToolbarItem {
+                Button {
+                    // edit, add step?
+                } label: {
+                    Image(systemName: "ellipsis")
+                }
+            }
+        }
     }
 }
 
