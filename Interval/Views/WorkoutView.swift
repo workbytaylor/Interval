@@ -9,13 +9,24 @@ import SwiftUI
 
 struct WorkoutView: View {
     
-    //var workout: Workout
+    var workout: Workout
     
     var body: some View {
         VStack(spacing: .zero) {
             List {
-                // steps
-                Text("Step 1")
+                ForEach(workout.steps, id: \.index) { step in
+                    HStack(alignment: .firstTextBaseline) {
+                        Image(systemName: step.targetType == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                        
+                        VStack(alignment: .leading) {
+                            Text("\(step.target.magnitude) \(step.target.unit)")
+                                .font(.headline)
+                            Text(step.pace)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
             }
             Button {
                 // start run
@@ -45,7 +56,7 @@ struct WorkoutView: View {
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            WorkoutView()
+            WorkoutView(workout: Workout.example)
         }
     }
 }

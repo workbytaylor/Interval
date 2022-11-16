@@ -16,7 +16,7 @@ struct NewView: View {
         NavigationStack {
             VStack(spacing: .zero) {
                 List {
-                    Section {
+                    Section(header: Text("Title")) {
                         TextField("Workout title", text: $title)
                         .overlay(alignment: .trailing) {
                             if title != "" {
@@ -31,22 +31,30 @@ struct NewView: View {
                     }
                     
                     Section(header: Text("Steps")) {
-                        Text("Steps...")
+                        Text("Step 1")
+                        Text("Step 2")
+                    }
+                    
+                    Section(header: Text("Suggestions")) {
+                        Button(action: {}) {
+                            HStack {
+                                Label("Distance", systemImage: "lines.measurement.horizontal")
+                                Spacer()
+                                Image(systemName: "plus")
+                            }
+                        }
+                        Button(action: {}) {
+                            HStack {
+                                Label("Time", systemImage: "stopwatch")
+                                Spacer()
+                                Image(systemName: "plus")
+                            }
+                        }
                     }
                 }
-                
-                Divider()
-                
-                List {
-                    Section(header: Text("Suggested steps")) {
-                        
-                    }
-                }
-                .frame(maxHeight: 250)
-                
-                //grid of buttons
-                // similar to notion?
             }
+            .navigationTitle("Add a workout")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
@@ -65,7 +73,6 @@ struct NewView: View {
                     }
                 }
             }
-            //.sheet()
             
         }
         
