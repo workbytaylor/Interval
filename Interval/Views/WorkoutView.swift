@@ -16,7 +16,7 @@ struct WorkoutView: View {
             List {
                 ForEach(workout.steps, id: \.index) { step in
                     HStack(alignment: .firstTextBaseline) {
-                        Image(systemName: step.targetType == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                        Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                         
                         VStack(alignment: .leading) {
                             Text("\(step.target.magnitude) \(step.target.unit)")

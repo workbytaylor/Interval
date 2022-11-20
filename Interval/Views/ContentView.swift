@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var viewModel = ViewModel()
-    @State private var showNewSheet: Bool = false
+    @State private var showAddView: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -22,21 +22,23 @@ struct ContentView: View {
                         Text(workout.title)
                     }
                 }
+                .onDelete(perform: viewModel.deleteWorkout)    // unsure how to fix
             }
+            .listStyle(.insetGrouped)
             .navigationTitle("Workouts")
             .toolbar {
                 ToolbarItem {
                     Button {
-                        //showNewSheet.toggle()
-                        viewModel.addWorkout()
+                        showAddView.toggle()
+                        //viewModel.addWorkout()
                         print(viewModel.workouts)
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showNewSheet) {
-                NewView()
+            .sheet(isPresented: $showAddView) {
+                AddView()
             }
         }
     }
