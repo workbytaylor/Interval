@@ -56,7 +56,7 @@ struct WorkoutView: View {
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            WorkoutView(workout: Workout.example)
+            WorkoutView(/*workout: Workout.example*/)   // removed example when changing struct to class
         }
     }
 }

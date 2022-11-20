@@ -16,11 +16,11 @@ extension ContentView {
         }
         
         func addWorkout() {
-            let newWorkout = Workout(
+            let newWorkout = Workout()/*( // removed when converting struct to class, also added '()' after Workout
                 id: UUID(),
                 title: "New workout",
                 steps: [Step(id: UUID(), index: 1, type: "distance", target: Target(magnitude: 800, unit: "meters"), pace: "5:15 m/km")]
-            )
+            )*/
             workouts.append(newWorkout)
         }
         

@@ -41,7 +41,7 @@ struct ContentView: View {
             .sheet(isPresented: $showAddView) {
                 AddView()
             }
-        }
+        }.environmentObject(viewModel.workouts)
     }
 }
 

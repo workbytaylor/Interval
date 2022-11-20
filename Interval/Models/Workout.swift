@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Workout: Identifiable {
-    var id: UUID
-    var title: String
-    var steps: [Step]
+@MainActor class Workout: Identifiable, ObservableObject {
+    @Published var id: UUID = UUID()
+    @Published var title: String = ""
+    @Published var steps: [Step] = []
     
-    static let example = Workout(id: UUID(), title: "Test title", steps: [Step.example])
+    //static let example = Workout(id: UUID(), title: "Test title", steps: [Step.example])
 }
 
 // Many steps in each workout
