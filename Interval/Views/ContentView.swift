@@ -10,29 +10,42 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var viewModel = ViewModel()
+    @StateObject var workouts = Workouts()
     @State private var showAddView: Bool = false
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(viewModel.workouts, id: \.id) { workout in
-                    NavigationLink {
-                        WorkoutView(workout: workout)
-                    } label: {
-                        Text(workout.title)
+                if workouts.allworkouts.count == 0 {
+                    HStack {
+                        Spacer()
+                        Text("Tap")
+                        Image(systemName: "plus")
+                        Text("to create your first workout.")
+                        Spacer()
                     }
+                    .listRowBackground(Color.clear)
+                    .foregroundStyle(.secondary)
+                } else {
+                    ForEach(workouts.allworkouts, id: \.id) { workout in
+                        NavigationLink {
+                            Text(workout.title)
+                            //workoutview
+                        } label: {
+                            Text(workout.title)
+                        }
+                    }
+                    .onDelete(perform: workouts.deleteWorkout)  // unsure how to fix
                 }
-                .onDelete(perform: viewModel.deleteWorkout)    // unsure how to fix
+                
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Workouts")
             .toolbar {
                 ToolbarItem {
                     Button {
+                        //workouts.addWorkout()
                         showAddView.toggle()
-                        //viewModel.addWorkout()
-                        print(viewModel.workouts)
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -41,7 +54,8 @@ struct ContentView: View {
             .sheet(isPresented: $showAddView) {
                 AddView()
             }
-        }.environmentObject(viewModel.workouts)
+        }
+        
     }
 }
 

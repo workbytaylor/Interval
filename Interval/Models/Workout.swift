@@ -7,33 +7,45 @@
 
 import Foundation
 
-@MainActor class Workout: Identifiable, ObservableObject {
-    @Published var id: UUID = UUID()
-    @Published var title: String = ""
-    @Published var steps: [Step] = []
-    
-    //static let example = Workout(id: UUID(), title: "Test title", steps: [Step.example])
+class Workout: Identifiable, Codable {
+    var id: UUID = UUID()
+    var title: String = "Test title"
+    var steps: [Step] = []
 }
 
-// Many steps in each workout
-struct Step: Identifiable, Equatable {
-    var id: UUID
-    var index: Int  // 1, 2, 3
-    var type: String    // time/distance for each step
-    var target: Target  // for ex: 800 meters   // goal
-    var pace: String    // for ex: 5:15 minutes/km OR 5*60+15 = 315 seconds per km
+class Step: Identifiable, Codable, Equatable {
+    var id: UUID = UUID()
+    var index: Int = 1
+    var type: String = "distance"
+    var target: Target = Target()
+    var pace: String = "5.15 /km"
     
-    static let example = Step(id: UUID(), index: 1, type: "distance", target: Target.example, pace: "5:15 /km")
-    
+      // unsure if this is necessary now that it is a class
     static func ==(lhs: Step, rhs: Step) -> Bool {
         return lhs.index == rhs.index
     }
 }
 
-// time/duration for each step
-struct Target {
-    var magnitude: Int  // for ex. '800'
-    var unit: String    // for ex. 'm' for meters
+class Target: Codable {
+    var magnitude: Int = 1
+    var unit: String = "km"
+}
+
+@MainActor class Workouts: ObservableObject {
+    @Published var allworkouts: [Workout]
     
-    static let example = Target(magnitude: 800, unit: "m")
+    init() {
+        self.allworkouts = []
+    }
+    
+    func deleteWorkout(at offsets: IndexSet) {
+        allworkouts.remove(atOffsets: offsets)
+    }
+    
+    func addWorkout() {
+        let newWorkout = Workout()
+        allworkouts.append(newWorkout)
+    }
+    
+    
 }

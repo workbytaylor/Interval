@@ -2,7 +2,7 @@
 //  AddView.swift
 //  Interval
 //
-//  Created by Nilakshi Roy on 2022-11-15.
+//  Created by Nilakshi Roy on 2022-11-23.
 //
 
 import SwiftUI
@@ -10,18 +10,19 @@ import SwiftUI
 struct AddView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = AddView_ViewModel()
+    @State var newTitle: String = ""
+    @State var newSteps: [Step] = []
     
     var body: some View {
         NavigationStack {
             VStack(spacing: .zero) {
                 List {
                     Section(header: Text("Title")) {
-                        TextField("Workout title", text: $viewModel.newTitle)
+                        TextField("Workout title", text: $newTitle)
                         .overlay(alignment: .trailing) {
-                            if viewModel.newTitle != "" {
+                            if newTitle != "" {
                                 Button {
-                                    viewModel.newTitle = ""
+                                    newTitle = ""
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                 }
@@ -29,21 +30,22 @@ struct AddView: View {
                             }
                         }
                     }
+                    
                     Section(header: Text("Steps")) {
-                        if viewModel.newSteps != [] {
-                            ForEach(viewModel.newSteps, id: \.index) { step in
+                        if newSteps != [] {
+                            ForEach(newSteps, id: \.index) { step in
                                 HStack {
                                     Text(String(step.index))    // for debugging only
                                     Text(String(step.target.magnitude))
                                     Text(step.target.unit)
                                 }
                             }
-                            .onDelete(perform: viewModel.deleteNewStep)
                         } else {
                             HStack {
                                 Spacer()
+                                Text("Tap")
                                 Image(systemName: "plus")
-                                Text("Add a step")
+                                Text("to add a step.")
                                 Spacer()
                             }
                             .foregroundStyle(.secondary)
@@ -51,11 +53,10 @@ struct AddView: View {
                         }
                     }
                 }
-                
                 List {
-                    Section(header: Text("Step Suggestions"), footer: Text("Tap to add a step")) {
+                    Section(header: Text("Step Suggestions")/*, footer: Text("Tap to add a step")*/) {
                         Button {
-                            viewModel.addDistanceStep()
+                            newSteps.append(Step())
                         } label: {
                             HStack {
                                 Label("Distance", systemImage: "lines.measurement.horizontal")
@@ -64,7 +65,7 @@ struct AddView: View {
                             }
                         }
                         Button {
-                            viewModel.addTimeStep()
+                            newSteps.append(Step())
                         } label: {
                             HStack {
                                 Label("Time", systemImage: "stopwatch")
@@ -73,9 +74,7 @@ struct AddView: View {
                             }
                         }
                     }
-                }.frame(height: 150)
-                
-                
+                }.frame(height: 150)    // use geometryreader? to adjust based on dynamic text size
             }
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
@@ -84,10 +83,7 @@ struct AddView: View {
                     Button(role: .cancel) { dismiss() } label: { Text("Cancel").tint(.red) }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button() {
-                        
-                        dismiss()
-                    } label: { Text("Save") }
+                    Button { dismiss() } label: { Text("Save") }
                 }
             }
             
@@ -98,6 +94,6 @@ struct AddView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddView()
+        AddView(newTitle: "")
     }
 }
