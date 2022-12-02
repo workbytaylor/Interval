@@ -46,7 +46,6 @@ struct AddView: View {
                                         .frame(width: 40)
                                     VStack(alignment: .leading) {
                                         Text(String(step.target.magnitude))+Text(" \(step.target.unit)")
-                                            .foregroundColor(.primary)
                                         Text(step.pace)
                                             .font(.subheadline)
                                             .foregroundStyle(.secondary)
@@ -88,7 +87,8 @@ struct AddView: View {
                             }
                         }
                     }
-                }.frame(height: 150)    // use geometryreader? to adjust based on dynamic text size
+                }
+                .frame(height: 150)    // use geometryreader? to adjust based on dynamic text size
             }
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)

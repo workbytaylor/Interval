@@ -18,6 +18,7 @@
 		95ACF5252922027100E9B2AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95ACF5242922027100E9B2AF /* Assets.xcassets */; };
 		95ACF5282922027100E9B2AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95ACF5272922027100E9B2AF /* Preview Assets.xcassets */; };
 		95CABB04292E8C33006E7AAE /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CABB03292E8C33006E7AAE /* AddView.swift */; };
+		95D66FA42939979600B0501B /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D66FA32939979600B0501B /* TestView.swift */; };
 		95E2A64B2923448200B7599B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E2A64A2923448200B7599B /* Workout.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		95ACF5242922027100E9B2AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95ACF5272922027100E9B2AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		95CABB03292E8C33006E7AAE /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		95D66FA32939979600B0501B /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		95E2A64A2923448200B7599B /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 				95ACF5102922026E00E9B2AF /* ContentView.swift */,
 				95CABB03292E8C33006E7AAE /* AddView.swift */,
 				9506F83429328F0200E20F83 /* DetailView.swift */,
+				95D66FA32939979600B0501B /* TestView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95D66FA42939979600B0501B /* TestView.swift in Sources */,
 				95CABB04292E8C33006E7AAE /* AddView.swift in Sources */,
 				95ACF5112922026E00E9B2AF /* ContentView.swift in Sources */,
 				95ACF50F2922026E00E9B2AF /* IntervalApp.swift in Sources */,
