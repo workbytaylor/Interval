@@ -40,7 +40,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    //.onDelete(perform: workouts.deleteWorkout)  // unsure how to fix
+                    .onDelete(perform: workouts.deleteWorkout)  // unsure how to fix
                 }
             }
             .listStyle(.insetGrouped)
@@ -60,6 +60,12 @@ struct ContentView: View {
             .environmentObject(workouts)
         }
     }
+    
+    private func deleteWorkout() {
+        workouts.deleteWorkout(at: IndexSet())
+    }
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

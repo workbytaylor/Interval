@@ -14,8 +14,6 @@ struct DetailView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.editMode) private var editMode   // starting to think buttons are better than delete
     
-    @State private var showDeleteAlert: Bool = false
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: .zero) {
@@ -38,51 +36,52 @@ struct DetailView: View {
                 }
                 
                 if editMode?.wrappedValue.isEditing == true {
-                    List {
-                        Section(header: Text("Step Suggestions")) {
-                            Button {
-                                addDistanceStep()
-                            } label: {
-                                HStack {
-                                    Label("Distance", systemImage: "lines.measurement.horizontal")
-                                    Spacer()
-                                    Image(systemName: "plus")
-                                }
+                    VStack {
+                        Button {
+                            addDistanceStep()
+                        } label: {
+                            HStack {
+                                Label("Distance", systemImage: "lines.measurement.horizontal")
+                                Spacer()
+                                Image(systemName: "plus")
                             }
-                            Button {
-                                addTimeStep()
-                            } label: {
-                                HStack {
-                                    Label("Time", systemImage: "stopwatch")
-                                    Spacer()
-                                    Image(systemName: "plus")
-                                }
+                        }
+                        Button {
+                            addTimeStep()
+                        } label: {
+                            HStack {
+                                Label("Time", systemImage: "stopwatch")
+                                Spacer()
+                                Image(systemName: "plus")
                             }
                         }
                     }
-                    .frame(height: 150)    // use geometryreader? to adjust based on dynamic text size
+                    .buttonStyle(.bordered)
+                    .padding()
+                    .background(Color(red: 242/255, green: 241/255, blue: 247/255))
+                } else {
+                    Button {
+                        // start run
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text("Start")
+                            Spacer()
+                        }
+                        
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .padding()
+                    .background(Color(red: 242/255, green: 241/255, blue: 247/255))
                 }
             }
             .navigationTitle(workout.title)
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    
-                    if editMode?.wrappedValue.isEditing == true {
-                        Button { showDeleteAlert.toggle() } label: { Image(systemName: "trash").foregroundColor(.red) }
-                        
-                        //Button { addStep() } label: { Image(systemName: "plus") }
-                    }
-                    
+                ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
             }
-            .alert("Delete workout", isPresented: $showDeleteAlert) {
-                Button("Delete", role: .destructive, action: deleteWorkout)
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Are you sure?")
-            }
-            
         }
     }
     
@@ -106,12 +105,6 @@ struct DetailView: View {
     
     private func deleteStep(at offsets: IndexSet) {
         workout.steps.remove(atOffsets: offsets)
-    }
-    
-    private func deleteWorkout() {
-        workouts.deleteWorkout(at: IndexSet())
-        //try? moc.save()
-        dismiss()   //returns to ContentView after delete
     }
     
 }

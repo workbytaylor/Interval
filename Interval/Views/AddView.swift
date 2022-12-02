@@ -66,29 +66,30 @@ struct AddView: View {
                         }
                     }
                 }
-                List {
-                    Section(header: Text("Step Suggestions")) {
-                        Button {
-                            addDistanceStep()
-                        } label: {
-                            HStack {
-                                Label("Distance", systemImage: "lines.measurement.horizontal")
-                                Spacer()
-                                Image(systemName: "plus")
-                            }
+                VStack {
+                    Button {
+                        addDistanceStep()
+                    } label: {
+                        HStack {
+                            Label("Distance", systemImage: "lines.measurement.horizontal")
+                            Spacer()
+                            Image(systemName: "plus")
                         }
-                        Button {
-                            addTimeStep()
-                        } label: {
-                            HStack {
-                                Label("Time", systemImage: "stopwatch")
-                                Spacer()
-                                Image(systemName: "plus")
-                            }
+                    }
+                    Button {
+                        addTimeStep()
+                    } label: {
+                        HStack {
+                            Label("Time", systemImage: "stopwatch")
+                            Spacer()
+                            Image(systemName: "plus")
                         }
                     }
                 }
-                .frame(height: 150)    // use geometryreader? to adjust based on dynamic text size
+                .buttonStyle(.bordered)
+                .padding()
+                .background(Color(red: 242/255, green: 241/255, blue: 247/255))
+                
             }
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
