@@ -7,18 +7,18 @@
 
 import Foundation
 
-class Workout: Identifiable, Codable {
-    var id: UUID = UUID()
-    var title: String = "Test title"
-    var steps: [Step] = []
+class Workout: Identifiable, ObservableObject {
+    let id: UUID = UUID()   // should this be 'var'?
+    @Published var title: String = "Placeholder title"
+    @Published var steps: [Step] = []
 }
 
-class Step: Identifiable, Codable, Equatable {
-    var id: UUID = UUID()
-    var index: Int = 1
-    var type: String = "distance"
-    var target: Target = Target()
-    var pace: String = "5.15 /km"
+class Step: Identifiable, Equatable, ObservableObject {
+    let id: UUID = UUID()   // should this be 'var'?
+    @Published var index: Int = 1
+    @Published var type: String = "distance"
+    @Published var target: Target = Target()
+    @Published var pace: String = "5.15 /km"
     
       // unsure if this is necessary now that it is a class
     static func ==(lhs: Step, rhs: Step) -> Bool {
@@ -26,9 +26,9 @@ class Step: Identifiable, Codable, Equatable {
     }
 }
 
-class Target: Codable {
-    var magnitude: Int = 1
-    var unit: String = "km"
+class Target: ObservableObject {
+    @Published var magnitude: Int = 1
+    @Published var unit: String = "km"
 }
 
 @MainActor class Workouts: ObservableObject {
@@ -42,10 +42,10 @@ class Target: Codable {
         allworkouts.remove(atOffsets: offsets)
     }
     
-    func addWorkout() {
-        let newWorkout = Workout()
-        allworkouts.append(newWorkout)
+    /*
+    func addWorkout(new: Workout) {
+        allworkouts.append(new)
     }
-    
+    */
     
 }

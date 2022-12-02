@@ -21,7 +21,7 @@ struct ContentView: View {
                         Spacer()
                         Text("Tap")
                         Image(systemName: "plus")
-                        Text("to create your first workout.")
+                        Text("to create a workout")
                         Spacer()
                     }
                     .listRowBackground(Color.clear)
@@ -29,22 +29,25 @@ struct ContentView: View {
                 } else {
                     ForEach(workouts.allworkouts, id: \.id) { workout in
                         NavigationLink {
-                            Text(workout.title)
-                            //workoutview
+                            DetailView(workout: workout)
                         } label: {
-                            Text(workout.title)
+                            VStack(alignment: .leading) {
+                                Text(workout.title)
+                                    .font(.headline)
+                                Text("\(workout.steps.count) steps")
+                                    .foregroundStyle(.secondary)
+                                    .font(.subheadline)
+                            }
                         }
                     }
-                    .onDelete(perform: workouts.deleteWorkout)  // unsure how to fix
+                    //.onDelete(perform: workouts.deleteWorkout)  // unsure how to fix
                 }
-                
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Workouts")
             .toolbar {
                 ToolbarItem {
                     Button {
-                        //workouts.addWorkout()
                         showAddView.toggle()
                     } label: {
                         Image(systemName: "plus")
@@ -54,8 +57,8 @@ struct ContentView: View {
             .sheet(isPresented: $showAddView) {
                 AddView()
             }
+            .environmentObject(workouts)
         }
-        
     }
 }
 
