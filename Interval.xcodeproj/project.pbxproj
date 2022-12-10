@@ -20,6 +20,7 @@
 		95CABB04292E8C33006E7AAE /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CABB03292E8C33006E7AAE /* AddView.swift */; };
 		95D66FA42939979600B0501B /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D66FA32939979600B0501B /* TestView.swift */; };
 		95E2A64B2923448200B7599B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E2A64A2923448200B7599B /* Workout.swift */; };
+		95ECF4822944F2F70021CCD1 /* Interval.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 95ECF4802944F2F70021CCD1 /* Interval.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		95CABB03292E8C33006E7AAE /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		95D66FA32939979600B0501B /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		95E2A64A2923448200B7599B /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		95ECF4812944F2F70021CCD1 /* Interval.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Interval.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		95ACF50D2922026E00E9B2AF /* Interval */ = {
 			isa = PBXGroup;
 			children = (
+				95ECF4802944F2F70021CCD1 /* Interval.xcdatamodeld */,
 				95ACF50E2922026E00E9B2AF /* IntervalApp.swift */,
 				95ACF5342922050B00E9B2AF /* Models */,
 				95ACF532292202E800E9B2AF /* Views */,
@@ -265,6 +268,7 @@
 				95ACF50F2922026E00E9B2AF /* IntervalApp.swift in Sources */,
 				9506F83529328F0200E20F83 /* DetailView.swift in Sources */,
 				95E2A64B2923448200B7599B /* Workout.swift in Sources */,
+				95ECF4822944F2F70021CCD1 /* Interval.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +556,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		95ECF4802944F2F70021CCD1 /* Interval.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				95ECF4812944F2F70021CCD1 /* Interval.xcdatamodel */,
+			);
+			currentVersion = 95ECF4812944F2F70021CCD1 /* Interval.xcdatamodel */;
+			name = Interval.xcdatamodeld;
+			path = Views/Interval.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 95ACF5032922026E00E9B2AF /* Project object */;
 }
