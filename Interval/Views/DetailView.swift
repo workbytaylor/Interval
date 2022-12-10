@@ -34,9 +34,10 @@ struct DetailView: View {
                     //.onDelete(perform: deleteStep)
                     .onMove(perform: nil)
                 }
+                .listStyle(.insetGrouped)
                 
                 if editMode?.wrappedValue.isEditing == true {
-                    VStack {
+                    HStack {
                         Button {
                             addDistanceStep()
                         } label: {
@@ -57,6 +58,7 @@ struct DetailView: View {
                         }
                     }
                     .buttonStyle(.bordered)
+                    .controlSize(.large)
                     .padding()
                     .background(Color(red: 242/255, green: 241/255, blue: 247/255))
                 } else {
@@ -106,6 +108,7 @@ struct DetailView: View {
     private func deleteStep(at offsets: IndexSet) {
         workout.steps.remove(atOffsets: offsets)
     }
+    
     
 }
 

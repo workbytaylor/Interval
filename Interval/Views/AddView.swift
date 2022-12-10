@@ -24,7 +24,7 @@ struct AddView: View {
                     Section(header: Text("Title")) {
                         TextField("Workout title", text: $newTitle)
                             .autocorrectionDisabled(false)
-                        // TODO: auto capilization
+                            .autocapitalization(.sentences)
                         // TODO: check for other titles that match current input
                         .overlay(alignment: .trailing) {
                             if newTitle != "" {
@@ -66,7 +66,7 @@ struct AddView: View {
                         }
                     }
                 }
-                VStack {
+                HStack {
                     Button {
                         addDistanceStep()
                     } label: {
@@ -87,6 +87,7 @@ struct AddView: View {
                     }
                 }
                 .buttonStyle(.bordered)
+                .controlSize(.large)
                 .padding()
                 .background(Color(red: 242/255, green: 241/255, blue: 247/255))
                 
@@ -143,6 +144,7 @@ struct AddView: View {
         newWorkout.title = newTitle
         newWorkout.steps = newSteps
         workouts.allworkouts.append(newWorkout)
+        workouts.save(workouts.allworkouts)
         dismiss()
     }
     
