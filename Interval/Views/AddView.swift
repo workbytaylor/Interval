@@ -7,21 +7,34 @@
 
 import SwiftUI
 
+struct NewSteps: Identifiable {
+    var id: UUID
+    var index: Int16
+    var magnitude: Int16
+    var unit: String
+    var type: String
+    var pace: String
+}
+
 struct AddView: View {
     
-    @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var workouts: Workouts
-    //viewmodel for this may be helpful? likely yes.
-    @State var newWorkout: Workout = Workout()
-    @State var newTitle: String = ""
-    @State var newSteps: [Step] = []
-    @State var newIndex: Int = 1
+    @Environment(\.managedObjectContext) var moc
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var newSteps: [NewSteps] = []
+    @State private var newIndex: Int = 1
+    @State private var newTitle: String = ""
+    
+    enum Types: CaseIterable {
+        case distance
+        case time
+    }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: .zero) {
                 List {
-                    Section(header: Text("Title")) {
+                    Section(header: Text("Title"), footer: Text("Error message here")) {
                         TextField("Workout title", text: $newTitle)
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)
@@ -40,19 +53,19 @@ struct AddView: View {
                     
                     Section(header: Text("Steps")) {
                         if newSteps.count != 0 {
-                            ForEach(newSteps, id: \.index) { step in
+                            ForEach(newSteps, id: \.id) { step in
                                 HStack {
                                     Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                                         .frame(width: 40)
                                     VStack(alignment: .leading) {
-                                        Text(String(step.target.magnitude))+Text(" \(step.target.unit)")
+                                        Text("\(step.magnitude) \(step.unit)")
                                         Text(step.pace)
                                             .font(.subheadline)
                                             .foregroundStyle(.secondary)
                                     }
                                 }
                             }
-                            .onDelete(perform: deleteStep)  // TODO: renumber later steps
+                            //.onDelete(perform: /*delete step*/)
                         } else {
                             HStack {
                                 Spacer()
@@ -61,28 +74,22 @@ struct AddView: View {
                                 Text("to add a step")
                                 Spacer()
                             }
-                            .foregroundStyle(.secondary)
                             .listRowBackground(Color.clear)
+                            .foregroundStyle(.secondary)
                         }
                     }
                 }
+                
                 HStack {
-                    Button {
-                        addDistanceStep()
-                    } label: {
-                        HStack {
-                            Label("Distance", systemImage: "lines.measurement.horizontal")
-                            Spacer()
-                            Image(systemName: "plus")
-                        }
-                    }
-                    Button {
-                        addTimeStep()
-                    } label: {
-                        HStack {
-                            Label("Time", systemImage: "stopwatch")
-                            Spacer()
-                            Image(systemName: "plus")
+                    ForEach(Types.allCases, id: \.self) { type in
+                        Button {
+                            // add step of appropriate type
+                        } label: {
+                            HStack {
+                                Label("", systemImage: type == .distance ? "lines.measurement.horizontal" : "stopwatch")
+                                Spacer()
+                                Image(systemName: "plus")
+                            }
                         }
                     }
                 }
@@ -103,13 +110,13 @@ struct AddView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if newTitle == "" || newSteps.count == 0 {
+                    if newTitle == ""/* || newSteps.count == 0*/ {
                         Text("Save")
                             .foregroundStyle(.secondary)
                             .bold()
                     } else {
                         Button {
-                            saveNewWorkout()
+                            // save new workout
                         } label: {
                             Text("Save")
                                 .bold()
@@ -121,39 +128,19 @@ struct AddView: View {
     }
     
     private func deleteStep(at offsets: IndexSet) {
-        newSteps.remove(atOffsets: offsets)
+        //newSteps.remove(atOffsets: offsets)
     }
     
     private func addTimeStep() {
-        let timeStep: Step = Step()
-        timeStep.type = "time"
-        timeStep.target.magnitude = 5
-        timeStep.target.unit = "minutes"
-        timeStep.index = newSteps.count+1
-        newSteps.append(timeStep)
     }
     
     private func addDistanceStep() {
-        let distanceStep: Step = Step()
-        distanceStep.type = "distance"
-        distanceStep.index = newSteps.count+1
-        newSteps.append(distanceStep)
     }
-    
-    private func saveNewWorkout() {
-        newWorkout.title = newTitle
-        newWorkout.steps = newSteps
-        workouts.allworkouts.append(newWorkout)
-        workouts.save(workouts.allworkouts)
-        dismiss()
-    }
-    
     
 }
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         AddView()
-            .environmentObject(Workouts())
     }
 }

@@ -10,68 +10,63 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var workouts = Workouts()
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var workouts: FetchedResults<Workout>
+
     @State private var showAddView: Bool = false
     
     var body: some View {
-        NavigationStack {
-            List {
-                if workouts.allworkouts.count == 0 {
-                    HStack {
-                        Spacer()
-                        Text("Tap")
-                        Image(systemName: "plus")
-                        Text("to create a workout")
-                        Spacer()
-                    }
-                    .listRowBackground(Color.clear)
-                    .foregroundStyle(.secondary)
-                } else {
-                    ForEach(workouts.allworkouts, id: \.id) { workout in
-                        NavigationLink {
-                            DetailView(workout: workout)
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(workout.title)
-                                    .font(.headline)
-                                Text("\(workout.steps.count) steps")
-                                    .foregroundStyle(.secondary)
-                                    .font(.subheadline)
-                            }
+        List {
+            if workouts.count == 0 {
+                HStack {
+                    Spacer()
+                    Text("Tap")
+                    Image(systemName: "plus")
+                    Text("to create a workout")
+                    Spacer()
+                }
+                .listRowBackground(Color.clear)
+                .foregroundStyle(.secondary)
+                
+            } else {
+                ForEach(workouts, id: \.id) { workout in
+                    NavigationLink {
+                        DetailView(workout: workout)
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text(workout.wrappedTitle)
+                                .font(.headline)
+                            Text("\(workout.stepArray.count) steps")
+                                .foregroundStyle(.secondary)
+                                .font(.subheadline)
                         }
                     }
-                    .onDelete(perform: workouts.deleteWorkout)  // unsure how to fix
+                }
+                //.onDelete(perform: /*delete workout*/)  // unsure how to fix
+            }
+        }
+        .listStyle(.insetGrouped)
+        .navigationTitle("Workouts")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showAddView.toggle()
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
-            .listStyle(.insetGrouped)
-            .navigationTitle("Workouts")
-            .toolbar {
-                ToolbarItem {
-                    Button {
-                        showAddView.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-            .sheet(isPresented: $showAddView) {
-                AddView()
-            }
-            .environmentObject(workouts)
+        }
+        .sheet(isPresented: $showAddView) {
+            AddView()
         }
     }
-    
-    private func deleteWorkout() {
-        workouts.deleteWorkout(at: IndexSet())
-    }
-    
-    
-    
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NavigationStack {
+            ContentView()
+                //.environment(\.managedObjectContext, dataController.container.viewContext)
+        }
     }
 }

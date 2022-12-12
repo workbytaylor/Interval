@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct IntervalApp: App {
+    
+    @StateObject private var dataController = DataController()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                ContentView()
+            }
+            .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }
