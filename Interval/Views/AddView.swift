@@ -117,6 +117,8 @@ struct AddView: View {
                     } else {
                         Button {
                             // save new workout
+                            createWorkout()
+                            dismiss()
                         } label: {
                             Text("Save")
                                 .bold()
@@ -125,6 +127,20 @@ struct AddView: View {
                 }
             }
         }
+    }
+    
+    private func createWorkout() {
+        let newWorkout = Workout(context: moc)
+        newWorkout.id = UUID()
+        newWorkout.title = newTitle
+        
+        //TODO: Continue saving new steps
+        
+        if moc.hasChanges {
+            try? moc.save()
+        }
+        
+        
     }
     
     private func deleteStep(at offsets: IndexSet) {
