@@ -7,42 +7,25 @@
 
 import SwiftUI
 
-struct NewStep: Identifiable {
-    var id: UUID = UUID()
-    var index: Int16 = 1
-    var magnitude: Int16 = 1
-    var unit: String = ""
-    var type: String = ""
-    var pace: String = ""
-}
-
 struct AddView: View {
     
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) private var dismiss
-    
-    @State private var newSteps: [NewStep] = []
-    @State private var newIndex: Int = 1
-    @State private var newTitle: String = ""
-    
-    enum Types: String, CaseIterable {
-        case distance = "distance"
-        case time = "time"
-    }
+    @StateObject private var vm = ViewModel()
     
     var body: some View {
         NavigationStack {
             VStack(spacing: .zero) {
                 List {
                     Section(header: Text("Title"), footer: Text("Error message here")) {
-                        TextField("Workout title", text: $newTitle)
+                        TextField("Workout title", text: $vm.newTitle)
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)
                         // TODO: check for other titles that match current input
                         .overlay(alignment: .trailing) {
-                            if newTitle != "" {
+                            if vm.newTitle != "" {
                                 Button {
-                                    newTitle = ""
+                                    vm.newTitle = ""
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                 }
@@ -52,8 +35,9 @@ struct AddView: View {
                     }
                     
                     Section(header: Text("Steps")) {
-                        if newSteps.count != 0 {
-                            ForEach(newSteps, id: \.id) { step in
+                        if vm.newSteps.count != 0 {
+                            //TODO: How is index managed with this? Try id by index.
+                            ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
                                 HStack {
                                     Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                                         .frame(width: 40)
@@ -64,6 +48,7 @@ struct AddView: View {
                                             .foregroundStyle(.secondary)
                                     }
                                 }
+                                .deleteDisabled(vm.newSteps.count < 2)
                             }
                             //.onDelete(perform: /*delete step*/)
                         } else {
@@ -81,18 +66,25 @@ struct AddView: View {
                 }
                 
                 HStack {
-                    ForEach(Types.allCases, id: \.self) { type in
-                        Button {
-                            // add step of appropriate type
-                            addStep(type: type.rawValue)
-                        } label: {
-                            HStack {
-                                Label("", systemImage: type == .distance ? "lines.measurement.horizontal" : "stopwatch")
-                                Spacer()
-                                Image(systemName: "plus")
-                            }
+                    Button {
+                        vm.addTimeStep()
+                    } label: {
+                        HStack {
+                            Label("", systemImage: "stopwatch")
+                            Spacer()
+                            Image(systemName: "plus")
                         }
                     }
+                    Button {
+                        vm.addDistanceStep()
+                    } label: {
+                        HStack {
+                            Label("", systemImage: "lines.measurement.horizontal")
+                            Spacer()
+                            Image(systemName: "plus")
+                        }
+                    }
+                    
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
@@ -111,7 +103,7 @@ struct AddView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if newTitle == ""/* || newSteps.count == 0*/ {
+                    if vm.newTitle == ""/* || newSteps.count == 0*/ {
                         Text("Save")
                             .foregroundStyle(.secondary)
                             .bold()
@@ -119,7 +111,6 @@ struct AddView: View {
                         Button {
                             // save new workout
                             createWorkout()
-                            dismiss()
                         } label: {
                             Text("Save")
                                 .bold()
@@ -133,38 +124,17 @@ struct AddView: View {
     private func createWorkout() {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
-        newWorkout.title = newTitle
+        newWorkout.title = vm.newTitle
         
         //TODO: Continue saving new steps
-        
         if moc.hasChanges {
             try? moc.save()
         }
+        dismiss()
         
         
     }
     
-    private func deleteStep(at offsets: IndexSet) {
-        //newSteps.remove(atOffsets: offsets)
-    }
-    
-    private func addTimeStep() {
-    }
-    
-    private func addDistanceStep() {
-    }
-    
-    private func addStep(type: String) {
-        var newStep: NewStep = NewStep()
-        newStep.type = type
-        newStep.index = Int16(newSteps.count + 1)
-        newStep.magnitude = Int16(800)
-        newStep.unit = "m"
-        newStep.pace = "pace"
-        newStep.id = UUID()
-
-        newSteps.append(newStep)
-    }
     
 }
 

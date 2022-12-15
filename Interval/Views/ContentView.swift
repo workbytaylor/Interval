@@ -29,6 +29,7 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
                 
             } else {
+                // editActions not working immediately with CoreData
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
                         DetailView(workout: workout)

@@ -14,6 +14,7 @@
 		956F3D092946CAFE00C79B7B /* Step+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956F3D052946CAFE00C79B7B /* Step+CoreDataProperties.swift */; };
 		956F3D0A2946CAFE00C79B7B /* Workout+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956F3D062946CAFE00C79B7B /* Workout+CoreDataClass.swift */; };
 		956F3D0B2946CAFE00C79B7B /* Workout+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956F3D072946CAFE00C79B7B /* Workout+CoreDataProperties.swift */; };
+		957FB727294ACA7A00F87C86 /* NewStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957FB726294ACA7A00F87C86 /* NewStep.swift */; };
 		95ACF50F2922026E00E9B2AF /* IntervalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ACF50E2922026E00E9B2AF /* IntervalApp.swift */; };
 		95ACF5112922026E00E9B2AF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ACF5102922026E00E9B2AF /* ContentView.swift */; };
 		95ACF5132922027000E9B2AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95ACF5122922027000E9B2AF /* Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		956F3D052946CAFE00C79B7B /* Step+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Step+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		956F3D062946CAFE00C79B7B /* Workout+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workout+CoreDataClass.swift"; sourceTree = "<group>"; };
 		956F3D072946CAFE00C79B7B /* Workout+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workout+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		957FB726294ACA7A00F87C86 /* NewStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NewStep.swift; path = Interval/Views/NewStep.swift; sourceTree = SOURCE_ROOT; };
 		95ACF50B2922026E00E9B2AF /* Interval.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Interval.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95ACF50E2922026E00E9B2AF /* IntervalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalApp.swift; sourceTree = "<group>"; };
 		95ACF5102922026E00E9B2AF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		95ACF5342922050B00E9B2AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				957FB726294ACA7A00F87C86 /* NewStep.swift */,
 				956F3D042946CAFE00C79B7B /* Step+CoreDataClass.swift */,
 				956F3D052946CAFE00C79B7B /* Step+CoreDataProperties.swift */,
 				956F3D062946CAFE00C79B7B /* Workout+CoreDataClass.swift */,
@@ -284,6 +287,7 @@
 			files = (
 				95CABB04292E8C33006E7AAE /* AddView.swift in Sources */,
 				95ACF5112922026E00E9B2AF /* ContentView.swift in Sources */,
+				957FB727294ACA7A00F87C86 /* NewStep.swift in Sources */,
 				95ACF50F2922026E00E9B2AF /* IntervalApp.swift in Sources */,
 				9506F83529328F0200E20F83 /* DetailView.swift in Sources */,
 				956F3D0A2946CAFE00C79B7B /* Workout+CoreDataClass.swift in Sources */,
