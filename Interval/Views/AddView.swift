@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct NewSteps: Identifiable {
-    var id: UUID
-    var index: Int16
-    var magnitude: Int16
-    var unit: String
-    var type: String
-    var pace: String
+struct NewStep: Identifiable {
+    var id: UUID = UUID()
+    var index: Int16 = 1
+    var magnitude: Int16 = 1
+    var unit: String = ""
+    var type: String = ""
+    var pace: String = ""
 }
 
 struct AddView: View {
@@ -21,13 +21,13 @@ struct AddView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) private var dismiss
     
-    @State private var newSteps: [NewSteps] = []
+    @State private var newSteps: [NewStep] = []
     @State private var newIndex: Int = 1
     @State private var newTitle: String = ""
     
-    enum Types: CaseIterable {
-        case distance
-        case time
+    enum Types: String, CaseIterable {
+        case distance = "distance"
+        case time = "time"
     }
     
     var body: some View {
@@ -84,6 +84,7 @@ struct AddView: View {
                     ForEach(Types.allCases, id: \.self) { type in
                         Button {
                             // add step of appropriate type
+                            addStep(type: type.rawValue)
                         } label: {
                             HStack {
                                 Label("", systemImage: type == .distance ? "lines.measurement.horizontal" : "stopwatch")
@@ -151,6 +152,18 @@ struct AddView: View {
     }
     
     private func addDistanceStep() {
+    }
+    
+    private func addStep(type: String) {
+        var newStep: NewStep = NewStep()
+        newStep.type = type
+        newStep.index = Int16(newSteps.count + 1)
+        newStep.magnitude = Int16(800)
+        newStep.unit = "m"
+        newStep.pace = "pace"
+        newStep.id = UUID()
+
+        newSteps.append(newStep)
     }
     
 }

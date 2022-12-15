@@ -42,7 +42,7 @@ struct ContentView: View {
                         }
                     }
                 }
-                //.onDelete(perform: /*delete workout*/)  // unsure how to fix
+                //.onDelete(perform: /*delete workout*/)
             }
         }
         .listStyle(.insetGrouped)

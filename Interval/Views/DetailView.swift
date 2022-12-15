@@ -13,6 +13,7 @@ struct DetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) private var dismiss
     @Environment(\.editMode) private var editMode
+    @State private var showDeleteAlert: Bool = false
     
     var body: some View {
             VStack(spacing: .zero) {
@@ -78,11 +79,35 @@ struct DetailView: View {
             }
             .navigationTitle(workout.wrappedTitle)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if editMode?.wrappedValue.isEditing == true {
+                        Button(role: .destructive) {
+                            showDeleteAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    
                     EditButton()
+                    
                 }
             }
+            .alert("Delete workout", isPresented: $showDeleteAlert) {
+                Button("Delete", role: .destructive, action: deleteWorkout)
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("Are you sure?")
+            }
         
+    }
+    
+    private func deleteWorkout() {
+        moc.delete(workout)
+        if moc.hasChanges {
+            try? moc.save()
+        }
+        dismiss()   //returns to ContentView after delete
     }
     
 }
