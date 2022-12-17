@@ -35,38 +35,25 @@ struct AddView: View {
                     }
                     
                     Section(header: Text("Steps")) {
-                        if vm.newSteps.count != 0 {
-                            //TODO: How is index managed with this? Try id by index.
-                            ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
-                                HStack {
-                                    
-                                    // change to switch statement when more step types are added
-                                    Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                                        .frame(width: 40)
-                                    VStack(alignment: .leading) {
-                                        Text("\(step.magnitude) \(step.unit)")
-                                        Text(step.pace)
-                                            .font(.subheadline)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                                .deleteDisabled(vm.newSteps.count < 2)
-                            }
-                            .onMove { indices, newOffset in
-                                vm.newSteps.move(fromOffsets: indices, toOffset: newOffset)
-                                
-                            }
-                        } else {
+                        ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
                             HStack {
-                                Spacer()
-                                Text("Tap")
-                                Image(systemName: "plus")
-                                Text("to add a step")
-                                Spacer()
+                                // change to switch statement when more step types are added
+                                Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                                    .frame(width: 40)
+                                VStack(alignment: .leading) {
+                                    Text("\(step.magnitude) \(step.unit)")
+                                    Text(step.pace)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
-                            .listRowBackground(Color.clear)
-                            .foregroundStyle(.secondary)
+                            .deleteDisabled(vm.newSteps.count < 2)
                         }
+                        .onMove(perform: { from, to in
+                            DispatchQueue.main.async {
+                                vm.move(from: from, to: to)
+                            }
+                        })
                     }
                 }
                 
@@ -89,7 +76,6 @@ struct AddView: View {
                             Image(systemName: "plus")
                         }
                     }
-                    
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
@@ -99,6 +85,9 @@ struct AddView: View {
             }
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                vm.addDistanceStep()
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
@@ -130,7 +119,10 @@ struct AddView: View {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = vm.newTitle
+        
         //TODO: Continue saving new steps
+        
+        
         if moc.hasChanges {
             try? moc.save()
         }
