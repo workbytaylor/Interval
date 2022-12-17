@@ -22,6 +22,23 @@ extension AddView {
             let distanceStep = NewStep(id: UUID(), index: Int16(newSteps.count+1), type: "distance", magnitude: 5, unit: "km", pace: "distancePace")
             newSteps.append(distanceStep)
         }
+        /*
+        func move(from source: IndexSet, to destination: Int) {
+            newSteps.move(fromOffsets: source, toOffset: destination)
+        }
+        
+        func renumber() {
+            for i in 0..<newSteps.count {
+                newSteps[i].index = Int16(i+1)
+            }
+        }
+        */
+        
+        func renumberSteps() {
+                for (index, NewStep) in newSteps.enumerated() {
+                    newStep.index = Int16(index + 1)
+                }
+            }
         
         
     }

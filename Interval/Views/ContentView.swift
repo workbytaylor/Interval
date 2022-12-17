@@ -4,7 +4,6 @@
 //
 //  Created by Nilakshi Roy on 2022-11-13.
 //
-// Writing on MergeViewModels branch - correct? yes/no
 
 import SwiftUI
 
@@ -29,7 +28,7 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
                 
             } else {
-                // editActions not working immediately with CoreData
+                // TODO: Add editactiosn .delete?
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
                         DetailView(workout: workout)
@@ -43,7 +42,6 @@ struct ContentView: View {
                         }
                     }
                 }
-                //.onDelete(perform: /*delete workout*/)
             }
         }
         .listStyle(.insetGrouped)

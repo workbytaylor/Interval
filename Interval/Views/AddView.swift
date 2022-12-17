@@ -39,6 +39,8 @@ struct AddView: View {
                             //TODO: How is index managed with this? Try id by index.
                             ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
                                 HStack {
+                                    
+                                    // change to switch statement when more step types are added
                                     Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                                         .frame(width: 40)
                                     VStack(alignment: .leading) {
@@ -50,7 +52,10 @@ struct AddView: View {
                                 }
                                 .deleteDisabled(vm.newSteps.count < 2)
                             }
-                            //.onDelete(perform: /*delete step*/)
+                            .onMove { indices, newOffset in
+                                vm.newSteps.move(fromOffsets: indices, toOffset: newOffset)
+                                
+                            }
                         } else {
                             HStack {
                                 Spacer()
@@ -125,16 +130,12 @@ struct AddView: View {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = vm.newTitle
-        
         //TODO: Continue saving new steps
         if moc.hasChanges {
             try? moc.save()
         }
         dismiss()
-        
-        
     }
-    
     
 }
 
