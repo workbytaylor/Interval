@@ -115,14 +115,18 @@ struct AddView: View {
         }
     }
     
-    private func createWorkout() {
+    func createWorkout() {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = vm.newTitle
         
         //TODO: Continue saving new steps
-        
-        
+        for step in vm.newSteps {
+            let step = Step(context: moc)
+            step.index = Int16()
+            
+        }
+                
         if moc.hasChanges {
             try? moc.save()
         }
