@@ -104,7 +104,7 @@ struct AddView: View {
                     } else {
                         Button {
                             // save new workout
-                            createWorkout()
+                            saveNewWorkout()
                         } label: {
                             Text("Save")
                                 .bold()
@@ -115,16 +115,21 @@ struct AddView: View {
         }
     }
     
-    func createWorkout() {
+    func saveNewWorkout() {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = vm.newTitle
         
         //TODO: Continue saving new steps
-        for step in vm.newSteps {
+        for newStep in vm.newSteps {
             let step = Step(context: moc)
-            step.index = Int16()
-            
+            step.id = newStep.id
+            step.type = newStep.type
+            step.magnitude = newStep.magnitude
+            step.unit = newStep.unit
+            step.pace = newStep.pace
+            //step.index = 
+            step.workout = newWorkout
         }
                 
         if moc.hasChanges {
@@ -132,6 +137,12 @@ struct AddView: View {
         }
         dismiss()
     }
+    
+    /*
+    func index(of item: String) -> Int? {
+        return vm.newSteps.firstIndex(of: item)
+    }
+    */
     
 }
 

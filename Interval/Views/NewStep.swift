@@ -14,6 +14,7 @@ struct NewStep: Identifiable {
     var magnitude: Int16
     var unit: String
     var pace: String
+    var workout: Workout?
     
     static let example = NewStep(id: UUID(), index: 1, type: "distance", magnitude: 800, unit: "m", pace: "test pace")
 }
