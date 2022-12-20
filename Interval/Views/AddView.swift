@@ -35,7 +35,7 @@ struct AddView: View {
                     }
                     
                     Section(header: Text("Steps")) {
-                        ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
+                        ForEach($vm.newSteps, id: \.id, editActions: .all) { ($step) in
                             HStack {
                                 // change to switch statement when more step types are added
                                 Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
@@ -89,22 +89,21 @@ struct AddView: View {
                 vm.addDistanceStep()
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
                         dismiss()
                     } label: {
                         Text("Cancel").tint(.red)
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    if vm.newTitle == ""/* || newSteps.count == 0*/ {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if vm.newTitle == "" || vm.newSteps.count == 0 {
                         Text("Save")
                             .foregroundStyle(.secondary)
                             .bold()
                     } else {
                         Button {
-                            // save new workout
-                            saveNewWorkout()
+                            createWorkout()
                         } label: {
                             Text("Save")
                                 .bold()
@@ -115,12 +114,11 @@ struct AddView: View {
         }
     }
     
-    func saveNewWorkout() {
+    func createWorkout() {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = vm.newTitle
-        
-        //TODO: Continue saving new steps
+        var i = 1
         for newStep in vm.newSteps {
             let step = Step(context: moc)
             step.id = newStep.id
@@ -128,21 +126,20 @@ struct AddView: View {
             step.magnitude = newStep.magnitude
             step.unit = newStep.unit
             step.pace = newStep.pace
-            //step.index = 
+            step.index = Int16(i)
             step.workout = newWorkout
+            i+=1
         }
-                
-        if moc.hasChanges {
-            try? moc.save()
-        }
+        save()
         dismiss()
     }
     
-    /*
-    func index(of item: String) -> Int? {
-        return vm.newSteps.firstIndex(of: item)
+    func save() {
+        if moc.hasChanges {
+            try? moc.save()
+        }
     }
-    */
+    
     
 }
 
