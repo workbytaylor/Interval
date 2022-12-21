@@ -16,19 +16,7 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            if workouts.count == 0 {
-                HStack {
-                    Spacer()
-                    Text("Tap")
-                    Image(systemName: "plus")
-                    Text("to create a workout")
-                    Spacer()
-                }
-                .listRowBackground(Color.clear)
-                .foregroundStyle(.secondary)
-                
-            } else {
-                // TODO: Add editactions .delete?
+            if workouts.count != 0 {
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
                         DetailView(workout: workout)
@@ -42,6 +30,16 @@ struct ContentView: View {
                         }
                     }
                 }
+            } else {
+                HStack {
+                    Spacer()
+                    Text("Tap")
+                    Image(systemName: "plus")
+                    Text("to create a workout")
+                    Spacer()
+                }
+                .listRowBackground(Color.clear)
+                .foregroundStyle(.secondary)
             }
         }
         .listStyle(.insetGrouped)
