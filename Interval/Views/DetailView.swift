@@ -30,7 +30,7 @@ struct DetailView: View {
                             }
                         }
                     }
-                    //.onDelete(perform: deleteStep)
+                    .onDelete(perform: nil)
                     .onMove(perform: nil)
                 }
                 .listStyle(.insetGrouped)

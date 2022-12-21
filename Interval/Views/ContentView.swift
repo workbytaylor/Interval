@@ -28,7 +28,7 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
                 
             } else {
-                // TODO: Add editactiosn .delete?
+                // TODO: Add editactions .delete?
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
                         DetailView(workout: workout)

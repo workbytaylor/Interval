@@ -10,8 +10,8 @@ import SwiftUI
 struct AddView: View {
     
     @Environment(\.managedObjectContext) var moc
-    @Environment(\.dismiss) private var dismiss
-    @StateObject private var vm = ViewModel()
+    @Environment(\.dismiss) var dismiss
+    @StateObject var vm = ViewModel()
     
     var body: some View {
         NavigationStack {
@@ -35,7 +35,7 @@ struct AddView: View {
                     }
                     
                     Section(header: Text("Steps")) {
-                        ForEach($vm.newSteps, id: \.id, editActions: .all) { ($step) in
+                        ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
                             HStack {
                                 // change to switch statement when more step types are added
                                 Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
@@ -49,11 +49,6 @@ struct AddView: View {
                             }
                             .deleteDisabled(vm.newSteps.count < 2)
                         }
-                        .onMove(perform: { from, to in
-                            DispatchQueue.main.async {
-                                vm.move(from: from, to: to)
-                            }
-                        })
                     }
                 }
                 
@@ -81,7 +76,6 @@ struct AddView: View {
                 .controlSize(.large)
                 .padding()
                 .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-                
             }
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
@@ -89,14 +83,14 @@ struct AddView: View {
                 vm.addDistanceStep()
             }
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
                         dismiss()
                     } label: {
                         Text("Cancel").tint(.red)
                     }
                 }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     if vm.newTitle == "" || vm.newSteps.count == 0 {
                         Text("Save")
                             .foregroundStyle(.secondary)
@@ -113,34 +107,6 @@ struct AddView: View {
             }
         }
     }
-    
-    func createWorkout() {
-        let newWorkout = Workout(context: moc)
-        newWorkout.id = UUID()
-        newWorkout.title = vm.newTitle
-        var i = 1
-        for newStep in vm.newSteps {
-            let step = Step(context: moc)
-            step.id = newStep.id
-            step.type = newStep.type
-            step.magnitude = newStep.magnitude
-            step.unit = newStep.unit
-            step.pace = newStep.pace
-            step.index = Int16(i)
-            step.workout = newWorkout
-            i+=1
-        }
-        save()
-        dismiss()
-    }
-    
-    func save() {
-        if moc.hasChanges {
-            try? moc.save()
-        }
-    }
-    
-    
 }
 
 struct AddView_Previews: PreviewProvider {
