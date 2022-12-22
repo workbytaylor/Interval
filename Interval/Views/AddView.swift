@@ -13,12 +13,11 @@ struct AddView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ViewModel()
     
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: .zero) {
                 List {
-                    Section(header: Text("Title"), footer: Text("Please choose a different title.")) {
+                    Section(header: Text("Title")/*, footer: Text("Please choose a different title.")*/) {
                         TextField("Workout title", text: $vm.newTitle)
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)
@@ -27,9 +26,7 @@ struct AddView: View {
                             if vm.newTitle != "" {
                                 Button {
                                     vm.newTitle = ""
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                }
+                                } label: { Image(systemName: "xmark.circle.fill") }
                                 .foregroundStyle(.secondary)
                             }
                         }
@@ -57,20 +54,12 @@ struct AddView: View {
                     Button {
                         vm.addTimeStep()
                     } label: {
-                        HStack {
-                            Label("", systemImage: "stopwatch")
-                            Spacer()
-                            Image(systemName: "plus")
-                        }
+                        HStack { Label("", systemImage: "stopwatch"); Spacer(); Image(systemName: "plus") }
                     }
                     Button {
                         vm.addDistanceStep()
                     } label: {
-                        HStack {
-                            Label("", systemImage: "lines.measurement.horizontal")
-                            Spacer()
-                            Image(systemName: "plus")
-                        }
+                        HStack { Label("", systemImage: "lines.measurement.horizontal"); Spacer(); Image(systemName: "plus") }
                     }
                 }
                 .buttonStyle(.bordered)
@@ -80,9 +69,7 @@ struct AddView: View {
             }
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                vm.addDistanceStep()
-            }
+            .onAppear { vm.addDistanceStep() }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
@@ -108,6 +95,10 @@ struct AddView: View {
             }
         }
     }
+    
+    
+    
+    
 }
 
 struct AddView_Previews: PreviewProvider {

@@ -30,7 +30,7 @@ struct DetailView: View {
                             }
                         }
                     }
-                    .onDelete(perform: nil)
+                    .onDelete(perform: deleteStep)
                     .onMove(perform: nil)
                 }
                 .listStyle(.insetGrouped)
@@ -109,6 +109,21 @@ struct DetailView: View {
         }
         dismiss()   //returns to ContentView after delete
     }
+    
+    private func deleteStep(at offsets: IndexSet) {
+        for index in offsets {
+            let step = workout.stepArray[index]
+            moc.delete(step)
+        }
+    }
+    
+    private func renumberSteps(_ step: Step) {
+        let stepIndexToDelete = Int(step.index)
+        if stepIndexToDelete < workout.stepArray.count {
+            let start = stepIndexToDelete
+        }
+    }
+    
     
 }
 

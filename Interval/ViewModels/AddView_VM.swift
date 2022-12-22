@@ -17,7 +17,7 @@ extension AddView {
         //@Published var newDescription = ""    // TODO: Add description to workout at later date, also add in CoreData
         
         func titleCheck() {
-            // check newTitle is already taken
+            // check if newTitle is already taken
         }
         
         func addTimeStep() {
@@ -35,7 +35,8 @@ extension AddView {
         }
     }
     
-    // Functions that act on CoreData go here
+    
+    // Functions that act on CoreData go here for now
     func createWorkout() {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
