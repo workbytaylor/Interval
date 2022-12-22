@@ -11,12 +11,12 @@ struct ContentView: View {
     
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var workouts: FetchedResults<Workout>
-
+    
     @State private var showAddView: Bool = false
     
     var body: some View {
         List {
-            if workouts.count != 0 {
+            if !workouts.isEmpty {
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
                         DetailView(workout: workout)
@@ -31,15 +31,7 @@ struct ContentView: View {
                     }
                 }
             } else {
-                HStack {
-                    Spacer()
-                    Text("Tap")
-                    Image(systemName: "plus")
-                    Text("to create a workout")
-                    Spacer()
-                }
-                .listRowBackground(Color.clear)
-                .foregroundStyle(.secondary)
+                noWorkoutsView
             }
         }
         .listStyle(.insetGrouped)
@@ -66,4 +58,28 @@ struct ContentView_Previews: PreviewProvider {
                 //.environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
+}
+
+
+private extension ContentView {
+    
+    var noWorkoutsView: some View {
+        HStack {
+            Spacer()
+            Text("Tap")
+            Image(systemName: "plus")
+            Text("to create a workout")
+            Spacer()
+        }
+        .listRowBackground(Color.clear)
+        .foregroundStyle(.secondary)
+    }
+        
+    
+    
+    
+    
+    
+    
+    
 }

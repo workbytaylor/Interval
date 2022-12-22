@@ -13,11 +13,12 @@ struct AddView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ViewModel()
     
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: .zero) {
                 List {
-                    Section(header: Text("Title"), footer: Text("Error message here")) {
+                    Section(header: Text("Title"), footer: Text("Please choose a different title.")) {
                         TextField("Workout title", text: $vm.newTitle)
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)

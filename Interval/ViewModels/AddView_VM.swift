@@ -16,6 +16,10 @@ extension AddView {
         @Published var newTitle = ""
         //@Published var newDescription = ""    // TODO: Add description to workout at later date, also add in CoreData
         
+        func titleCheck() {
+            // check newTitle is already taken
+        }
+        
         func addTimeStep() {
             let timeStep = NewStep(id: UUID(), index: Int16(newSteps.count+1), type: "time", magnitude: 10, unit: "minutes", pace: "timePace")
             newSteps.append(timeStep)
