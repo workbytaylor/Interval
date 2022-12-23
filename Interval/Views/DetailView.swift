@@ -11,7 +11,7 @@ struct DetailView: View {
     
     @ObservedObject var workout: Workout
     @Environment(\.managedObjectContext) var moc
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) var dismiss
     @Environment(\.editMode) private var editMode
     @State private var showDeleteAlert: Bool = false
     
@@ -20,6 +20,7 @@ struct DetailView: View {
                 List {
                     ForEach(workout.stepArray, id: \.id) { step in
                         HStack {
+                            Text(String(step.index))
                             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                                 .frame(width: 40)
                             VStack(alignment: .leading) {
@@ -31,14 +32,14 @@ struct DetailView: View {
                         }
                     }
                     .onDelete(perform: deleteStep)
-                    .onMove(perform: nil)
+                    .onMove(perform: nil)   //TODO: Move function
                 }
                 .listStyle(.insetGrouped)
                 
                 if editMode?.wrappedValue.isEditing == true {
                     HStack {
                         Button {
-                            // add distance step
+                            // TODO: add distance step
                         } label: {
                             HStack {
                                 Label("Distance", systemImage: "lines.measurement.horizontal")
@@ -47,7 +48,7 @@ struct DetailView: View {
                             }
                         }
                         Button {
-                            // add time step
+                            // TODO: add time step
                         } label: {
                             HStack {
                                 Label("Time", systemImage: "stopwatch")
@@ -69,7 +70,6 @@ struct DetailView: View {
                             Text("Start")
                             Spacer()
                         }
-                        
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
@@ -88,9 +88,7 @@ struct DetailView: View {
                                 .foregroundColor(.red)
                         }
                     }
-                    
                     EditButton()
-                    
                 }
             }
             .alert("Delete workout", isPresented: $showDeleteAlert) {
@@ -99,32 +97,7 @@ struct DetailView: View {
             } message: {
                 Text("Are you sure?")
             }
-        
     }
-    
-    private func deleteWorkout() {
-        moc.delete(workout)
-        if moc.hasChanges {
-            try? moc.save()
-        }
-        dismiss()   //returns to ContentView after delete
-    }
-    
-    private func deleteStep(at offsets: IndexSet) {
-        for index in offsets {
-            let step = workout.stepArray[index]
-            moc.delete(step)
-        }
-    }
-    
-    private func renumberSteps(_ step: Step) {
-        let stepIndexToDelete = Int(step.index)
-        if stepIndexToDelete < workout.stepArray.count {
-            let start = stepIndexToDelete
-        }
-    }
-    
-    
 }
 
 /*
