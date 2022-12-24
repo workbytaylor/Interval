@@ -17,7 +17,7 @@ extension AddView {
         //@Published var newDescription = ""    // TODO: Add description to workout at later date, also add in CoreData
         
         func titleCheck() {
-            // check if newTitle is already taken
+            // TODO: check if newTitle is already taken
         }
         
         func addTimeStep() {

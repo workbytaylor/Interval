@@ -39,7 +39,7 @@ struct DetailView: View {
                 if editMode?.wrappedValue.isEditing == true {
                     HStack {
                         Button {
-                            // TODO: add distance step
+                            addDistanceStep()
                         } label: {
                             HStack {
                                 Label("Distance", systemImage: "lines.measurement.horizontal")
@@ -48,7 +48,7 @@ struct DetailView: View {
                             }
                         }
                         Button {
-                            // TODO: add time step
+                            addTimeStep()
                         } label: {
                             HStack {
                                 Label("Time", systemImage: "stopwatch")

@@ -44,7 +44,29 @@ extension DetailView {
         }
     }
     
+    func addTimeStep() {
+        let timeStep = Step(context: moc)
+        timeStep.id = UUID()
+        timeStep.index = Int16(workout.stepArray.count + 1)
+        timeStep.type = "time"
+        timeStep.magnitude = Int16(10)
+        timeStep.unit = "minutes"
+        timeStep.pace = "timePace"
+        timeStep.workout = workout
+        save()
+    }
     
+    func addDistanceStep() {
+        let timeStep = Step(context: moc)
+        timeStep.id = UUID()
+        timeStep.index = Int16(workout.stepArray.count + 1)
+        timeStep.type = "distance"
+        timeStep.magnitude = Int16(5)
+        timeStep.unit = "km"
+        timeStep.pace = "distancePace"
+        timeStep.workout = workout
+        save()
+    }
     
     
 }
