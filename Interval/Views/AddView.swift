@@ -54,12 +54,12 @@ struct AddView: View {
                     Button {
                         vm.addTimeStep()
                     } label: {
-                        HStack { Label("", systemImage: "stopwatch"); Spacer(); Image(systemName: "plus") }
+                        HStack { Label("Time", systemImage: "stopwatch"); Spacer(); Image(systemName: "plus") }
                     }
                     Button {
                         vm.addDistanceStep()
                     } label: {
-                        HStack { Label("", systemImage: "lines.measurement.horizontal"); Spacer(); Image(systemName: "plus") }
+                        HStack { Label("Distance", systemImage: "lines.measurement.horizontal"); Spacer(); Image(systemName: "plus") }
                     }
                 }
                 .buttonStyle(.bordered)
@@ -82,7 +82,6 @@ struct AddView: View {
                     if vm.newTitle == "" || vm.newSteps.count == 0 {
                         Text("Save")
                             .foregroundStyle(.secondary)
-                            .bold()
                     } else {
                         Button {
                             createWorkout()

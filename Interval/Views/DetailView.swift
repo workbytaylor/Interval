@@ -13,6 +13,7 @@ struct DetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @Environment(\.editMode) private var editMode
+    @State private var addSteps: Bool = false
     @State private var showDeleteAlert: Bool = false
     
     var body: some View {
@@ -20,7 +21,7 @@ struct DetailView: View {
                 List {
                     ForEach(workout.stepArray, id: \.id) { step in
                         HStack {
-                            Text(String(step.index))
+                            //Text(String(step.index))
                             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                                 .frame(width: 40)
                             VStack(alignment: .leading) {
@@ -36,7 +37,7 @@ struct DetailView: View {
                 }
                 .listStyle(.insetGrouped)
                 
-                if editMode?.wrappedValue.isEditing == true {
+                if addSteps == true {
                     HStack {
                         Button {
                             addDistanceStep()
@@ -57,7 +58,7 @@ struct DetailView: View {
                             }
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .padding()
                     .background(Color(red: 242/255, green: 241/255, blue: 247/255))
@@ -67,11 +68,11 @@ struct DetailView: View {
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Start")
+                            Text("Start workout on apple watch")
                             Spacer()
                         }
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.bordered)
                     .controlSize(.large)
                     .padding()
                     .background(Color(red: 242/255, green: 241/255, blue: 247/255))
@@ -80,7 +81,8 @@ struct DetailView: View {
             .navigationTitle(workout.wrappedTitle)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if editMode?.wrappedValue.isEditing == true {
+                    // TODO: Change to 3 dot menu
+                    if addSteps == true {
                         Button(role: .destructive) {
                             showDeleteAlert = true
                         } label: {
@@ -88,7 +90,11 @@ struct DetailView: View {
                                 .foregroundColor(.red)
                         }
                     }
-                    EditButton()
+                    Button {
+                        addSteps.toggle()
+                    } label: {
+                        Image(systemName: addSteps == false ? "square.and.pencil" : "checkmark")
+                    }
                 }
             }
             .alert("Delete workout", isPresented: $showDeleteAlert) {
