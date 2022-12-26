@@ -55,7 +55,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             ContentView()
-                //.environment(\.managedObjectContext, dataController.container.viewContext)
+                .environment(\.managedObjectContext, DataController().container.viewContext)
         }
     }
 }

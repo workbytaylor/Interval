@@ -71,6 +71,10 @@ struct AddView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { vm.addDistanceStep() }
             .toolbar {
+                
+                
+                
+                
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
                         dismiss()

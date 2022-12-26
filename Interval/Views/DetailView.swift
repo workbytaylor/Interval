@@ -12,12 +12,12 @@ struct DetailView: View {
     @ObservedObject var workout: Workout
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    @Environment(\.editMode) private var editMode
-    @State private var addSteps: Bool = false
+    @State private var editMode: Bool = false
     @State private var showDeleteAlert: Bool = false
     
     var body: some View {
             VStack(spacing: .zero) {
+                
                 List {
                     ForEach(workout.stepArray, id: \.id) { step in
                         HStack {
@@ -34,10 +34,11 @@ struct DetailView: View {
                     }
                     .onDelete(perform: deleteStep)
                     .onMove(perform: nil)   //TODO: Move function
+                    
                 }
                 .listStyle(.insetGrouped)
                 
-                if addSteps == true {
+                if editMode == true {
                     HStack {
                         Button {
                             addDistanceStep()
@@ -68,36 +69,34 @@ struct DetailView: View {
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Start workout on apple watch")
+                            Text("Start")
                             Spacer()
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .padding()
-                    .background(Color(red: 242/255, green: 241/255, blue: 247/255))
                 }
             }
-            .navigationTitle(workout.wrappedTitle)
+            .background(Color(red: 242/255, green: 241/255, blue: 247/255))
+            .navigationBarTitle(workout.wrappedTitle)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    // TODO: Change to 3 dot menu
-                    if addSteps == true {
-                        Button(role: .destructive) {
-                            showDeleteAlert = true
+                    if editMode == false {
+                        Menu {
+                            Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete Workout", systemImage: "trash") }
+                            // TODO: Change Edit Steps to show modal sheet, edit steps and info there
+                            // TODO: After doing above, remove edit and move fxns on DetailView
+                            Button { editMode.toggle() } label: { Label("Edit Steps", systemImage: "square.and.pencil") }
                         } label: {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
+                            Image(systemName: "ellipsis")
                         }
-                    }
-                    Button {
-                        addSteps.toggle()
-                    } label: {
-                        Image(systemName: addSteps == false ? "square.and.pencil" : "checkmark")
+                    } else {
+                        Button { editMode.toggle() } label: { Image(systemName: "checkmark") }
                     }
                 }
             }
-            .alert("Delete workout", isPresented: $showDeleteAlert) {
+            .alert("Delete Workout", isPresented: $showDeleteAlert) {
                 Button("Delete", role: .destructive, action: deleteWorkout)
                 Button("Cancel", role: .cancel) { }
             } message: {
@@ -108,8 +107,10 @@ struct DetailView: View {
 
 /*
 struct DetailView_Previews: PreviewProvider {
+    
     static var previews: some View {
         DetailView()
+            //.environment(\.managedObjectContext, DataController().container.viewContext)
     }
 }
 */
