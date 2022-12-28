@@ -12,8 +12,9 @@ struct DetailView: View {
     @ObservedObject var workout: Workout
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    @State private var editMode: Bool = false
+    //@State private var editMode: Bool = false
     @State private var showDeleteAlert: Bool = false
+    @State private var showEditView: Bool = false
     
     var body: some View {
             VStack(spacing: .zero) {
@@ -32,12 +33,12 @@ struct DetailView: View {
                             }
                         }
                     }
-                    .onDelete(perform: deleteStep)
-                    .onMove(perform: nil)   //TODO: Move function
+                    //.onDelete(perform: deleteStep)
+                    //.onMove(perform: nil)   //TODO: Move function
                     
                 }
                 .listStyle(.insetGrouped)
-                
+                /*
                 if editMode == true {
                     HStack {
                         Button {
@@ -76,25 +77,26 @@ struct DetailView: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .padding()
-                }
+                }*/
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationBarTitle(workout.wrappedTitle)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if editMode == false {
+                    //if editMode == false {
                         Menu {
+                            Button { showEditView.toggle() } label: { Label("Edit Workout", systemImage: "square.and.pencil") }
                             Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete Workout", systemImage: "trash") }
                             // TODO: Change Edit Steps to show modal sheet, edit steps and info there
                             // TODO: After doing above, remove edit and move fxns on DetailView
-                            Button { editMode.toggle() } label: { Label("Edit Steps", systemImage: "square.and.pencil") }
                         } label: {
                             Image(systemName: "ellipsis")
                         }
-                    } else {
-                        Button { editMode.toggle() } label: { Image(systemName: "checkmark") }
-                    }
+                    //}
                 }
+            }
+            .sheet(isPresented: $showEditView) {
+                EditView(/*workout: workout*/)
             }
             .alert("Delete Workout", isPresented: $showDeleteAlert) {
                 Button("Delete", role: .destructive, action: deleteWorkout)

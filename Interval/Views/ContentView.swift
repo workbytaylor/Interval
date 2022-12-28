@@ -34,7 +34,7 @@ struct ContentView: View {
                 noWorkoutsView
             }
         }
-        .listStyle(.insetGrouped)
+        //.listStyle(.insetGrouped)
         .navigationTitle("Workouts")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
