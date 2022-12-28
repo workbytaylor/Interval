@@ -96,7 +96,7 @@ struct AddView: View {
                         NavigationStack {
                             VStack(spacing: .zero) {
                                 HStack {
-                                    Spacer()
+                                    Text("Text")
                                     Button {
                                         showStepEditor.toggle()
                                     } label: {
@@ -114,8 +114,10 @@ struct AddView: View {
                                             Text(unit.rawValue)
                                         }
                                     }
+                                    .pickerStyle(.menu)
                                 }
                             }
+                            
                         }
                         // nav bar hidden
                         // small sheet
