@@ -93,32 +93,34 @@ struct AddView: View {
                     
                     
                     if showStepEditor == true {
-                        NavigationStack {
-                            VStack(spacing: .zero) {
-                                HStack {
-                                    Text("Text")
-                                    Button {
-                                        showStepEditor.toggle()
-                                    } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(.gray)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                                .padding()
-                                
-                                Form {
-                                    TextField("Magnitude", text: $magnitude)
-                                    Picker("Unit", selection: $unit) {
-                                        ForEach(Units.allCases, id: \.self) { unit in
-                                            Text(unit.rawValue)
-                                        }
-                                    }
-                                    .pickerStyle(.menu)
+                        VStack(spacing: .zero) {
+                            HStack {
+                                Spacer()
+                                Button {
+                                    showStepEditor.toggle()
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.gray)
+                                        .foregroundStyle(.secondary)
                                 }
                             }
+                            //.padding(.horizontal)
                             
+                            HStack {
+                                TextField("Magnitude", text: $magnitude)
+                                Picker("Unit", selection: $unit) {
+                                    ForEach(Units.allCases, id: \.self) { unit in
+                                        Text(unit.rawValue)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                            }
+                            //.padding(.horizontal)
                         }
+                        .padding()
+                        .background(Color.white)
+                            
+                        
                         // nav bar hidden
                         // small sheet
                         
