@@ -15,8 +15,9 @@ struct AddView: View {
     
     @State private var showStepEditor: Bool = true
     
-    @State private var magnitude: String = ""
-    @State private var unit = Units.seconds
+    @State private var pace: String = ""
+    @State private var magnitude: String = "10"
+    @State private var unit = Units.minutes
     enum Units: String, CaseIterable {
         case seconds = "Seconds"
         case minutes = "Minutes"
@@ -30,7 +31,7 @@ struct AddView: View {
                 List {
                     Section(/*footer: Text("Please choose a different title.")*/) {
                         TextField("Title", text: $vm.newTitle)
-                            .multilineTextAlignment(.center)
+                            //.multilineTextAlignment(.center)
                             .font(.system(.title2, design: .default, weight: .semibold))
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)
@@ -72,9 +73,6 @@ struct AddView: View {
                 }
                 
                 ZStack(alignment: .bottom) {
-                    
-                    
-
                     HStack {
                         Button {
                             vm.addTimeStep()
@@ -93,8 +91,11 @@ struct AddView: View {
                     
                     
                     if showStepEditor == true {
-                        VStack(spacing: .zero) {
+                        
+                        VStack(alignment: .leading, spacing: .zero) {
                             HStack {
+                                Text("Edit Step")
+                                    .font(.system(.headline))
                                 Spacer()
                                 Button {
                                     showStepEditor.toggle()
@@ -104,31 +105,52 @@ struct AddView: View {
                                         .foregroundStyle(.secondary)
                                 }
                             }
-                            //.padding(.horizontal)
+                            // TODO: Check uber bottom sheet
+                            // TODO: FIx width of textfields
+                            // TODO: Study pickers with apple human interaction guidelines
+                            // TODO: Focus state for bottom sheet? Tapping title should dismiss it
+                            // TODO: Dynamically change textfield prompt based on unit selection (ie. "distance", "time")
                             
                             HStack {
-                                TextField("Magnitude", text: $magnitude)
+                                Text("Distance")
+                                Spacer()
+                                TextField("0", text: $magnitude)
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 50)
+                                    .padding(.horizontal).padding(.vertical, 4) // TODO: Fix this syntax
+                                    .background(Color(red: 244/255, green: 244/255, blue: 245/255))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .padding(.vertical)
+                            }
+                            Divider()
+                            HStack {
+                                Text("Unit")
+                                Spacer()
                                 Picker("Unit", selection: $unit) {
                                     ForEach(Units.allCases, id: \.self) { unit in
                                         Text(unit.rawValue)
                                     }
                                 }
                                 .pickerStyle(.menu)
+                                .padding(.vertical)
                             }
-                            //.padding(.horizontal)
+                            Divider()
+                            
+                            HStack {
+                                Text("Pace")
+                                Spacer()
+                                TextField("Pace", text: $pace)
+                                    .frame(width: 40)
+                                Text("/ km")
+                            }
+                            .padding(.vertical)
                         }
                         .padding()
                         .background(Color.white)
-                            
-                        
-                        // nav bar hidden
-                        // small sheet
-                        
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        .padding()
                     }
-                    
                 }
-                
-                
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle("Add a workout")
