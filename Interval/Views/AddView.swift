@@ -13,17 +13,8 @@ struct AddView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ViewModel()
     
-    @State private var showStepEditor: Bool = true
+    @State private var showStepEditor: Bool = false
     
-    @State private var pace: String = ""
-    @State private var magnitude: String = "10"
-    @State private var unit = Units.minutes
-    enum Units: String, CaseIterable {
-        case seconds = "Seconds"
-        case minutes = "Minutes"
-        case hours = "Hours"
-        case kilometers = "Kilometers"
-    }
     
     var body: some View {
         NavigationStack {
@@ -31,7 +22,6 @@ struct AddView: View {
                 List {
                     Section(/*footer: Text("Please choose a different title.")*/) {
                         TextField("Title", text: $vm.newTitle)
-                            //.multilineTextAlignment(.center)
                             .font(.system(.title2, design: .default, weight: .semibold))
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)
@@ -60,7 +50,6 @@ struct AddView: View {
                                 }
                                 Spacer()
                                 Button {
-                                    // edit selected step
                                     showStepEditor.toggle()
                                 } label: {
                                     Image(systemName: "ellipsis")
@@ -73,6 +62,15 @@ struct AddView: View {
                 }
                 
                 ZStack(alignment: .bottom) {
+                    /*
+                    if showStepEditor == true {
+                        EditStepView()
+                    }
+                    */
+                    // unsure if sheet should be modal or not
+                    // TODO: Depends on animation and scrolling to location
+                    // TODO: Test scrolling to location next
+                    
                     HStack {
                         Button {
                             vm.addTimeStep()
@@ -88,74 +86,16 @@ struct AddView: View {
                     .buttonStyle(.bordered)
                     .controlSize(.large)
                     .padding()
-                    
-                    
-                    if showStepEditor == true {
-                        
-                        VStack(alignment: .leading, spacing: .zero) {
-                            HStack {
-                                Text("Edit Step")
-                                    .font(.system(.headline))
-                                Spacer()
-                                Button {
-                                    showStepEditor.toggle()
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.gray)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                            // TODO: Check uber bottom sheet
-                            // TODO: FIx width of textfields
-                            // TODO: Study pickers with apple human interaction guidelines
-                            // TODO: Focus state for bottom sheet? Tapping title should dismiss it
-                            // TODO: Dynamically change textfield prompt based on unit selection (ie. "distance", "time")
-                            
-                            HStack {
-                                Text("Distance")
-                                Spacer()
-                                TextField("0", text: $magnitude)
-                                    .multilineTextAlignment(.center)
-                                    .frame(width: 50)
-                                    .padding(.horizontal).padding(.vertical, 4) // TODO: Fix this syntax
-                                    .background(Color(red: 244/255, green: 244/255, blue: 245/255))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                    .padding(.vertical)
-                            }
-                            Divider()
-                            HStack {
-                                Text("Unit")
-                                Spacer()
-                                Picker("Unit", selection: $unit) {
-                                    ForEach(Units.allCases, id: \.self) { unit in
-                                        Text(unit.rawValue)
-                                    }
-                                }
-                                .pickerStyle(.menu)
-                                .padding(.vertical)
-                            }
-                            Divider()
-                            
-                            HStack {
-                                Text("Pace")
-                                Spacer()
-                                TextField("Pace", text: $pace)
-                                    .frame(width: 40)
-                                Text("/ km")
-                            }
-                            .padding(.vertical)
-                        }
-                        .padding()
-                        .background(Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        .padding()
-                    }
                 }
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { vm.addDistanceStep() }
+            .sheet(isPresented: $showStepEditor) {
+                EditStepView()
+                    .presentationDetents([.medium])
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
@@ -180,10 +120,6 @@ struct AddView: View {
             }
         }
     }
-    
-    
-    
-    
 }
 
 struct AddView_Previews: PreviewProvider {
