@@ -96,7 +96,7 @@ struct DetailView: View {
                 }
             }
             .sheet(isPresented: $showEditView) {
-                EditView(/*workout: workout*/)
+                //EditView(/*workout: workout*/)
             }
             .alert("Delete Workout", isPresented: $showDeleteAlert) {
                 Button("Delete", role: .destructive, action: deleteWorkout)

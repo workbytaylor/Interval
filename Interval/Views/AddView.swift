@@ -58,19 +58,44 @@ struct AddView: View {
                             }
                             .deleteDisabled(vm.newSteps.count < 2)
                         }
+                        
+                        Menu {
+                            Button("1") {}
+                            Text("2")
+                        } label: {
+                            Label("Add step", systemImage: "plus")
+                        }
+                         
                     }
+                    
+                    Section {
+                        
+                        DisclosureGroup("Next Suggested Steps") {
+                            Button("1") {}
+                            Button("2") {}
+                        }
+                        .listRowBackground(Color.clear)
+                        
+                        Menu {
+                            Button("1") {}
+                            Button("2") {}
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Label("Add Step", systemImage: "plus.circle.fill")
+                                Spacer()
+                            }
+                            
+                        }.listRowBackground(Color.clear)
+                    }
+                    
                 }
                 
+                
                 ZStack(alignment: .bottom) {
-                    /*
-                    if showStepEditor == true {
-                        EditStepView()
-                    }
-                    */
-                    // unsure if sheet should be modal or not
-                    // TODO: Depends on animation and scrolling to location
-                    // TODO: Test scrolling to location next
                     
+                    
+                    /*
                     HStack {
                         Button {
                             vm.addTimeStep()
@@ -84,18 +109,21 @@ struct AddView: View {
                         }
                     }
                     .buttonStyle(.bordered)
-                    .controlSize(.large)
+                    .controlSize(.regular)
                     .padding()
+                    */
+                     
+                     
+                    if showStepEditor == true {
+                        EditStepView()
+                            .padding()
+                    }
                 }
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle("Add a workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { vm.addDistanceStep() }
-            .sheet(isPresented: $showStepEditor) {
-                EditStepView()
-                    .presentationDetents([.medium])
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
