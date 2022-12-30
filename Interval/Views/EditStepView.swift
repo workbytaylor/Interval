@@ -12,6 +12,9 @@ struct EditStepView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
+    @State private var showingPopover: Bool = false
+    
+    
     @State private var toggle: Bool = false
     
     @State private var minutePace: Int = 3
@@ -38,6 +41,22 @@ struct EditStepView: View {
                 // TODO: Focus state for bottom sheet? Tapping title field should dismiss sheet
                 
                 HStack {
+                    Spacer()
+                    Button {
+                        // toggle showEditStepView
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                    }
+                    .foregroundStyle(.secondary)
+                }
+                
+                .overlay {
+                    Text("Edit Step")
+                        .font(.headline)
+                }
+                .padding(.bottom)
+                
+                HStack {
                     Text("Type")
                     Spacer()
                     Picker("Type", selection: $type) {
@@ -51,6 +70,7 @@ struct EditStepView: View {
                 HStack {
                     Text(type.rawValue)
                     Spacer()
+                    /*
                     TextField("0", text: $magnitude)
                     // text height needs to be bigger to match pickers
                         .multilineTextAlignment(.center)
@@ -58,7 +78,10 @@ struct EditStepView: View {
                         .padding(.horizontal).padding(.vertical, 4) // TODO: Fix this syntax
                         .background(Color(red: 244/255, green: 244/255, blue: 245/255))
                         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        //.padding(.vertical)
+                    */
+                    
+                    // TODO: Make the textfield a button that expands to show a wheel, just like calendar
+                    
                     
                     Picker("Unit", selection: $unit) {
                         ForEach(Units.allCases, id: \.self) { unit in
@@ -95,12 +118,10 @@ struct EditStepView: View {
                     }
                     .clipShape(Rectangle())
                 }
-                //Spacer()
             }
             .padding()
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            //.padding()
     }
 }
 

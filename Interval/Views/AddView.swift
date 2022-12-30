@@ -41,16 +41,20 @@ struct AddView: View {
                             HStack {
                                 // change to switch statement when more step types are added
                                 Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                                    .frame(width: 40)
                                 VStack(alignment: .leading) {
                                     Text("\(step.magnitude) \(step.unit)")
+                                        .font(.headline)
                                     Text(step.pace)
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
                                 }
+                                .padding(.leading)
                                 Spacer()
                                 Button {
-                                    showStepEditor.toggle()
+                                    withAnimation {
+                                        showStepEditor.toggle()
+                                    }
+                                    
                                 } label: {
                                     Image(systemName: "ellipsis")
                                         .foregroundColor(.primary)
@@ -59,72 +63,53 @@ struct AddView: View {
                             .deleteDisabled(vm.newSteps.count < 2)
                         }
                         
+                            HStack {
+                                Image(systemName: "repeat")
+                                VStack(alignment: .leading) {
+                                    Text("5 km")
+                                        .font(.headline)
+                                    Text("distancePace")
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                        .padding(.bottom)
+                                    
+                                    Text("5 km")
+                                        .font(.headline)
+                                    Text("distancePace")
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
+                                .padding(.leading)
+                            }
+                            
+                        
+                        
+                        
+                        
+                    }
+                }
+                
+                ZStack(alignment: .bottom) {
+                    if showStepEditor == true {
+                        EditStepView()
+                    } else {
                         Menu {
-                            Button("1") {}
-                            Text("2")
+                            Button {
+                                vm.addTimeStep()
+                            } label: {
+                                Label("Time", systemImage: "stopwatch")
+                            }
+                            Button {
+                                vm.addDistanceStep()
+                            } label: {
+                                Label("Distance", systemImage: "lines.measurement.horizontal")
+                            }
                         } label: {
                             Label("Add step", systemImage: "plus")
                         }
-                         
-                    }
-                    
-                    Section {
-                        
-                        DisclosureGroup("Next Suggested Steps") {
-                            Button("1") {}
-                            Button("2") {}
-                        }
-                        .listRowBackground(Color.clear)
-                        
-                        Menu {
-                            Button("1") {}
-                            Button("2") {}
-                        } label: {
-                            HStack {
-                                Spacer()
-                                Label("Add Step", systemImage: "plus.circle.fill")
-                                Spacer()
-                            }
-                            
-                        }.listRowBackground(Color.clear)
-                    }
-                    
-                }
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                
-                ZStack(alignment: .bottom) {
-                    
-                    
-                    /*
-                    HStack {
-                        Button {
-                            vm.addTimeStep()
-                        } label: {
-                            HStack { Label("Time", systemImage: "stopwatch"); Spacer(); Image(systemName: "plus") }
-                        }
-                        Button {
-                            vm.addDistanceStep()
-                        } label: {
-                            HStack { Label("Distance", systemImage: "lines.measurement.horizontal"); Spacer(); Image(systemName: "plus") }
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.regular)
-                    .padding()
-                    */
-                     
-                     
-                    if showStepEditor == true {
-                        EditStepView()
-                            .padding()
                     }
                 }
+                .padding()
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle("Add a workout")
