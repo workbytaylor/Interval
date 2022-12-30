@@ -90,7 +90,13 @@ struct AddView: View {
                     }
                     
                 }
-                
+                Button {
+                    
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
                 
                 ZStack(alignment: .bottom) {
                     
