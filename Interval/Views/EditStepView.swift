@@ -12,24 +12,16 @@ struct EditStepView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    @State private var showingPopover: Bool = false
-    
-    //@State private var toggleDistance: Bool = false
-    
     @State private var lengthToggle: Bool = false
     @State private var paceToggle: Bool = false
-    
     @State private var minutePace: Int = 3
     @State private var secondPace: Int = 0
     
-    @State private var type = Types.distance
-    enum Types: String, CaseIterable {
-        case distance = "Distance"
-        case time = "Time"
+    @State private var paceType = paceTypes.speed
+    enum paceTypes: String, CaseIterable {
+        case none = "Recovery"
+        case speed = "Pace"
     }
-    
-    enum paceTypes: String
-    
     
     @State private var magnitude: String = "10"
     @State private var unit = Units.minutes
@@ -43,76 +35,79 @@ struct EditStepView: View {
     var body: some View {
         NavigationStack {
             List {
-                HStack {
-                    //Text("Length")
-                    Label("Length", systemImage: "arrow.left.and.right")
-                    Spacer()
-                    Button {
-                        withAnimation {
-                            lengthToggle.toggle()
-                        }
-                        
-                    } label: {
-                        Text("\(magnitude) \(unit.rawValue)")
-                    }
-                }
-                
-                if lengthToggle == true {
+                Section {
                     HStack {
-                        Picker("Magnitude", selection: $magnitude) {
-                            ForEach(1..<101) { magnitude in
-                                Text(String(magnitude))
+                        Label("Length", systemImage: "arrow.left.and.right")
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                lengthToggle.toggle()
                             }
+                        } label: {
+                            Text("\(magnitude) \(unit.rawValue)")
                         }
-                        .pickerStyle(.wheel)
-                        Picker("Unit", selection: $unit) {
-                            ForEach(Units.allCases, id: \.self) { unit in
-                                Text(unit.rawValue)
-                            }
-                        }
-                        .pickerStyle(.wheel)
                     }
-                }
-
+                    
+                    if lengthToggle == true {
+                        HStack {
+                            Picker("Magnitude", selection: $magnitude) {
+                                ForEach(1..<101) { magnitude in
+                                    Text(String(magnitude))
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                            Picker("Unit", selection: $unit) {
+                                ForEach(Units.allCases, id: \.self) { unit in
+                                    Text(unit.rawValue)
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                        }
+                    }
+                } footer: {
+                   Text("")
+                       .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
+               }
                 
-                HStack {
-                    //Text("Effort")
-                    Label("Effort", systemImage: "bolt.fill")
-                    Spacer()
-                    
-                    Picker("Unit", selection: $unit) {
-                        ForEach(Units.allCases, id: \.self) { unit in
-                            Text(unit.rawValue)
+                Section {
+                    HStack {
+                        Toggle(isOn: $paceToggle.animation(.linear)) {
+                            Label("Pace", systemImage: "stopwatch")
                         }
                     }
-                    .pickerStyle(.menu)
                     
-                }
-                if paceToggle == true { // if _ == pace, then show pace picker
-                    HStack(spacing: .zero) {
-                        Picker("", selection: $minutePace) {
-                            ForEach(2..<11) { num in
-                                Text("\(num) m")
-                            }
-                        }
-                        .pickerStyle(.wheel)
-                        Text(":")
-                        Picker("", selection: $secondPace) {
-                            ForEach(0..<12) {   // add double zero (00)
-                                Text("\($0*5) s")
-                            }
-                        }
-                        .pickerStyle(.wheel)
+                    if paceToggle == true {
                         
+                        HStack(spacing: .zero) {
+                            Picker("", selection: $minutePace) {
+                                ForEach(2..<11) { num in
+                                    Text("\(num) m")
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                            Text(":")
+                            Picker("", selection: $secondPace) {
+                                ForEach(0..<12) {   // add double zero (00)
+                                    Text("\($0*5) s")
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                        }
+                        .clipShape(Rectangle())
                     }
-                    .clipShape(Rectangle())
+                } header: { // required for spacing between sections
+                    Text("")
+                        .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
+                } footer: { // required for spacing between sections
+                    Text("")
+                        .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
                 }
                 
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
+            .environment(\.defaultMinListHeaderHeight, 1) // required for spacing between sections
         }
-        
     }
 }
 

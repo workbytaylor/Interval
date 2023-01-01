@@ -130,17 +130,13 @@ struct AddView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if vm.newTitle == "" || vm.newSteps.count == 0 {
+                    Button {
+                        createWorkout()
+                    } label: {
                         Text("Save")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Button {
-                            createWorkout()
-                        } label: {
-                            Text("Save")
-                                .bold()
-                        }
+                            .bold()
                     }
+                    .disabled(vm.newTitle == "" || vm.newSteps.count == 0)
                 }
             }
         }
