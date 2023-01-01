@@ -14,6 +14,8 @@ struct EditStepView: View {
     
     @State private var showingPopover: Bool = false
     
+    @State private var toggleDistance: Bool = false
+    
     
     @State private var toggle: Bool = false
     
@@ -36,6 +38,7 @@ struct EditStepView: View {
     }
     
     var body: some View {
+        ScrollView {
             VStack(alignment: .center, spacing: .zero) {
                 
                 // TODO: Focus state for bottom sheet? Tapping title field should dismiss sheet
@@ -56,65 +59,79 @@ struct EditStepView: View {
                 }
                 .padding(.bottom)
                 
+                
                 HStack {
-                    Text("Type")
+                    Text("Length")
                     Spacer()
-                    Picker("Type", selection: $type) {
-                        ForEach(Types.allCases, id: \.self) { type in
-                            Text(type.rawValue)
+                    Picker("Magnitude", selection: $magnitude) {
+                        ForEach(1..<101) { num in
+                            Text(String(num))
                         }
                     }
-                }
-                Divider()
-                    .padding(.vertical, 10)
-                HStack {
-                    Text(type.rawValue)
-                    Spacer()
-                    /*
-                    TextField("0", text: $magnitude)
-                    // text height needs to be bigger to match pickers
-                        .multilineTextAlignment(.center)
-                        .frame(width: 40)
-                        .padding(.horizontal).padding(.vertical, 4) // TODO: Fix this syntax
-                        .background(Color(red: 244/255, green: 244/255, blue: 245/255))
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    */
-                    
-                    // TODO: Make the textfield a button that expands to show a wheel, just like calendar
-                    
-                    
+                    .pickerStyle(.menu)
                     Picker("Unit", selection: $unit) {
                         ForEach(Units.allCases, id: \.self) { unit in
                             Text(unit.rawValue)
                         }
                     }
                     .pickerStyle(.menu)
+                    
                 }
+                
+                if toggleDistance == true {
+                    HStack(spacing: .zero) {
+                        Picker("Magnitude", selection: $magnitude) {
+                            ForEach(1..<101) { num in
+                                Text(String(num))
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        Picker("Unit", selection: $unit) {
+                            ForEach(Units.allCases, id: \.self) { unit in
+                                Text(unit.rawValue)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                    }
+                    
+                }
+                
                 Divider()
                     .padding(.vertical, 10)
                 
                 
-                Toggle("Pace", isOn: $toggle)
+                HStack {
+                    Text("Pace")
+                    Spacer()
+                    Button {
+                        withAnimation {
+                            toggle.toggle()
+                        }
+                        
+                    } label: {
+                        Text("5:15 /km")
+                    }
+                }
+                
                 
                 if toggle == true {
                     HStack(spacing: .zero) {
                         Picker("", selection: $minutePace) {
                             ForEach(2..<11) { num in
-                                Text(String(num))
+                                Text("\(num) m")
                             }
                         }
                         .pickerStyle(.wheel)
-                        .frame(width: 80)
+                        //.frame(width: 80)
                         Text(":")
                         Picker("", selection: $secondPace) {
                             ForEach(0..<12) {   // add double zero (00)
-                                Text("\($0*5)")
+                                Text("\($0*5) s")
                             }
                         }
                         .pickerStyle(.wheel)
-                        .frame(width: 80)
+                        //.frame(width: 80)
                         
-                        Text("/ km")
                     }
                     .clipShape(Rectangle())
                 }
@@ -122,6 +139,9 @@ struct EditStepView: View {
             .padding()
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        }
+        
+            
     }
 }
 

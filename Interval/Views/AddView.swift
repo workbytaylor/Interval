@@ -112,9 +112,15 @@ struct AddView: View {
                 .padding()
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-            .navigationTitle("Add a workout")
+            .navigationTitle("New Workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { vm.addDistanceStep() }
+            /*
+            .sheet(isPresented: $showStepEditor) {
+                EditStepView()
+                    .presentationDetents([.medium, .large])
+            }
+             */
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
