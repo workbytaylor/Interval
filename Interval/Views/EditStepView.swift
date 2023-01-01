@@ -14,8 +14,7 @@ struct EditStepView: View {
     
     @State private var showingPopover: Bool = false
     
-    @State private var toggleDistance: Bool = false
-    
+    //@State private var toggleDistance: Bool = false
     
     @State private var toggle: Bool = false
     
@@ -64,8 +63,8 @@ struct EditStepView: View {
                     Text("Length")
                     Spacer()
                     Picker("Magnitude", selection: $magnitude) {
-                        ForEach(1..<101) { num in
-                            Text(String(num))
+                        ForEach(1..<101) { magnitude in
+                            Text(String(magnitude))
                         }
                     }
                     .pickerStyle(.menu)
@@ -77,7 +76,7 @@ struct EditStepView: View {
                     .pickerStyle(.menu)
                     
                 }
-                
+                /*
                 if toggleDistance == true {
                     HStack(spacing: .zero) {
                         Picker("Magnitude", selection: $magnitude) {
@@ -95,14 +94,17 @@ struct EditStepView: View {
                     }
                     
                 }
-                
+                */
                 Divider()
                     .padding(.vertical, 10)
                 
                 
                 HStack {
-                    Text("Pace")
+                    Text("Effort")
                     Spacer()
+                    // Picker (menu style) for effort type (Pace, None)
+                    
+                    
                     Button {
                         withAnimation {
                             toggle.toggle()
