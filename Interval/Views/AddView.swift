@@ -91,7 +91,7 @@ struct AddView: View {
                 
                 ZStack(alignment: .bottom) {
                     if showStepEditor == true {
-                        EditStepView()
+                        //EditStepView()
                     } else {
                         Menu {
                             Button {
@@ -115,12 +115,12 @@ struct AddView: View {
             .navigationTitle("New Workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { vm.addDistanceStep() }
-            /*
+            
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
-                    .presentationDetents([.medium, .large])
+                    .presentationDetents([.medium])
             }
-             */
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {

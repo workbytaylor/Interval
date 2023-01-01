@@ -20,7 +20,8 @@ struct testListView: View {
                     selection = nil
                 }
                 
-                List(0..<100, id: \.self) { i in
+                List(0..<2, id: \.self) { i in
+                    
                     Button("Selection \(i)") {
                         selection = i
                         showBottomSheet = true

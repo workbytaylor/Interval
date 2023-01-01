@@ -16,7 +16,8 @@ struct EditStepView: View {
     
     //@State private var toggleDistance: Bool = false
     
-    @State private var toggle: Bool = false
+    @State private var lengthToggle: Bool = false
+    @State private var paceToggle: Bool = false
     
     @State private var minutePace: Int = 3
     @State private var secondPace: Int = 0
@@ -26,6 +27,9 @@ struct EditStepView: View {
         case distance = "Distance"
         case time = "Time"
     }
+    
+    enum paceTypes: String
+    
     
     @State private var magnitude: String = "10"
     @State private var unit = Units.minutes
@@ -37,37 +41,45 @@ struct EditStepView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .center, spacing: .zero) {
-                
-                // TODO: Focus state for bottom sheet? Tapping title field should dismiss sheet
-                
+        NavigationStack {
+            List {
                 HStack {
+                    //Text("Length")
+                    Label("Length", systemImage: "arrow.left.and.right")
                     Spacer()
                     Button {
-                        // toggle showEditStepView
+                        withAnimation {
+                            lengthToggle.toggle()
+                        }
+                        
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
+                        Text("\(magnitude) \(unit.rawValue)")
                     }
-                    .foregroundStyle(.secondary)
                 }
                 
-                .overlay {
-                    Text("Edit Step")
-                        .font(.headline)
+                if lengthToggle == true {
+                    HStack {
+                        Picker("Magnitude", selection: $magnitude) {
+                            ForEach(1..<101) { magnitude in
+                                Text(String(magnitude))
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        Picker("Unit", selection: $unit) {
+                            ForEach(Units.allCases, id: \.self) { unit in
+                                Text(unit.rawValue)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                    }
                 }
-                .padding(.bottom)
-                
+
                 
                 HStack {
-                    Text("Length")
+                    //Text("Effort")
+                    Label("Effort", systemImage: "bolt.fill")
                     Spacer()
-                    Picker("Magnitude", selection: $magnitude) {
-                        ForEach(1..<101) { magnitude in
-                            Text(String(magnitude))
-                        }
-                    }
-                    .pickerStyle(.menu)
+                    
                     Picker("Unit", selection: $unit) {
                         ForEach(Units.allCases, id: \.self) { unit in
                             Text(unit.rawValue)
@@ -76,47 +88,7 @@ struct EditStepView: View {
                     .pickerStyle(.menu)
                     
                 }
-                /*
-                if toggleDistance == true {
-                    HStack(spacing: .zero) {
-                        Picker("Magnitude", selection: $magnitude) {
-                            ForEach(1..<101) { num in
-                                Text(String(num))
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        Picker("Unit", selection: $unit) {
-                            ForEach(Units.allCases, id: \.self) { unit in
-                                Text(unit.rawValue)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                    }
-                    
-                }
-                */
-                Divider()
-                    .padding(.vertical, 10)
-                
-                
-                HStack {
-                    Text("Effort")
-                    Spacer()
-                    // Picker (menu style) for effort type (Pace, None)
-                    
-                    
-                    Button {
-                        withAnimation {
-                            toggle.toggle()
-                        }
-                        
-                    } label: {
-                        Text("5:15 /km")
-                    }
-                }
-                
-                
-                if toggle == true {
+                if paceToggle == true { // if _ == pace, then show pace picker
                     HStack(spacing: .zero) {
                         Picker("", selection: $minutePace) {
                             ForEach(2..<11) { num in
@@ -124,7 +96,6 @@ struct EditStepView: View {
                             }
                         }
                         .pickerStyle(.wheel)
-                        //.frame(width: 80)
                         Text(":")
                         Picker("", selection: $secondPace) {
                             ForEach(0..<12) {   // add double zero (00)
@@ -132,18 +103,16 @@ struct EditStepView: View {
                             }
                         }
                         .pickerStyle(.wheel)
-                        //.frame(width: 80)
                         
                     }
                     .clipShape(Rectangle())
                 }
+                
             }
-            .padding()
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .navigationTitle("Edit Step")
+            .navigationBarTitleDisplayMode(.inline)
         }
         
-            
     }
 }
 
