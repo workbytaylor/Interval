@@ -13,7 +13,7 @@ struct EditStepView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var lengthToggle: Bool = false
-    @State private var paceToggle: Bool = false
+    @State private var paceToggle: Bool = true
     @State private var minutePace: Int = 3
     @State private var secondPace: Int = 0
     
@@ -51,7 +51,7 @@ struct EditStepView: View {
                     if lengthToggle == true {
                         HStack {
                             Picker("Magnitude", selection: $magnitude) {
-                                ForEach(1..<101) { magnitude in
+                                ForEach(1..<101, id: \.self) { magnitude in
                                     Text(String(magnitude))
                                 }
                             }
@@ -80,20 +80,19 @@ struct EditStepView: View {
                         
                         HStack(spacing: .zero) {
                             Picker("", selection: $minutePace) {
-                                ForEach(2..<11) { num in
-                                    Text("\(num) m")
+                                ForEach(2..<11) { minutePace in
+                                    Text("\(minutePace) m")
                                 }
                             }
                             .pickerStyle(.wheel)
                             Text(":")
                             Picker("", selection: $secondPace) {
-                                ForEach(0..<12) {   // add double zero (00)
-                                    Text("\($0*5) s")
+                                ForEach(0..<12) { secondPace in  // add double zero (00)
+                                    Text("\(secondPace*5) s")
                                 }
                             }
                             .pickerStyle(.wheel)
                         }
-                        .clipShape(Rectangle())
                     }
                 } header: { // required for spacing between sections
                     Text("")
@@ -106,6 +105,18 @@ struct EditStepView: View {
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        dismiss()
+                        //save
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
             .environment(\.defaultMinListHeaderHeight, 1) // required for spacing between sections
         }
     }

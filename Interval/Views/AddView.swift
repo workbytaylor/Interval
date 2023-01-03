@@ -21,7 +21,7 @@ struct AddView: View {
             VStack(spacing: .zero) {
                 List {
                     Section(/*footer: Text("Please choose a different title.")*/) {
-                        TextField("Title", text: $vm.newTitle)
+                        TextField("Add Title", text: $vm.newTitle)
                             .font(.system(.title2, design: .default, weight: .semibold))
                             .autocorrectionDisabled(false)
                             .autocapitalization(.sentences)
@@ -54,7 +54,6 @@ struct AddView: View {
                                     withAnimation {
                                         showStepEditor.toggle()
                                     }
-                                    
                                 } label: {
                                     Image(systemName: "ellipsis")
                                         .foregroundColor(.primary)
@@ -62,30 +61,6 @@ struct AddView: View {
                             }
                             .deleteDisabled(vm.newSteps.count < 2)
                         }
-                        
-                            HStack {
-                                Image(systemName: "repeat")
-                                VStack(alignment: .leading) {
-                                    Text("5 km")
-                                        .font(.headline)
-                                    Text("distancePace")
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                        .padding(.bottom)
-                                    
-                                    Text("5 km")
-                                        .font(.headline)
-                                    Text("distancePace")
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                }
-                                .padding(.leading)
-                            }
-                            
-                        
-                        
-                        
-                        
                     }
                 }
                 
@@ -118,7 +93,7 @@ struct AddView: View {
             
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
-                    .presentationDetents([.medium])
+                    .presentationDetents([.large])
             }
             
             .toolbar {
