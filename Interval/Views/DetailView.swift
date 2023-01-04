@@ -17,93 +17,47 @@ struct DetailView: View {
     @State private var showEditView: Bool = false
     
     var body: some View {
-            VStack(spacing: .zero) {
-                
-                List {
-                    ForEach(workout.stepArray, id: \.id) { step in
-                        HStack {
-                            //Text(String(step.index))
-                            Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                                .frame(width: 40)
-                            VStack(alignment: .leading) {
-                                Text(String(step.magnitude))+Text(" \(step.wrappedUnit)")
-                                Text(step.wrappedPace)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                    }
-                    //.onDelete(perform: deleteStep)
-                    //.onMove(perform: nil)   //TODO: Move function
-                    
-                }
-                .listStyle(.insetGrouped)
-                /*
-                if editMode == true {
+        VStack(spacing: .zero) {
+            List {
+                ForEach(workout.stepArray, id: \.id) { step in
                     HStack {
-                        Button {
-                            addDistanceStep()
-                        } label: {
-                            HStack {
-                                Label("Distance", systemImage: "lines.measurement.horizontal")
-                                Spacer()
-                                Image(systemName: "plus")
-                            }
-                        }
-                        Button {
-                            addTimeStep()
-                        } label: {
-                            HStack {
-                                Label("Time", systemImage: "stopwatch")
-                                Spacer()
-                                Image(systemName: "plus")
-                            }
+                        //Text(String(step.index))
+                        Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                            .frame(width: 40)
+                        VStack(alignment: .leading) {
+                            Text(String(step.magnitude))+Text(" \(step.wrappedUnit)")
+                            Text(step.wrappedPace)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
                         }
                     }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .padding()
-                    .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-                } else {
-                    Button {
-                        // start run
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Text("Start")
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .padding()
-                }*/
-            }
-            .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-            .navigationBarTitle(workout.wrappedTitle)
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    //if editMode == false {
-                        Menu {
-                            Button { showEditView.toggle() } label: { Label("Edit Workout", systemImage: "square.and.pencil") }
-                            Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete Workout", systemImage: "trash") }
-                            // TODO: Change Edit Steps to show modal sheet, edit steps and info there
-                            // TODO: After doing above, remove edit and move fxns on DetailView
-                        } label: {
-                            Image(systemName: "ellipsis")
-                        }
-                    //}
                 }
             }
-            .sheet(isPresented: $showEditView) {
-                //EditView(/*workout: workout*/)
+            .listStyle(.insetGrouped)
+        }
+        .background(Color(red: 242/255, green: 241/255, blue: 247/255))
+        .navigationBarTitle(workout.wrappedTitle)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Menu {
+                    Button { showEditView.toggle() } label: { Label("Edit Workout", systemImage: "square.and.pencil") }
+                    Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete Workout", systemImage: "trash") }
+                    // TODO: Change Edit Steps to show modal sheet, edit steps and info there
+                    // TODO: After doing above, remove edit and move fxns on DetailView
+                } label: {
+                    Image(systemName: "ellipsis")
+                }
             }
-            .alert("Delete Workout", isPresented: $showDeleteAlert) {
-                Button("Delete", role: .destructive, action: deleteWorkout)
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Are you sure?")
-            }
+        }
+        .sheet(isPresented: $showEditView) {
+            EditView(/*workout: workout*/)
+        }
+        .alert("Delete Workout", isPresented: $showDeleteAlert) {
+            Button("Delete", role: .destructive, action: deleteWorkout)
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Are you sure?")
+        }
     }
 }
 

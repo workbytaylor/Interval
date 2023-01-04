@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension AddView {
+extension EditView {
     
     // Functions that act on AddView's data go here
     @MainActor class ViewModel: ObservableObject {

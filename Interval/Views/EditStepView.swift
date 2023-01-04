@@ -101,7 +101,6 @@ struct EditStepView: View {
                     Text("")
                         .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
                 }
-                
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)

@@ -46,7 +46,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showAddView) {
-            AddView()
+            EditView()
         }
     }
 }

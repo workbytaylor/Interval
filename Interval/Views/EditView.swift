@@ -1,5 +1,5 @@
 //
-//  AddView.swift
+//  EditView.swift
 //  Interval
 //
 //  Created by Nilakshi Roy on 2022-11-23.
@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct AddView: View {
+struct EditView: View {
     
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ViewModel()
     
     @State private var showStepEditor: Bool = false
-    
     
     var body: some View {
         NavigationStack {
@@ -43,7 +42,7 @@ struct AddView: View {
                                 Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                                 VStack(alignment: .leading) {
                                     Text("\(step.magnitude) \(step.unit)")
-                                        .font(.headline)
+                                        //.font(.headline)
                                     Text(step.pace)
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
@@ -90,12 +89,10 @@ struct AddView: View {
             .navigationTitle("New Workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { vm.addDistanceStep() }
-            
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
                     .presentationDetents([.large])
             }
-            
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
@@ -120,6 +117,6 @@ struct AddView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddView()
+        EditView()
     }
 }
