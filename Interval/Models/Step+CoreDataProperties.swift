@@ -2,7 +2,7 @@
 //  Step+CoreDataProperties.swift
 //  Interval
 //
-//  Created by Nilakshi Roy on 2022-12-11.
+//  Created by Nilakshi Roy on 2023-01-04.
 //
 //
 
@@ -23,9 +23,7 @@ extension Step {
     @NSManaged public var type: String?
     @NSManaged public var unit: String?
     @NSManaged public var workout: Workout?
-    
-    //may need wrappedID - unsure
-    
+
     public var wrappedPace: String {
         pace ?? "Unknown pace"
     }
@@ -37,7 +35,8 @@ extension Step {
     public var wrappedUnit: String {
         unit ?? "Unknown unit"
     }
-
+    
+    
 }
 
 extension Step : Identifiable {

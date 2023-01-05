@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     
@@ -19,7 +20,7 @@ struct ContentView: View {
             if !workouts.isEmpty {
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
-                        DetailView(workout: workout)
+                        DetailView(workout: workout, showEditView: true)
                     } label: {
                         VStack(alignment: .leading) {
                             Text(workout.wrappedTitle)
@@ -37,17 +38,36 @@ struct ContentView: View {
         .navigationTitle("Workouts")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
+                //https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
+                
                 Button {
                     showEditView.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
+                
             }
+            
+            // move this to cancel button in EditView
+            // undoes all actions since previous save
+            ToolbarItem(placement: .bottomBar) {
+                Button {
+                    //moc.rollback()    //undo all since prev save
+                    
+                    
+                } label: {
+                    Text("delete all")
+                }
+            }
+            
         }
         .sheet(isPresented: $showEditView) {
             EditView(title: "New Workout")
         }
     }
+    
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -57,28 +77,4 @@ struct ContentView_Previews: PreviewProvider {
                 .environment(\.managedObjectContext, DataController().container.viewContext)
         }
     }
-}
-
-
-private extension ContentView {
-    
-    var noWorkoutsView: some View {
-        HStack {
-            Spacer()
-            Text("Tap")
-            Image(systemName: "plus")
-            Text("to create a workout")
-            Spacer()
-        }
-        .listRowBackground(Color.clear)
-        .foregroundStyle(.secondary)
-    }
-        
-    
-    
-    
-    
-    
-    
-    
 }

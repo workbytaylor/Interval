@@ -1,5 +1,5 @@
 //
-//  DetailView_VM.swift
+//  DetailView_Ext.swift
 //  Interval
 //
 //  Created by Nilakshi Roy on 2022-12-21.

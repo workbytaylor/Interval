@@ -13,7 +13,7 @@ struct DetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @State private var showDeleteAlert: Bool = false
-    @State private var showEditView: Bool = false
+    @State var showEditView: Bool = false
     
     var body: some View {
         VStack(spacing: .zero) {
