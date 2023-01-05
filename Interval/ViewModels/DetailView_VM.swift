@@ -9,12 +9,14 @@ import Foundation
 
 extension DetailView {
     
+    // Keep
     func deleteWorkout() {
         moc.delete(workout)
         save()
         dismiss()   //returns to ContentView after delete
     }
     
+    // TODO: DELETE
     func deleteStep(at offsets: IndexSet) {
         for index in offsets {
             let step = workout.stepArray[index]
@@ -24,6 +26,7 @@ extension DetailView {
         }
     }
     
+    // TODO: DELETE
     func renumberSteps(step: Step) {
         let stepIndexToDelete = Int(step.index)
         if stepIndexToDelete < workout.stepArray.count {
@@ -38,6 +41,7 @@ extension DetailView {
         }
     }
     
+    // keep
     func save() {
         if moc.hasChanges {
             try? moc.save()

@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var workouts: FetchedResults<Workout>
     
-    @State private var showAddView: Bool = false
+    @State private var showEditView: Bool = false
     
     var body: some View {
         List {
@@ -34,19 +34,18 @@ struct ContentView: View {
                 noWorkoutsView
             }
         }
-        //.listStyle(.insetGrouped)
         .navigationTitle("Workouts")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    showAddView.toggle()
+                    showEditView.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
         }
-        .sheet(isPresented: $showAddView) {
-            EditView()
+        .sheet(isPresented: $showEditView) {
+            EditView(title: "New Workout")
         }
     }
 }

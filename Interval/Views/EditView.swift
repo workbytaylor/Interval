@@ -13,6 +13,7 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ViewModel()
     
+    @State var title: String = "Unknown"
     @State private var showStepEditor: Bool = false
     
     var body: some View {
@@ -37,25 +38,20 @@ struct EditView: View {
                     
                     Section(header: Text("Steps")) {
                         ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
-                            HStack {
-                                // change to switch statement when more step types are added
-                                Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                                VStack(alignment: .leading) {
-                                    Text("\(step.magnitude) \(step.unit)")
-                                        //.font(.headline)
-                                    Text(step.pace)
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                }
-                                .padding(.leading)
-                                Spacer()
-                                Button {
-                                    withAnimation {
-                                        showStepEditor.toggle()
+                            NavigationLink {
+                                EditStepView()
+                            } label: {
+                                HStack {
+                                    // change to switch statement when more step types are added
+                                    Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                                    VStack(alignment: .leading) {
+                                        Text("\(step.magnitude) \(step.unit)")
+                                            //.font(.headline)
+                                        Text(step.pace)
+                                            .font(.subheadline)
+                                            .foregroundStyle(.secondary)
                                     }
-                                } label: {
-                                    Image(systemName: "ellipsis")
-                                        .foregroundColor(.primary)
+                                    .padding(.leading)
                                 }
                             }
                             .deleteDisabled(vm.newSteps.count < 2)
@@ -63,32 +59,26 @@ struct EditView: View {
                     }
                 }
                 
-                ZStack(alignment: .bottom) {
-                    if showStepEditor == true {
-                        //EditStepView()
-                    } else {
-                        Menu {
-                            Button {
-                                vm.addTimeStep()
-                            } label: {
-                                Label("Time", systemImage: "stopwatch")
-                            }
-                            Button {
-                                vm.addDistanceStep()
-                            } label: {
-                                Label("Distance", systemImage: "lines.measurement.horizontal")
-                            }
-                        } label: {
-                            Label("Add step", systemImage: "plus")
-                        }
+                Menu {
+                    Button {
+                        vm.addTimeStep()
+                    } label: {
+                        Label("Time", systemImage: "stopwatch")
                     }
+                    Button {
+                        vm.addDistanceStep()
+                    } label: {
+                        Label("Distance", systemImage: "lines.measurement.horizontal")
+                    }
+                } label: {
+                    Label("Add step", systemImage: "plus")
                 }
                 .padding()
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-            .navigationTitle("New Workout")
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear { vm.addDistanceStep() }
+            .onAppear { vm.addFirstStep() }
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
                     .presentationDetents([.large])

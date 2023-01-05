@@ -1,5 +1,5 @@
 //
-//  AddView_VM.swift
+//  EditView_VM.swift
 //  Interval
 //
 //  Created by Nilakshi Roy on 2022-12-14.
@@ -20,6 +20,12 @@ extension EditView {
             // TODO: check if newTitle is already taken
         }
         
+        func addFirstStep() {
+            if newSteps.count == 0 {
+                addDistanceStep()
+            }
+        }
+        
         func addTimeStep() {
             let timeStep = NewStep(id: UUID(), index: Int16(newSteps.count+1), type: "time", magnitude: 10, unit: "minutes", pace: "timePace")
             newSteps.append(timeStep)
@@ -34,7 +40,6 @@ extension EditView {
             newSteps.move(fromOffsets: source, toOffset: destination)
         }
     }
-    
     
     // Functions that act on CoreData go here for now
     func createWorkout() {

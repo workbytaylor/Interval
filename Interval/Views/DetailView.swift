@@ -12,7 +12,6 @@ struct DetailView: View {
     @ObservedObject var workout: Workout
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    //@State private var editMode: Bool = false
     @State private var showDeleteAlert: Bool = false
     @State private var showEditView: Bool = false
     
@@ -21,7 +20,6 @@ struct DetailView: View {
             List {
                 ForEach(workout.stepArray, id: \.id) { step in
                     HStack {
-                        //Text(String(step.index))
                         Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                             .frame(width: 40)
                         VStack(alignment: .leading) {
@@ -40,17 +38,15 @@ struct DetailView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Menu {
-                    Button { showEditView.toggle() } label: { Label("Edit Workout", systemImage: "square.and.pencil") }
-                    Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete Workout", systemImage: "trash") }
-                    // TODO: Change Edit Steps to show modal sheet, edit steps and info there
-                    // TODO: After doing above, remove edit and move fxns on DetailView
+                    Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete", systemImage: "trash") }
+                    Button { showEditView.toggle() } label: { Label("Edit", systemImage: "square.and.pencil") }
                 } label: {
                     Image(systemName: "ellipsis")
                 }
             }
         }
         .sheet(isPresented: $showEditView) {
-            EditView(/*workout: workout*/)
+            EditView(title: "Edit Workout"/*workout: workout*/)
         }
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive, action: deleteWorkout)

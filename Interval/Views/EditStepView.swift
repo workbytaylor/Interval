@@ -13,17 +13,9 @@ struct EditStepView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var lengthToggle: Bool = false
-    @State private var paceToggle: Bool = true
-    @State private var minutePace: Int = 3
-    @State private var secondPace: Int = 0
+    @State private var paceToggle: Bool = false
     
-    @State private var paceType = paceTypes.speed
-    enum paceTypes: String, CaseIterable {
-        case none = "Recovery"
-        case speed = "Pace"
-    }
-    
-    @State private var magnitude: String = "10"
+    @State private var magnitude: Int = 5
     @State private var unit = Units.minutes
     enum Units: String, CaseIterable {
         case seconds = "Seconds"
@@ -31,6 +23,13 @@ struct EditStepView: View {
         case hours = "Hours"
         case kilometers = "Kilometers"
     }
+    
+    @State private var minutePace: Int = 5
+    @State private var secondPace: Int = 0
+    
+    @State private var paceMinuteOptions = 1...99
+    @State private var paceSecondOptions = Array(stride(from: 0, to: 55, by: 5))
+    
     
     var body: some View {
         NavigationStack {
@@ -46,6 +45,8 @@ struct EditStepView: View {
                         } label: {
                             Text("\(magnitude) \(unit.rawValue)")
                         }
+                        .buttonStyle(.bordered)
+                        .foregroundColor(lengthToggle == true ? .accentColor : .primary)
                     }
                     
                     if lengthToggle == true {
@@ -64,59 +65,59 @@ struct EditStepView: View {
                             .pickerStyle(.wheel)
                         }
                     }
-                } footer: {
+                } header: {
+                    //Text("Length")
+                }
+                /* footer: {
                    Text("")
                        .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
-               }
+               }*/
                 
                 Section {
                     HStack {
-                        Toggle(isOn: $paceToggle.animation(.linear)) {
-                            Label("Pace", systemImage: "stopwatch")
+                        Label("Pace", systemImage: "stopwatch")
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                paceToggle.toggle()
+                            }
+                        } label: {
+                            Text("\(minutePace).")+Text(secondPace < 10 ? "0" :  "")+Text("\(secondPace)")+Text(" /km")
                         }
+                        .buttonStyle(.bordered)
+                        .foregroundColor(paceToggle == true ? .accentColor : .primary)
                     }
                     
                     if paceToggle == true {
-                        
                         HStack(spacing: .zero) {
                             Picker("", selection: $minutePace) {
-                                ForEach(2..<11) { minutePace in
-                                    Text("\(minutePace) m")
+                                ForEach(paceMinuteOptions, id: \.self) { minute in
+                                    Text("\(minute) m")
                                 }
                             }
                             .pickerStyle(.wheel)
                             Text(":")
                             Picker("", selection: $secondPace) {
-                                ForEach(0..<12) { secondPace in  // add double zero (00)
-                                    Text("\(secondPace*5) s")
+                                ForEach(paceSecondOptions, id: \.self) { secondPace in  // add double zero (00)
+                                    Text("\(secondPace) s")
                                 }
                             }
                             .pickerStyle(.wheel)
                         }
                     }
-                } header: { // required for spacing between sections
+                } header: {
+                    //Text("Pace")
+                }/* header: { // required for spacing between sections
                     Text("")
                         .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
                 } footer: { // required for spacing between sections
                     Text("")
                         .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
-                }
+                }*/
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        dismiss()
-                        //save
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            }
-            .environment(\.defaultMinListHeaderHeight, 1) // required for spacing between sections
+            //.environment(\.defaultMinListHeaderHeight, 1) // required for spacing between sections
         }
     }
 }
