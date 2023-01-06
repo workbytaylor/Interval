@@ -45,20 +45,17 @@ struct ContentView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
-                
             }
             
             // move this to cancel button in EditView
             // undoes all actions since previous save
-            ToolbarItem(placement: .bottomBar) {
-                Button {
-                    //moc.rollback()    //undo all since prev save
-                    
-                    
-                } label: {
-                    Text("delete all")
-                }
+            /*
+            Button {
+                moc.rollback()    //undo all since prev save
+            } label: {
+                Text("Undo")
             }
+            */
             
         }
         .sheet(isPresented: $showEditView) {
