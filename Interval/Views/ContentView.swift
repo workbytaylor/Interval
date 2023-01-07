@@ -40,13 +40,12 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 //https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
-                /*
+                
                 Button {
                     showEditView.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
-                */
                 
                 
             }
