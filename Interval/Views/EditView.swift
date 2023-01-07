@@ -9,6 +9,8 @@ import SwiftUI
 
 struct EditView: View {
     
+    // CoreData is get only, so need to accept a universal step and workout with this view
+    
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ViewModel()

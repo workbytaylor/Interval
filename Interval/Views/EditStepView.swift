@@ -65,15 +65,7 @@ struct EditStepView: View {
                             .pickerStyle(.wheel)
                         }
                     }
-                } header: {
-                    //Text("Length")
-                }
-                /* footer: {
-                   Text("")
-                       .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
-               }*/
-                
-                Section {
+                    
                     HStack {
                         Label("Pace", systemImage: "stopwatch")
                         Spacer()
@@ -105,19 +97,10 @@ struct EditStepView: View {
                             .pickerStyle(.wheel)
                         }
                     }
-                } header: {
-                    //Text("Pace")
-                }/* header: { // required for spacing between sections
-                    Text("")
-                        .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
-                } footer: { // required for spacing between sections
-                    Text("")
-                        .listRowInsets(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
-                }*/
+                }
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
-            //.environment(\.defaultMinListHeaderHeight, 1) // required for spacing between sections
         }
     }
 }

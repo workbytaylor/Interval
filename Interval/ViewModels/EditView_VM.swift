@@ -16,10 +16,6 @@ extension EditView {
         @Published var newTitle = ""
         //@Published var newDescription = ""    // TODO: Add description to workout at later date, also add in CoreData
         
-        func titleCheck() {
-            // TODO: check if newTitle is already taken
-        }
-        
         func addFirstStep() {
             if newSteps.count == 0 {
                 addDistanceStep()
