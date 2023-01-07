@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9506F83529328F0200E20F83 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9506F83429328F0200E20F83 /* DetailView.swift */; };
 		950FAAB7295321A0001C86E5 /* DetailView_Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950FAAB6295321A0001C86E5 /* DetailView_Ext.swift */; };
+		951BE9182967E2A9007B8C13 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951BE9172967E2A9007B8C13 /* TestView.swift */; };
 		95528123294AC605008B67CF /* EditView_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95528122294AC605008B67CF /* EditView_VM.swift */; };
 		95615796295EA50C00EBD61D /* EditStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95615795295EA50C00EBD61D /* EditStepView.swift */; };
 		956F3CF72946C0DC00C79B7B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956F3CF62946C0DC00C79B7B /* DataController.swift */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		9506F83429328F0200E20F83 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		950FAAB6295321A0001C86E5 /* DetailView_Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView_Ext.swift; sourceTree = "<group>"; };
+		951BE9172967E2A9007B8C13 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		95528122294AC605008B67CF /* EditView_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView_VM.swift; sourceTree = "<group>"; };
 		95615795295EA50C00EBD61D /* EditStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepView.swift; sourceTree = "<group>"; };
 		956F3CF62946C0DC00C79B7B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				9506F83429328F0200E20F83 /* DetailView.swift */,
 				95CABB03292E8C33006E7AAE /* EditView.swift */,
 				95615795295EA50C00EBD61D /* EditStepView.swift */,
+				951BE9172967E2A9007B8C13 /* TestView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				95CABB04292E8C33006E7AAE /* EditView.swift in Sources */,
 				95ACF5112922026E00E9B2AF /* ContentView.swift in Sources */,
 				95A29FAD29668F88002DFA8B /* Step+CoreDataProperties.swift in Sources */,
+				951BE9182967E2A9007B8C13 /* TestView.swift in Sources */,
 				95A29FAC29668F88002DFA8B /* Step+CoreDataClass.swift in Sources */,
 				957FB727294ACA7A00F87C86 /* NewStep.swift in Sources */,
 				95ACF50F2922026E00E9B2AF /* IntervalApp.swift in Sources */,
