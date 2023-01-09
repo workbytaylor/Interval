@@ -13,24 +13,26 @@ struct EditView: View {
     
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    @StateObject var vm = ViewModel()
     
-    @State var title: String = "Title"
+    @State var newSteps = [NewStep]()
+    @State var newTitle = ""
+    
+    @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
     
     var body: some View {
         NavigationStack {
             List {
                 Section(/*footer: Text("Please choose a different title.")*/) {
-                    TextField("Add Title", text: $vm.newTitle)
+                    TextField("Add Title", text: $newTitle)
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                     // TODO: check for other titles that match current input
                     .overlay(alignment: .trailing) {
-                        if vm.newTitle != "" {
+                        if newTitle != "" {
                             Button {
-                                vm.newTitle = ""
+                                newTitle = ""
                             } label: { Image(systemName: "xmark.circle.fill") }
                             .foregroundStyle(.secondary)
                         }
@@ -38,7 +40,7 @@ struct EditView: View {
                 }
                 
                 Section(header: Text("Steps")) {
-                    ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
+                    ForEach($newSteps, id: \.id, editActions: .all) { $step in
                         NavigationLink {
                             EditStepView()
                         } label: {
@@ -55,14 +57,14 @@ struct EditView: View {
                                 .padding(.leading)
                             }
                         }
-                        .deleteDisabled(vm.newSteps.count < 2)
+                        .deleteDisabled(newSteps.count < 2)
                     }
                 }
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-            .navigationTitle(title)
+            .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear { vm.addFirstStep() }
+            .onAppear { addFirstStep() }
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
                     .presentationDetents([.large])
@@ -83,17 +85,17 @@ struct EditView: View {
                         Text("Save")
                             .bold()
                     }
-                    .disabled(vm.newTitle == "" || vm.newSteps.count == 0)
+                    .disabled(newTitle == "" || newSteps.count == 0)
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
-                            vm.addTimeStep()
+                            addTimeStep()
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
-                            vm.addDistanceStep()
+                            addDistanceStep()
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
                         }

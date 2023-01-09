@@ -62,7 +62,7 @@ struct ContentView: View {
             
         }
         .sheet(isPresented: $showEditView) {
-            EditView(title: "New Workout")
+            EditView(navigationTitle: "New Workout")
         }
     }
     

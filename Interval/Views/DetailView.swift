@@ -46,7 +46,7 @@ struct DetailView: View {
             }
         }
         .sheet(isPresented: $showEditView) {
-            EditView(title: "Edit Workout"/*workout: workout*/)
+            EditView(navigationTitle: "Edit Workout"/*workout: workout*/)
         }
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive, action: deleteWorkout)
