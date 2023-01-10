@@ -9,13 +9,12 @@ import SwiftUI
 
 struct EditView: View {
     
-    // CoreData is get only, so need to accept a universal step and workout with this view
-    
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    @State var newSteps = [NewStep]()
+    
     @State var newTitle = ""
+    @State var newSteps = [EditStep]()
     
     @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
@@ -64,7 +63,10 @@ struct EditView: View {
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear { addFirstStep() }
+            .onAppear {
+                addFirstStep()
+                
+            }
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
                     .presentationDetents([.large])
@@ -104,7 +106,6 @@ struct EditView: View {
                             Image(systemName: "plus")
                             Text("Add Step")
                         }
-                        //Label("Add step", systemImage: "plus")
                     }
                 }
             }

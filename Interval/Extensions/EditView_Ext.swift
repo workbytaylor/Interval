@@ -1,5 +1,5 @@
 //
-//  EditView_VM.swift
+//  EditView_EXT.swift
 //  Interval
 //
 //  Created by Nilakshi Roy on 2022-12-14.
@@ -16,12 +16,12 @@ extension EditView {
     }
     
     func addTimeStep() {
-        let timeStep = NewStep(id: UUID(), index: Int16(newSteps.count+1), type: "time", magnitude: 10, unit: "minutes", pace: "timePace")
+        let timeStep = EditStep(id: UUID(), index: Int16(newSteps.count+1), type: "time", magnitude: 10, unit: "minutes", pace: "timePace")
         newSteps.append(timeStep)
     }
     
     func addDistanceStep() {
-        let distanceStep = NewStep(id: UUID(), index: Int16(newSteps.count+1), type: "distance", magnitude: 5, unit: "km", pace: "distancePace")
+        let distanceStep = EditStep(id: UUID(), index: Int16(newSteps.count+1), type: "distance", magnitude: 5, unit: "km", pace: "distancePace")
         newSteps.append(distanceStep)
     }
     
