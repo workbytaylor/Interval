@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EditStep: Identifiable {
+struct TempStep: Identifiable {
     var id: UUID
     var index: Int16
     var type: String
@@ -16,5 +16,5 @@ struct EditStep: Identifiable {
     var pace: String
     var workout: Workout?
     
-    static let example = EditStep(id: UUID(), index: 1, type: "distance", magnitude: 800, unit: "m", pace: "test pace")
+    static let example = TempStep(id: UUID(), index: 1, type: "distance", magnitude: 800, unit: "m", pace: "test pace")
 }

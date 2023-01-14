@@ -14,7 +14,7 @@ struct EditView: View {
     
     
     @State var newTitle = ""
-    @State var newSteps = [EditStep]()
+    @State var newSteps = [TempStep]()
     
     @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
@@ -65,7 +65,6 @@ struct EditView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 addFirstStep()
-                
             }
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()

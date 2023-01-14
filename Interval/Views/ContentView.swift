@@ -21,7 +21,7 @@ struct ContentView: View {
             if !workouts.isEmpty {
                 ForEach(workouts, id: \.id) { workout in
                     NavigationLink {
-                        DetailView(workout: workout, showEditView: false)
+                        DetailView(workout: workout)
                     } label: {
                         VStack(alignment: .leading) {
                             Text(workout.wrappedTitle)
@@ -39,23 +39,17 @@ struct ContentView: View {
         .navigationTitle("Workouts")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                //https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-programmatic-navigation-in-swiftui
-                
                 Button {
                     showEditView.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
-            
         }
         .sheet(isPresented: $showEditView) {
             EditView(navigationTitle: "New Workout")
         }
     }
-    
-    
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
