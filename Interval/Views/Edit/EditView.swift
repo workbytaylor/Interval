@@ -79,12 +79,11 @@ struct EditView: View {
                         Text("Cancel").tint(.red)
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         createWorkout()
                     } label: {
                         Text("Save")
-                            .bold()
                     }
                     .disabled(newTitle == "" || newSteps.count == 0)
                 }

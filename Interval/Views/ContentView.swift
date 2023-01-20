@@ -38,7 +38,7 @@ struct ContentView: View {
         }
         .navigationTitle("Workouts")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button {
                     showEditView.toggle()
                 } label: {
