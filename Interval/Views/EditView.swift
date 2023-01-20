@@ -11,32 +11,41 @@ struct EditView: View {
     
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    @StateObject var vm = ViewModel()
     
+    @State var newTitle = ""
+    @State var newSteps = [TempStep]()
+    
+    @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: .zero) {
-                List {
-                    Section(/*footer: Text("Please choose a different title.")*/) {
-                        TextField("Add Title", text: $vm.newTitle)
-                            .font(.system(.title2, design: .default, weight: .semibold))
-                            .autocorrectionDisabled(false)
-                            .autocapitalization(.sentences)
-                        // TODO: check for other titles that match current input
-                        .overlay(alignment: .trailing) {
-                            if vm.newTitle != "" {
-                                Button {
-                                    vm.newTitle = ""
-                                } label: { Image(systemName: "xmark.circle.fill") }
-                                .foregroundStyle(.secondary)
-                            }
+            List {
+                Section(footer:
+                            Text("Error message here")
+                                .foregroundColor(.red)
+                ) {
+                    TextField("Add Title", text: $newTitle)
+                        .font(.system(.title2, design: .default, weight: .semibold))
+                        .autocorrectionDisabled(false)
+                        .autocapitalization(.sentences)
+                    
+                    // TODO: check for other titles that match current input
+                    .overlay(alignment: .trailing) {
+                        if newTitle != "" {
+                            Button {
+                                newTitle = ""
+                            } label: { Image(systemName: "xmark.circle.fill") }
+                            .foregroundStyle(.secondary)
                         }
                     }
-                    
-                    Section(header: Text("Steps")) {
-                        ForEach($vm.newSteps, id: \.id, editActions: .all) { $step in
+                }
+                
+                Section(header: Text("Steps")) {
+                    ForEach($newSteps, id: \.id, editActions: .all) { $step in
+                        NavigationLink {
+                            EditStepView()
+                        } label: {
                             HStack {
                                 // change to switch statement when more step types are added
                                 Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
@@ -48,47 +57,18 @@ struct EditView: View {
                                         .foregroundStyle(.secondary)
                                 }
                                 .padding(.leading)
-                                Spacer()
-                                Button {
-                                    withAnimation {
-                                        showStepEditor.toggle()
-                                    }
-                                } label: {
-                                    Image(systemName: "ellipsis")
-                                        .foregroundColor(.primary)
-                                }
                             }
-                            .deleteDisabled(vm.newSteps.count < 2)
                         }
+                        .deleteDisabled(newSteps.count < 2)
                     }
                 }
-                
-                ZStack(alignment: .bottom) {
-                    if showStepEditor == true {
-                        //EditStepView()
-                    } else {
-                        Menu {
-                            Button {
-                                vm.addTimeStep()
-                            } label: {
-                                Label("Time", systemImage: "stopwatch")
-                            }
-                            Button {
-                                vm.addDistanceStep()
-                            } label: {
-                                Label("Distance", systemImage: "lines.measurement.horizontal")
-                            }
-                        } label: {
-                            Label("Add step", systemImage: "plus")
-                        }
-                    }
-                }
-                .padding()
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-            .navigationTitle("New Workout")
+            .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear { vm.addDistanceStep() }
+            .onAppear {
+                addFirstStep()
+            }
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
                     .presentationDetents([.large])
@@ -97,6 +77,7 @@ struct EditView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
                         dismiss()
+                        //moc.rollback()
                     } label: {
                         Text("Cancel").tint(.red)
                     }
@@ -106,9 +87,27 @@ struct EditView: View {
                         createWorkout()
                     } label: {
                         Text("Save")
-                            .bold()
                     }
-                    .disabled(vm.newTitle == "" || vm.newSteps.count == 0)
+                    .disabled(newTitle == "" || newSteps.count == 0)
+                }
+                ToolbarItem(placement: .bottomBar) {
+                    Menu {
+                        Button {
+                            addTimeStep()
+                        } label: {
+                            Label("Time", systemImage: "stopwatch")
+                        }
+                        Button {
+                            addDistanceStep()
+                        } label: {
+                            Label("Distance", systemImage: "lines.measurement.horizontal")
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add Step")
+                        }
+                    }
                 }
             }
         }

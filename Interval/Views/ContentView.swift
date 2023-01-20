@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var workouts: FetchedResults<Workout>
     
-    @State private var showAddView: Bool = false
+    @State private var showEditView: Bool = false
+    
     
     var body: some View {
         List {
@@ -34,19 +36,18 @@ struct ContentView: View {
                 noWorkoutsView
             }
         }
-        //.listStyle(.insetGrouped)
         .navigationTitle("Workouts")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    showAddView.toggle()
+                    showEditView.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
         }
-        .sheet(isPresented: $showAddView) {
-            EditView()
+        .sheet(isPresented: $showEditView) {
+            EditView(navigationTitle: "New Workout")
         }
     }
 }
@@ -58,28 +59,4 @@ struct ContentView_Previews: PreviewProvider {
                 .environment(\.managedObjectContext, DataController().container.viewContext)
         }
     }
-}
-
-
-private extension ContentView {
-    
-    var noWorkoutsView: some View {
-        HStack {
-            Spacer()
-            Text("Tap")
-            Image(systemName: "plus")
-            Text("to create a workout")
-            Spacer()
-        }
-        .listRowBackground(Color.clear)
-        .foregroundStyle(.secondary)
-    }
-        
-    
-    
-    
-    
-    
-    
-    
 }

@@ -2,7 +2,7 @@
 //  Workout+CoreDataProperties.swift
 //  Interval
 //
-//  Created by Nilakshi Roy on 2022-12-11.
+//  Created by Nilakshi Roy on 2023-01-04.
 //
 //
 
@@ -33,6 +33,7 @@ extension Workout {
         }
     }
     
+
 }
 
 // MARK: Generated accessors for steps
