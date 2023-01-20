@@ -21,24 +21,22 @@ struct EditView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(footer:
-                            Text("Error message here")
-                                .foregroundColor(.red)
-                ) {
+                Section/*(footer: Text("Error message here").foregroundColor(.red))*/ {
                     TextField("Add Title", text: $newTitle)
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                    
                     // TODO: check for other titles that match current input
-                    .overlay(alignment: .trailing) {
-                        if newTitle != "" {
-                            Button {
-                                newTitle = ""
-                            } label: { Image(systemName: "xmark.circle.fill") }
-                            .foregroundStyle(.secondary)
+                        .overlay(alignment: .trailing) {
+                            if newTitle != "" {
+                                Button {
+                                    newTitle = ""
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                }
+                                .foregroundStyle(.secondary)
+                            }
                         }
-                    }
                 }
                 
                 Section(header: Text("Steps")) {
@@ -77,7 +75,6 @@ struct EditView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
                         dismiss()
-                        //moc.rollback()
                     } label: {
                         Text("Cancel").tint(.red)
                     }
@@ -87,6 +84,7 @@ struct EditView: View {
                         createWorkout()
                     } label: {
                         Text("Save")
+                            .bold()
                     }
                     .disabled(newTitle == "" || newSteps.count == 0)
                 }
