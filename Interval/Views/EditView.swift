@@ -12,7 +12,6 @@ struct EditView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    
     @State var newTitle = ""
     @State var newSteps = [TempStep]()
     
@@ -22,11 +21,15 @@ struct EditView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(/*footer: Text("Please choose a different title.")*/) {
+                Section(footer:
+                            Text("Error message here")
+                                .foregroundColor(.red)
+                ) {
                     TextField("Add Title", text: $newTitle)
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
+                    
                     // TODO: check for other titles that match current input
                     .overlay(alignment: .trailing) {
                         if newTitle != "" {
@@ -84,7 +87,6 @@ struct EditView: View {
                         createWorkout()
                     } label: {
                         Text("Save")
-                            .bold()
                     }
                     .disabled(newTitle == "" || newSteps.count == 0)
                 }

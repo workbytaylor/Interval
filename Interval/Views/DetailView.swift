@@ -39,6 +39,7 @@ struct DetailView: View {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Menu {
                     Button(role: .destructive) { showDeleteAlert = true } label: { Label("Delete", systemImage: "trash") }
+                    Divider()
                     Button { showEditView.toggle() } label: { Label("Edit", systemImage: "square.and.pencil") }
                 } label: {
                     Image(systemName: "ellipsis")
