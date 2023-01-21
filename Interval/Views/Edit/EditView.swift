@@ -9,11 +9,13 @@ import SwiftUI
 
 struct EditView: View {
     
-    @Environment(\.managedObjectContext) var moc
+    //@Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
+    @ObservedObject var vm: EditWorkoutViewModel
     
-    @State var newTitle = ""
-    @State var newSteps = [TempStep]()
+    
+    @State var newTitle = "Edit Workout"
+    //@State var newSteps = [TempStep]()
     
     @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
@@ -22,7 +24,7 @@ struct EditView: View {
         NavigationStack {
             List {
                 Section/*(footer: Text("Error message here").foregroundColor(.red))*/ {
-                    TextField("Add Title", text: $newTitle)
+                    TextField("Add Title", text: $vm.workout.title)
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
@@ -40,7 +42,7 @@ struct EditView: View {
                 }
                 
                 Section(header: Text("Steps")) {
-                    ForEach($newSteps, id: \.id, editActions: .all) { $step in
+                    ForEach((1...4), id: \.self, editActions: .all) { $step in
                         NavigationLink {
                             EditStepView()
                         } label: {
@@ -50,14 +52,14 @@ struct EditView: View {
                                 VStack(alignment: .leading) {
                                     Text("\(step.magnitude) \(step.unit)")
                                         //.font(.headline)
-                                    Text(step.pace)
+                                    Text(String(step.pace))
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
                                 }
                                 .padding(.leading)
                             }
                         }
-                        .deleteDisabled(newSteps.count < 2)
+                        //.deleteDisabled(newSteps.count < 2)
                     }
                 }
             }
@@ -65,7 +67,7 @@ struct EditView: View {
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                addFirstStep()
+                //addFirstStep()
             }
             .sheet(isPresented: $showStepEditor) {
                 EditStepView()
@@ -81,21 +83,27 @@ struct EditView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        createWorkout()
+                        //createWorkout()
+                        do {
+                            try vm.save()
+                            dismiss()
+                        } catch {
+                            print(error)
+                        }
                     } label: {
                         Text("Save")
                     }
-                    .disabled(newTitle == "" || newSteps.count == 0)
+                    //.disabled(newTitle == "" || newSteps.count == 0)
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
-                            addTimeStep()
+                            //addTimeStep()
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
-                            addDistanceStep()
+                            //addDistanceStep()
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
                         }
@@ -113,6 +121,6 @@ struct EditView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        EditView()
+        EditView(vm: .init(provider: .shared))
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 extension EditView {
-    
+    /*
     func addFirstStep() {
         if newSteps.count == 0 {
             addDistanceStep()
@@ -17,12 +17,12 @@ extension EditView {
     }
     
     func addTimeStep() {
-        let timeStep = TempStep(id: UUID(), index: Int16(newSteps.count+1), type: "time", magnitude: 10, unit: "minutes", pace: "timePace")
+        let timeStep = TempStep(id: UUID(), index: Int16(newSteps.count+1), type: "time", magnitude: 10, unit: "minutes", pace: 315)
         newSteps.append(timeStep)
     }
     
     func addDistanceStep() {
-        let distanceStep = TempStep(id: UUID(), index: Int16(newSteps.count+1), type: "distance", magnitude: 5, unit: "km", pace: "distancePace")
+        let distanceStep = TempStep(id: UUID(), index: Int16(newSteps.count+1), type: "distance", magnitude: 5, unit: "km", pace: 315)
         newSteps.append(distanceStep)
     }
     
@@ -48,7 +48,7 @@ extension EditView {
             step.type = newStep.type
             step.magnitude = newStep.magnitude
             step.unit = newStep.unit
-            step.pace = newStep.pace
+            step.pace = Int16(newStep.pace)
             step.index = Int16(i)
             step.workout = newWorkout
             i+=1
@@ -61,7 +61,7 @@ extension EditView {
         }
     }
     
-    
+    */
 }
 
 

@@ -17,12 +17,24 @@ extension Workout {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var title: String?
+    @NSManaged public var title: String//?
     @NSManaged public var steps: NSSet?
     
+    public override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+        setPrimitiveValue(UUID(), forKey: "id")
+    }
+    
+    
+    
+    
+    
+    /*
     public var wrappedTitle: String {
         title ?? "Unknown title"
     }
+     */
     
     // order steps based on index
     public var stepArray: [Step] {

@@ -9,32 +9,28 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    
+    /*
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var workouts: FetchedResults<Workout>
+    */
     
+    var provider = WorkoutsProvider.shared
     @State private var showEditView: Bool = false
     
     
     var body: some View {
         List {
-            if !workouts.isEmpty {
-                ForEach(workouts, id: \.id) { workout in
-                    NavigationLink {
-                        DetailView(workout: workout)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(workout.wrappedTitle)
-                                .font(.headline)
-                            Text("\(workout.stepArray.count) steps")
-                                .foregroundStyle(.secondary)
-                                .font(.subheadline)
-                        }
-                    }
-                }
-            } else {
+            /*if workouts.isEmpty {
                 noWorkoutsView
+            } else {*/
+            ForEach((1...10), id: \.self) { workout in
+                NavigationLink {
+                    DetailView(/*workout: workout*/)
+                } label: {
+                    ContentRowView()
+                }
             }
+            //}
         }
         .navigationTitle("Workouts")
         .toolbar {
@@ -47,7 +43,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showEditView) {
-            EditView(navigationTitle: "New Workout")
+            EditView(vm: .init(provider: provider))
         }
     }
 }

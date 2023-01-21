@@ -22,15 +22,4 @@ extension ContentView {
         .foregroundStyle(.secondary)
     }
     
-    func createWorkout() {
-        let newWorkout = Workout(context: moc)
-        newWorkout.id = UUID()
-        //newWorkout.title = vm.newTitle
-        //createSteps(newWorkout)
-        //save()
-        //dismiss()
-    }
-    
-    
-    
 }

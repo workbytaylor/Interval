@@ -19,14 +19,20 @@ extension Step {
     @NSManaged public var id: UUID?
     @NSManaged public var index: Int16
     @NSManaged public var magnitude: Int16
-    @NSManaged public var pace: String?
+    @NSManaged public var pace: Int16
     @NSManaged public var type: String?
     @NSManaged public var unit: String?
     @NSManaged public var workout: Workout?
-
-    public var wrappedPace: String {
-        pace ?? "Unknown pace"
+    
+    public override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+        setPrimitiveValue(UUID(), forKey: "id")
+        setPrimitiveValue(5, forKey: "magnitude")
+        setPrimitiveValue(315, forKey: "pace")
     }
+    
+    
     
     public var wrappedType: String {
         type ?? "Unknown type"

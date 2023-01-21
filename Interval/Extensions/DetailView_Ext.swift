@@ -8,7 +8,7 @@
 import Foundation
 
 extension DetailView {
-    
+    /*
     // Keep
     func deleteWorkout() {
         moc.delete(workout)
@@ -41,13 +41,6 @@ extension DetailView {
         }
     }
     
-    // keep
-    func save() {
-        if moc.hasChanges {
-            try? moc.save()
-        }
-    }
-    
     func addTimeStep() {
         let timeStep = Step(context: moc)
         timeStep.id = UUID()
@@ -55,7 +48,7 @@ extension DetailView {
         timeStep.type = "time"
         timeStep.magnitude = Int16(10)
         timeStep.unit = "minutes"
-        timeStep.pace = "timePace"
+        timeStep.pace = 315
         timeStep.workout = workout
         save()
     }
@@ -67,10 +60,10 @@ extension DetailView {
         timeStep.type = "distance"
         timeStep.magnitude = Int16(5)
         timeStep.unit = "km"
-        timeStep.pace = "distancePace"
+        timeStep.pace = 315
         timeStep.workout = workout
         save()
     }
     
-    
+    */
 }
