@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 @objc(Workout)
-public class Workout: NSManagedObject {
+public class Workout: NSManagedObject, Identifiable {
 
 }

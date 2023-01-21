@@ -9,28 +9,22 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    /*
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var workouts: FetchedResults<Workout>
-    */
     
-    var provider = WorkoutsProvider.shared
     @State private var showEditView: Bool = false
     
+    @FetchRequest(fetchRequest: Workout.all()) private var workouts
+    
+    var provider = WorkoutsProvider.shared
     
     var body: some View {
         List {
-            /*if workouts.isEmpty {
-                noWorkoutsView
-            } else {*/
-            ForEach((1...10), id: \.self) { workout in
+            ForEach(workouts, id: \.id) { workout in
                 NavigationLink {
                     DetailView(/*workout: workout*/)
                 } label: {
                     ContentRowView()
                 }
             }
-            //}
         }
         .navigationTitle("Workouts")
         .toolbar {

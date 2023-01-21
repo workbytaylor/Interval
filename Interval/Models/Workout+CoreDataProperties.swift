@@ -25,28 +25,22 @@ extension Workout {
         
         setPrimitiveValue(UUID(), forKey: "id")
     }
-    
-    
-    
-    
-    
-    /*
-    public var wrappedTitle: String {
-        title ?? "Unknown title"
-    }
-     */
-    
-    // order steps based on index
-    public var stepArray: [Step] {
-        let set = steps as? Set<Step> ?? []
-        
-        return set.sorted {
-            $0.index < $1.index
-        }
-    }
-    
-
 }
+
+extension Workout {
+    private static var workoutsFetchRequest: NSFetchRequest<Workout> {
+        NSFetchRequest(entityName: "Workout")
+    }
+    
+    static func all() -> NSFetchRequest<Workout> {
+        let request: NSFetchRequest<Workout> = workoutsFetchRequest
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Workout.title, ascending: true)
+        ]
+        return request
+    }
+}
+
 
 // MARK: Generated accessors for steps
 extension Workout {
@@ -62,9 +56,5 @@ extension Workout {
 
     @objc(removeSteps:)
     @NSManaged public func removeFromSteps(_ values: NSSet)
-
-}
-
-extension Workout : Identifiable {
 
 }

@@ -13,10 +13,6 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
     
-    
-    @State var newTitle = "Edit Workout"
-    //@State var newSteps = [TempStep]()
-    
     @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
     
@@ -29,6 +25,7 @@ struct EditView: View {
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                     // TODO: check for other titles that match current input
+                      /*
                         .overlay(alignment: .trailing) {
                             if newTitle != "" {
                                 Button {
@@ -39,20 +36,21 @@ struct EditView: View {
                                 .foregroundStyle(.secondary)
                             }
                         }
+                    */
                 }
                 
                 Section(header: Text("Steps")) {
-                    ForEach((1...4), id: \.self, editActions: .all) { $step in
+                    ForEach((1...4), id: \.self) { step in
                         NavigationLink {
                             EditStepView()
                         } label: {
                             HStack {
                                 // change to switch statement when more step types are added
-                                Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                                Image(systemName: "stopwatch")
                                 VStack(alignment: .leading) {
-                                    Text("\(step.magnitude) \(step.unit)")
+                                    Text("magnitude unit")
                                         //.font(.headline)
-                                    Text(String(step.pace))
+                                    Text("pace")
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
                                 }
@@ -64,7 +62,7 @@ struct EditView: View {
                 }
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255))
-            .navigationTitle(navigationTitle)
+            .navigationTitle("Edit")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 //addFirstStep()

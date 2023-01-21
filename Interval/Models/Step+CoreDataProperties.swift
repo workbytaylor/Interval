@@ -41,10 +41,4 @@ extension Step {
     public var wrappedUnit: String {
         unit ?? "Unknown unit"
     }
-    
-    
-}
-
-extension Step : Identifiable {
-
 }
