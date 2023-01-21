@@ -10,20 +10,19 @@ import SwiftUI
 struct DetailView: View {
     
     @Environment(\.dismiss) var dismiss
+    var workout: Workout
     @State private var showDeleteAlert: Bool = false
     @State var showEditView: Bool = false
     
     var body: some View {
         VStack(spacing: .zero) {
             List {
-                ForEach((1...3), id: \.self) { step in
+                ForEach(workout.stepArray) { step in
                     HStack {
-                        /*
                         Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                             .frame(width: 40)
-                        */
                          VStack(alignment: .leading) {
-                            Text("magnitude")+Text("unit")
+                             Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
                             Text("Pace")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)

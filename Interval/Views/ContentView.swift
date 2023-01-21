@@ -9,20 +9,17 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    
-    @State private var showEditView: Bool = false
-    
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
-    
+    @State private var showEditView: Bool = false
     var provider = WorkoutsProvider.shared
     
     var body: some View {
         List {
             ForEach(workouts, id: \.id) { workout in
                 NavigationLink {
-                    DetailView(/*workout: workout*/)
+                    DetailView(workout: workout)
                 } label: {
-                    ContentRowView()
+                    ContentRowView(workout: workout)
                 }
             }
         }

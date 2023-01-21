@@ -17,14 +17,28 @@ extension Workout {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var title: String//?
+    @NSManaged public var title: String//?  //making title optional prevents textfield from working
     @NSManaged public var steps: NSSet?
     
     public override func awakeFromInsert() {
         super.awakeFromInsert()
-        
         setPrimitiveValue(UUID(), forKey: "id")
     }
+    
+    // order steps based on index
+    public var stepArray: [Step] {
+        let set = steps as? Set<Step> ?? []
+        
+        return set.sorted {
+            $0.index < $1.index
+        }
+    }
+    
+    
+    
+    
+    
+    
 }
 
 extension Workout {

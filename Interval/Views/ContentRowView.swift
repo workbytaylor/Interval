@@ -8,20 +8,24 @@
 import SwiftUI
 
 struct ContentRowView: View {
+    @Environment(\.managedObjectContext) private var moc
+    @ObservedObject var workout: Workout
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Text(/*workout.wrappedTitle*/"Title")
+            Text(workout.title)
                 .font(.headline)
-            //Text("\(workout.stepArray.count) steps")
-            Text("6 steps")
+            Text("\(workout.stepArray.count) steps")
                 .foregroundStyle(.secondary)
                 .font(.subheadline)
         }
     }
 }
 
+/*
 struct ContentRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentRowView()
+        ContentRowView(workout: <#Workout#>)
     }
 }
+*/

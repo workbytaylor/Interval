@@ -32,8 +32,6 @@ extension Step {
         setPrimitiveValue(315, forKey: "pace")
     }
     
-    
-    
     public var wrappedType: String {
         type ?? "Unknown type"
     }
