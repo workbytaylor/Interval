@@ -17,6 +17,9 @@ final class EditWorkoutViewModel: ObservableObject {
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.context = provider.newContext
         self.workout = Workout(context: self.context)
+        //self.workout.steps = Step(context: self.context)
+        
+        //TODO: How can I add steps to this same context?
     }
     
     func save() throws {
@@ -24,6 +27,8 @@ final class EditWorkoutViewModel: ObservableObject {
             try? context.save()
         }
     }
+    
+    
     
     
     

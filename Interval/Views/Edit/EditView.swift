@@ -12,8 +12,6 @@ struct EditView: View {
     //@Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
-    
-    @State var navigationTitle: String = "Title"
     @State private var showStepEditor: Bool = false
     
     var body: some View {
@@ -25,22 +23,21 @@ struct EditView: View {
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                     // TODO: check for other titles that match current input
-                      /*
+                      
                         .overlay(alignment: .trailing) {
-                            if newTitle != "" {
+                            if vm.workout.title != "" {
                                 Button {
-                                    newTitle = ""
+                                    vm.workout.title = ""
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                 }
                                 .foregroundStyle(.secondary)
                             }
                         }
-                    */
+                    
                 }
-                
                 Section(header: Text("Steps")) {
-                    ForEach((1...4), id: \.self) { step in
+                    ForEach(vm.workout.stepArray, id: \.id) { step in
                         NavigationLink {
                             EditStepView()
                         } label: {
@@ -48,7 +45,7 @@ struct EditView: View {
                                 // change to switch statement when more step types are added
                                 Image(systemName: "stopwatch")
                                 VStack(alignment: .leading) {
-                                    Text("magnitude unit")
+                                    Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
                                         //.font(.headline)
                                     Text("pace")
                                         .font(.subheadline)
@@ -61,7 +58,7 @@ struct EditView: View {
                     }
                 }
             }
-            .background(Color(red: 242/255, green: 241/255, blue: 247/255))
+            //.background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle("Edit")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
@@ -81,7 +78,6 @@ struct EditView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        //createWorkout()
                         do {
                             try vm.save()
                             dismiss()
