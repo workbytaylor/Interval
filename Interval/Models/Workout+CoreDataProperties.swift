@@ -33,12 +33,6 @@ extension Workout {
             $0.index < $1.index
         }
     }
-    
-    
-    
-    
-    
-    
 }
 
 extension Workout {
@@ -71,4 +65,20 @@ extension Workout {
     @objc(removeSteps:)
     @NSManaged public func removeFromSteps(_ values: NSSet)
 
+}
+
+extension Workout {
+    
+    @discardableResult
+    func makePreview(count: Int, in context: NSManagedObjectContext) -> [Workout] {
+        var workouts = [Workout]()
+        for i in 0..<count {
+            let workout = Workout(context: context)
+            workout.id = UUID()
+            workout.title = "New workout \(i)"
+            workouts.append(workout)
+        }
+        return workouts
+    }
+    
 }
