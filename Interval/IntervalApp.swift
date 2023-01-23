@@ -14,10 +14,8 @@ struct IntervalApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                ContentView()
-            }
-            .environment(\.managedObjectContext, WorkoutsProvider.shared.viewContext)
+            ContentView()
+                .environment(\.managedObjectContext, WorkoutsProvider.shared.viewContext)
         }
     }
 }

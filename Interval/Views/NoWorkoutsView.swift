@@ -9,13 +9,13 @@ import SwiftUI
 
 struct NoWorkoutsView: View {
     var body: some View {
-        
-        VStack {
-            Text("No workouts")
-                .font(.title2)
-            Text("")
+        HStack {
+            Text("Tap")
+            Image(systemName: "plus")
+            Text("to create your first workout")
         }
-        
+        .font(.callout)
+        .foregroundStyle(.secondary)
     }
 }
 

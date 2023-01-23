@@ -14,27 +14,35 @@ struct ContentView: View {
     var provider = WorkoutsProvider.shared
     
     var body: some View {
-        List {
-            ForEach(workouts, id: \.id) { workout in
-                NavigationLink {
-                    DetailView(workout: workout)
-                } label: {
-                    ContentRowView(workout: workout)
+        NavigationStack {
+            ZStack {
+                if workouts.isEmpty {
+                    NoWorkoutsView()
+                } else {
+                    List {
+                        ForEach(workouts, id: \.id) { workout in
+                            NavigationLink {
+                                DetailView(workout: workout)
+                            } label: {
+                                ContentRowView(workout: workout)
+                            }
+                        }
+                    }
                 }
             }
-        }
-        .navigationTitle("Workouts")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    showEditView.toggle()
-                } label: {
-                    Image(systemName: "plus")
+            .navigationTitle("Workouts")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showEditView.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
-        }
-        .sheet(isPresented: $showEditView) {
-            EditView(vm: .init(provider: provider))
+            .sheet(isPresented: $showEditView) {
+                EditView(vm: .init(provider: provider))
+            }
         }
     }
 }
@@ -42,19 +50,14 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let preview = WorkoutsProvider.shared
-        NavigationStack {
-            ContentView(provider: preview)
-                .environment(\.managedObjectContext, preview.viewContext)
-                .onAppear{ Workout.makePreview(count: 10, in: preview.viewContext) }
-        }
-        .previewDisplayName("Workouts with data")
+        ContentView(provider: preview)
+            .environment(\.managedObjectContext, preview.viewContext)
+            .onAppear{ Workout.makePreview(count: 10, in: preview.viewContext) }
+            .previewDisplayName("Workouts with data")
         
         let emptyPreview = WorkoutsProvider.shared
-        NavigationStack {
-            ContentView(provider: emptyPreview)
-                .environment(\.managedObjectContext, emptyPreview.viewContext)
-        }
-        .previewDisplayName("Workouts with no data")
-        
+        ContentView(provider: emptyPreview)
+            .environment(\.managedObjectContext, emptyPreview.viewContext)
+            .previewDisplayName("Workouts with no data")
     }
 }
