@@ -17,8 +17,7 @@ final class EditWorkoutViewModel: ObservableObject {
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.context = provider.newContext
         self.workout = Workout(context: self.context)
-        //self.workout.steps = Step(context: self.context)
-        
+        self.workout.steps = self.workout.steps
         //TODO: How can I add steps to this same context?
     }
     
@@ -28,8 +27,10 @@ final class EditWorkoutViewModel: ObservableObject {
         }
     }
     
-    
-    
+    // placeholder for later
+    func addDistanceStep() {
+        //add distance step
+    }
     
     
 }

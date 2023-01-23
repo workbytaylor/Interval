@@ -21,6 +21,8 @@ struct NoWorkoutsView: View {
 
 struct NoWorkoutsView_Previews: PreviewProvider {
     static var previews: some View {
-        NoWorkoutsView()
+        NavigationStack {
+            NoWorkoutsView()
+        }
     }
 }

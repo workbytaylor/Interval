@@ -28,7 +28,6 @@ extension Workout {
     // order steps based on index
     public var stepArray: [Step] {
         let set = steps as? Set<Step> ?? []
-        
         return set.sorted {
             $0.index < $1.index
         }
