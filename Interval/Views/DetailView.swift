@@ -67,11 +67,11 @@ struct DetailView: View {
     }
 }
 
-/*
 struct DetailView_Previews: PreviewProvider {
     
     static var previews: some View {
-        DetailView()
+        DetailView(workout: .preview())
+        //no data because there are no steps, yet
     }
 }
-*/
+

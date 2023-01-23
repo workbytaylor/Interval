@@ -22,10 +22,11 @@ struct ContentRowView: View {
     }
 }
 
-/*
+
 struct ContentRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentRowView(workout: <#Workout#>)
+        List {
+            ContentRowView(workout: .preview())
+        }
     }
 }
-*/

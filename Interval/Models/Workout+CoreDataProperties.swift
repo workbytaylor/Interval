@@ -70,7 +70,7 @@ extension Workout {
 extension Workout {
     
     @discardableResult
-    func makePreview(count: Int, in context: NSManagedObjectContext) -> [Workout] {
+    static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Workout] {
         var workouts = [Workout]()
         for i in 0..<count {
             let workout = Workout(context: context)
@@ -80,5 +80,14 @@ extension Workout {
         }
         return workouts
     }
+    
+    static func preview(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Workout {
+        return makePreview(count: 1, in: context)[0]
+    }
+    
+    static func empty(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Workout {
+        return Workout(context: context)
+    }
+    
     
 }

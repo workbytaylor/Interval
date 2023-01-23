@@ -41,9 +41,20 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let preview = WorkoutsProvider.shared
         NavigationStack {
-            ContentView()
-                .environment(\.managedObjectContext, DataController().container.viewContext)
+            ContentView(provider: preview)
+                .environment(\.managedObjectContext, preview.viewContext)
+                .onAppear{ Workout.makePreview(count: 10, in: preview.viewContext) }
         }
+        .previewDisplayName("Workouts with data")
+        
+        let emptyPreview = WorkoutsProvider.shared
+        NavigationStack {
+            ContentView(provider: emptyPreview)
+                .environment(\.managedObjectContext, emptyPreview.viewContext)
+        }
+        .previewDisplayName("Workouts with no data")
+        
     }
 }

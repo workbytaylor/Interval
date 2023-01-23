@@ -22,8 +22,8 @@ struct EditView: View {
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                    // TODO: check for other titles that match current input
-                      
+                    // TODO: Title error
+                      /*
                         .overlay(alignment: .trailing) {
                             if vm.workout.title != "" {
                                 Button {
@@ -34,7 +34,7 @@ struct EditView: View {
                                 .foregroundStyle(.secondary)
                             }
                         }
-                    
+                    */
                 }
                 Section(header: Text("Steps")) {
                     ForEach(vm.workout.stepArray, id: \.id) { step in
@@ -58,7 +58,6 @@ struct EditView: View {
                     }
                 }
             }
-            //.background(Color(red: 242/255, green: 241/255, blue: 247/255))
             .navigationTitle("Edit")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
@@ -87,7 +86,7 @@ struct EditView: View {
                     } label: {
                         Text("Save")
                     }
-                    //.disabled(newTitle == "" || newSteps.count == 0)
+                    .disabled(vm.workout.title == ""/* || newSteps.count == 0*/)
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
@@ -115,6 +114,8 @@ struct EditView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        EditView(vm: .init(provider: .shared))
+        let preview = WorkoutsProvider.shared
+        EditView(vm: .init(provider: preview))
+            .environment(\.managedObjectContext, preview.viewContext)
     }
 }
