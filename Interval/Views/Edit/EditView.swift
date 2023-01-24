@@ -58,7 +58,7 @@ struct EditView: View {
                     }
                 }
             }
-            .navigationTitle("Edit")
+            .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 //addFirstStep()

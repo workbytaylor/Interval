@@ -10,7 +10,8 @@ import CoreData
 
 struct ContentView: View {
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
-    @State private var showEditView: Bool = false
+    //@State private var showEditView: Bool = false // delete this to change sheet
+    @State private var workoutToEdit: Workout?
     var provider = WorkoutsProvider.shared
     
     var body: some View {
@@ -34,15 +35,20 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        showEditView.toggle()
+                        //showEditView.toggle()
+                        workoutToEdit = .empty(context: provider.newContext)
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showEditView) {
-                EditView(vm: .init(provider: provider))
-            }
+            .sheet(item: $workoutToEdit,
+                   onDismiss: {
+                workoutToEdit = nil
+            }, content: { workout in
+                EditView(vm: .init(provider: provider,
+                                  workout: workout))
+            })
         }
     }
 }

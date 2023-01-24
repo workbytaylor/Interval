@@ -55,7 +55,7 @@ struct DetailView: View {
                 }
             }
         }
-        .sheet(isPresented: $showEditView) {
+        .sheet(isPresented: $showEditView) {    // TODO: copy sheet from ContentView?
             EditView(vm: .init(provider: .shared)/*workout: workout*/)
         }
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
@@ -63,7 +63,7 @@ struct DetailView: View {
                 do {
                     try deleteWorkout()
                 } catch {
-                    print(error)    // handles the erorr from 'throws' in function below
+                    print(error)    // handles error from 'throws' in fn below
                 }
             }
             Button("Cancel", role: .cancel) {  }
