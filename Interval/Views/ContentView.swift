@@ -17,7 +17,7 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 if workouts.isEmpty {
-                    NoWorkoutsView()
+                    NoDataView(item: "workout")
                 } else {
                     List {
                         ForEach(workouts, id: \.id) { workout in

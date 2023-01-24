@@ -1,5 +1,5 @@
 //
-//  NoWorkoutsView.swift
+//  NoDataView.swift
 //  Interval
 //
 //  Created by Nilakshi Roy on 2023-01-22.
@@ -7,22 +7,25 @@
 
 import SwiftUI
 
-struct NoWorkoutsView: View {
+struct NoDataView: View {
+    
+    var item: String
+    
     var body: some View {
         HStack {
             Text("Tap")
             Image(systemName: "plus")
-            Text("to create your first workout")
+            Text("to add your first \(item)")
         }
         .font(.callout)
         .foregroundStyle(.secondary)
     }
 }
 
-struct NoWorkoutsView_Previews: PreviewProvider {
+struct NoDataView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            NoWorkoutsView()
+            NoDataView(item: "workout")
         }
     }
 }
