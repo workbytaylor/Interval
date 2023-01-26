@@ -37,6 +37,33 @@ final class WorkoutsProvider {
             }
         }
     }
+    
+    func exists(_ workout: Workout,
+                in context: NSManagedObjectContext) -> Workout? {
+        try? context.existingObject(with: workout.objectID) as? Workout
+    }
+    
+    func delete(_ workout: Workout,
+                in context: NSManagedObjectContext) throws {
+        if let existingWorkout = exists(workout, in: context) {
+            context.delete(existingWorkout)
+            Task(priority: .background) {
+                try await context.perform {
+                    try context.save()
+                }
+            }
+        }
+    }
+    
+    func persist(in context: NSManagedObjectContext) throws {
+        if context.hasChanges {
+            try context.save()
+        }
+    }
+    
+    
+    
+    
 }
 
 extension EnvironmentValues {

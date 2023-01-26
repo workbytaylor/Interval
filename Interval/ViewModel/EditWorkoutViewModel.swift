@@ -12,16 +12,20 @@ final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
     let isNew: Bool
+    private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
     
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
+        self.provider = provider
         self.context = provider.newContext
         if let workout, // unwrap
-           let existingWorkoutCopy = try? context.existingObject(with: workout.objectID) as? Workout {  //does object existing in coreData?
+           let existingWorkoutCopy = provider.exists(workout,
+                                                     in: context) {  //does object exist in coreData?
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
         } else {
+            // if no, create new workout
             self.workout = Workout(context: self.context)
             self.isNew = true
         }
@@ -31,14 +35,12 @@ final class EditWorkoutViewModel: ObservableObject {
     }
     
     func save() throws {
-        if context.hasChanges {
-            try? context.save()
-        }
+        try provider.persist(in: context)
     }
     
     // placeholder for later
-    func addDistanceStep() {
-        //add distance step
+    func addStep(type: String) {
+        //add step logic
     }
     
     

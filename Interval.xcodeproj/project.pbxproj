@@ -12,7 +12,6 @@
 		95368A34297B982C0056C5B9 /* ContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95368A33297B982C0056C5B9 /* ContentRowView.swift */; };
 		95368A36297B9C3D0056C5B9 /* EditWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95368A35297B9C3D0056C5B9 /* EditWorkoutViewModel.swift */; };
 		95615796295EA50C00EBD61D /* EditStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95615795295EA50C00EBD61D /* EditStepView.swift */; };
-		956F3CF72946C0DC00C79B7B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956F3CF62946C0DC00C79B7B /* DataController.swift */; };
 		95A29FAC29668F88002DFA8B /* Step+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A29FA829668F88002DFA8B /* Step+CoreDataClass.swift */; };
 		95A29FAD29668F88002DFA8B /* Step+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A29FA929668F88002DFA8B /* Step+CoreDataProperties.swift */; };
 		95A29FAE29668F88002DFA8B /* Workout+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A29FAA29668F88002DFA8B /* Workout+CoreDataClass.swift */; };
@@ -62,7 +61,6 @@
 		95368A33297B982C0056C5B9 /* ContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRowView.swift; sourceTree = "<group>"; };
 		95368A35297B9C3D0056C5B9 /* EditWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutViewModel.swift; sourceTree = "<group>"; };
 		95615795295EA50C00EBD61D /* EditStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepView.swift; sourceTree = "<group>"; };
-		956F3CF62946C0DC00C79B7B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		95A29FA829668F88002DFA8B /* Step+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Step+CoreDataClass.swift"; sourceTree = "<group>"; };
 		95A29FA929668F88002DFA8B /* Step+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Step+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		95A29FAA29668F88002DFA8B /* Workout+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workout+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				95ECF4802944F2F70021CCD1 /* Interval.xcdatamodeld */,
-				956F3CF62946C0DC00C79B7B /* DataController.swift */,
 				95368A31297B82DF0056C5B9 /* WorkoutsProvider.swift */,
 				95ACF50E2922026E00E9B2AF /* IntervalApp.swift */,
 				95ACF5342922050B00E9B2AF /* Models */,
@@ -315,7 +312,6 @@
 				95615796295EA50C00EBD61D /* EditStepView.swift in Sources */,
 				95368A32297B82DF0056C5B9 /* WorkoutsProvider.swift in Sources */,
 				95DE46A1297E40DD0061E507 /* NoDataView.swift in Sources */,
-				956F3CF72946C0DC00C79B7B /* DataController.swift in Sources */,
 				95A29FAE29668F88002DFA8B /* Workout+CoreDataClass.swift in Sources */,
 				95ECF4822944F2F70021CCD1 /* Interval.xcdatamodeld in Sources */,
 				95368A36297B9C3D0056C5B9 /* EditWorkoutViewModel.swift in Sources */,

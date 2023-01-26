@@ -9,20 +9,19 @@ import SwiftUI
 
 struct EditView: View {
     
-    //@Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
     @State private var showStepEditor: Bool = false
+    @State private var hasError: Bool = false
     
     var body: some View {
         NavigationStack {
             List {
-                Section/*(footer: Text("Error message here").foregroundColor(.red))*/ {
+                Section {
                     TextField("Add Title", text: $vm.workout.title)
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                    // TODO: Title error
                       /*
                         .overlay(alignment: .trailing) {
                             if vm.workout.title != "" {
@@ -37,24 +36,33 @@ struct EditView: View {
                     */
                 }
                 Section(header: Text("Steps")) {
-                    ForEach(vm.workout.stepArray, id: \.id) { step in
-                        NavigationLink {
-                            EditStepView()
-                        } label: {
-                            HStack {
-                                // change to switch statement when more step types are added
-                                Image(systemName: "stopwatch")
-                                VStack(alignment: .leading) {
-                                    Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
-                                        //.font(.headline)
-                                    Text("pace")
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                }
-                                .padding(.leading)
-                            }
+                    if vm.workout.stepArray.isEmpty {
+                        HStack {
+                            Spacer()
+                            NoDataView(item: "step")
+                            Spacer()
                         }
-                        //.deleteDisabled(newSteps.count < 2)
+                        .listRowBackground(Color.clear)
+                    } else {
+                        ForEach(vm.workout.stepArray, id: \.id) { step in
+                            NavigationLink {
+                                EditStepView()
+                            } label: {
+                                HStack {
+                                    // change to switch statement when more step types are added
+                                    Image(systemName: "stopwatch")
+                                    VStack(alignment: .leading) {
+                                        Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
+                                            //.font(.headline)
+                                        Text("pace")
+                                            .font(.subheadline)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding(.leading)
+                                }
+                            }
+                            //.deleteDisabled(newSteps.count < 2)
+                        }
                     }
                 }
             }
@@ -86,7 +94,8 @@ struct EditView: View {
                     } label: {
                         Text("Save")
                     }
-                    .disabled(vm.workout.title == ""/* || newSteps.count == 0*/)
+                    //.disabled(vm.workout.title == ""/* || newSteps.count == 0*/)
+                    .disabled(!vm.workout.isValid)
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Menu {

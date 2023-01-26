@@ -10,10 +10,10 @@ import SwiftUI
 struct DetailView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) private var moc    // added this to delete the workout
-    var workout: Workout
+    @ObservedObject var workout: Workout
+    let provider: WorkoutsProvider
     @State private var showDeleteAlert: Bool = false
-    @State var showEditView: Bool = false
+    @State private var workoutToEdit: Workout?
     
     var body: some View {
         //ZStack {
@@ -33,37 +33,46 @@ struct DetailView: View {
             }
             .listStyle(.insetGrouped)
         //}
-        .navigationBarTitle(workout.title)
+            .navigationBarTitle(workout.title)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Menu {
-                    Button(role: .destructive) {
-                        showDeleteAlert = true
-                    } label: {
-                        Label("Delete", systemImage: "trash")
+                    Section {
+                        Button(role: .destructive) {
+                            showDeleteAlert = true
+                        } label: {
+                            Label("Delete workout", systemImage: "trash")
+                        }
                     }
                     
-                    Divider()
-                    
-                    Button {
-                        showEditView.toggle()
-                    } label: {
-                        Label("Edit", systemImage: "square.and.pencil")
+                    Section {
+                        Button {
+                            workoutToEdit = workout
+                        } label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
                     }
+                    
                 } label: {
                     Image(systemName: "ellipsis")
                 }
             }
         }
-        .sheet(isPresented: $showEditView) {    // TODO: copy sheet from ContentView?
-            EditView(vm: .init(provider: .shared)/*workout: workout*/)
-        }
+        .sheet(item: $workoutToEdit,
+               onDismiss: {
+            workoutToEdit = nil
+        }, content: { workout in
+            EditView(vm: .init(provider: provider,
+                              workout: workout))
+        })
+        
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 do {
-                    try deleteWorkout()
+                    try provider.delete(workout, in: provider.viewContext)  // change viewContext to newContext to make safer
+                    dismiss()
                 } catch {
-                    print(error)    // handles error from 'throws' in fn below
+                    print(error)    // handles error from throwing fn
                 }
             }
             Button("Cancel", role: .cancel) {  }
@@ -73,28 +82,15 @@ struct DetailView: View {
     }
 }
 
-private extension DetailView {
-    
-    func deleteWorkout() throws {
-        moc.delete(workout)
-        Task(priority: .background) {   // handles save in the background
-            try await moc.perform {
-                try moc.save()
-            }
-        }
-        dismiss()
-    }
-    
-}
-
-
-
 
 struct DetailView_Previews: PreviewProvider {
     
     static var previews: some View {
-        DetailView(workout: .preview())
-        //no data because there are no steps, yet
+        let previewProvider = WorkoutsProvider.shared
+        NavigationStack {
+            DetailView(workout: .preview(context: previewProvider.viewContext), provider: previewProvider)
+            //no data because there are no steps, yet
+        }
     }
 }
 

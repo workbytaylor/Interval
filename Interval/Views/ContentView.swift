@@ -10,7 +10,6 @@ import CoreData
 
 struct ContentView: View {
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
-    //@State private var showEditView: Bool = false // delete this to change sheet
     @State private var workoutToEdit: Workout?
     var provider = WorkoutsProvider.shared
     
@@ -23,7 +22,7 @@ struct ContentView: View {
                     List {
                         ForEach(workouts, id: \.id) { workout in
                             NavigationLink {
-                                DetailView(workout: workout)
+                                DetailView(workout: workout, provider: provider)
                             } label: {
                                 ContentRowView(workout: workout)
                             }
@@ -35,7 +34,6 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        //showEditView.toggle()
                         workoutToEdit = .empty(context: provider.newContext)
                     } label: {
                         Image(systemName: "plus")
@@ -44,8 +42,8 @@ struct ContentView: View {
             }
             .sheet(item: $workoutToEdit,
                    onDismiss: {
-                workoutToEdit = nil
-            }, content: { workout in
+                        workoutToEdit = nil
+                }, content: { workout in
                 EditView(vm: .init(provider: provider,
                                   workout: workout))
             })
@@ -58,7 +56,7 @@ struct ContentView_Previews: PreviewProvider {
         let preview = WorkoutsProvider.shared
         ContentView(provider: preview)
             .environment(\.managedObjectContext, preview.viewContext)
-            .onAppear{ Workout.makePreview(count: 10, in: preview.viewContext) }
+            .onAppear{ Workout.makePreview(count: 4, in: preview.viewContext) }
             .previewDisplayName("Workouts with data")
         
         let emptyPreview = WorkoutsProvider.shared

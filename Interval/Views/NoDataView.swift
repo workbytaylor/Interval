@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoDataView: View {
     
-    var item: String
+    let item: String
     
     var body: some View {
         HStack {

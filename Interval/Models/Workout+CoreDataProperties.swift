@@ -20,6 +20,10 @@ extension Workout {
     @NSManaged public var title: String//?  //making title optional prevents textfield from working
     @NSManaged public var steps: NSSet?
     
+    var isValid: Bool {
+        !title.isEmpty
+    }
+    
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         setPrimitiveValue(UUID(), forKey: "id")
