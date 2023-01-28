@@ -94,18 +94,19 @@ struct EditView: View {
                     } label: {
                         Text("Save")
                     }
-                    //.disabled(vm.workout.title == ""/* || newSteps.count == 0*/)
-                    .disabled(!vm.workout.isValid)
+                    .disabled(!vm.workout.isValid)  // or if steps == 0
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
                             //addTimeStep()
+                            vm.addStep(type: "time")
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
                             //addDistanceStep()
+                            vm.addStep(type: "distance")
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
                         }

@@ -43,7 +43,7 @@ extension Workout {
         NSFetchRequest(entityName: "Workout")
     }
     
-    static func all() -> NSFetchRequest<Workout> {
+    static func all() -> NSFetchRequest<Workout> {  // fetch request for ContentView, sort by title ascending
         let request: NSFetchRequest<Workout> = workoutsFetchRequest
         request.sortDescriptors = [
             NSSortDescriptor(keyPath: \Workout.title, ascending: true)

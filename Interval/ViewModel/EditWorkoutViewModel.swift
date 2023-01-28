@@ -11,6 +11,7 @@ import CoreData
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
+    @Published var step: Step
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -38,9 +39,17 @@ final class EditWorkoutViewModel: ObservableObject {
         try provider.persist(in: context)
     }
     
-    // placeholder for later
+    // unsure if this should be in provider, vm, or object
     func addStep(type: String) {
-        //add step logic
+        let step = Step(context: context)
+        step.id = UUID()
+        step.type = type
+        step.magnitude = 5
+        step.unit = "km"
+        step.pace = 315
+        step.index = Int16(workout.stepArray.count + 1)
+        step.workout = workout
+        
     }
     
     
