@@ -11,7 +11,6 @@ import CoreData
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
-    @Published var stepArray: [Step]  // make steps @Published? so steps update?
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -25,13 +24,11 @@ final class EditWorkoutViewModel: ObservableObject {
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
-            self.stepArray = existingWorkoutCopy.stepArray  //TODO: doesn't solve the problem
-                
+            
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
             self.isNew = true
-            self.stepArray = []
         }
     }
     
@@ -39,16 +36,23 @@ final class EditWorkoutViewModel: ObservableObject {
         try provider.persist(in: context)
     }
     
-    // unsure if this should be in provider, vm, or object
+    // unsure if this should be in provider, vm, or object? leave here.
     func addStep(type: String) {
         let step = Step(context: context)
         step.id = UUID()
         step.type = type
         step.magnitude = 5
-        step.unit = "km"
+        
+        if type == "distance" {
+            step.unit = "km"
+        } else if type == "time" {
+            step.unit = "minutes"
+        }
+        
         step.pace = 315
         step.index = Int16(workout.stepArray.count + 1)
         step.workout = workout
+        objectWillChange.send() //updates list of steps
     }
     
     func deleteStep() {

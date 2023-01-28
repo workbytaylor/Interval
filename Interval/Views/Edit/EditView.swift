@@ -45,7 +45,7 @@ struct EditView: View {
                         }
                         .listRowBackground(Color.clear)
                     } else {
-                        ForEach(vm.workout.stepArray, id: \.id/*, editActions: .all*/) { step in
+                        ForEach(vm.workout.stepArray, id: \.id) { step in
                             NavigationLink {
                                 EditStepView()
                             } label: {
@@ -85,13 +85,13 @@ struct EditView: View {
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
-                            //addTimeStep()
                             vm.addStep(type: "time")
+                            //vm.workout.objectWillChange.send()
+                            
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
-                            //addDistanceStep()
                             vm.addStep(type: "distance")
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")

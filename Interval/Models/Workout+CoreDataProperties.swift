@@ -24,6 +24,7 @@ extension Workout {
         !title.isEmpty
     }
     
+    
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         setPrimitiveValue(UUID(), forKey: "id")

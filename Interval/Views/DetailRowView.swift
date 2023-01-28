@@ -15,7 +15,7 @@ struct DetailRowView: View {
         HStack {
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                 .frame(width: 40)
-            Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
+            Text("\(step.magnitude)")+Text(" \(step.wrappedUnit)")
             Text("5.15 /km")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
