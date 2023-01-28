@@ -19,16 +19,7 @@ struct DetailView: View {
         //ZStack {
             List {
                 ForEach(workout.stepArray) { step in
-                    HStack {
-                        Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                            .frame(width: 40)
-                         VStack(alignment: .leading) {
-                             Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
-                            Text("Pace")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
+                    DetailRowView(step: step)
                 }
             }
             .listStyle(.insetGrouped)

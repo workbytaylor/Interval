@@ -12,7 +12,7 @@ struct ContentRowView: View {
     @ObservedObject var workout: Workout
     
     var body: some View {
-        VStack(alignment: .leading) {
+        HStack {
             Text(workout.title)
                 .font(.headline)
             Text("\(workout.stepArray.count) steps")

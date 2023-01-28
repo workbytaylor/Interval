@@ -11,7 +11,7 @@ import CoreData
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
-    //@Published var steps: [Step]  // make steps @Published?
+    //@Published var steps: [Step]  // make steps @Published? so they update?
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -50,8 +50,12 @@ final class EditWorkoutViewModel: ObservableObject {
         step.pace = 315
         step.index = Int16(workout.stepArray.count + 1)
         step.workout = workout
-        
     }
+    
+    func deleteStep() {
+        // delete step
+    }
+    
     
     
 }

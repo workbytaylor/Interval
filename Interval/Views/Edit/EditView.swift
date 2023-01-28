@@ -42,33 +42,20 @@ struct EditView: View {
                         }
                         .listRowBackground(Color.clear)
                     } else {
-                        ForEach(vm.workout.stepArray, id: \.id) { step in
+                        ForEach(vm.workout.stepArray, id: \.id/*, editActions: .all*/) { step in
                             NavigationLink {
                                 EditStepView()
                             } label: {
-                                HStack {
-                                    // change to switch statement when more step types are added
-                                    Image(systemName: "stopwatch")
-                                    VStack(alignment: .leading) {
-                                        Text("\(step.magnitude)")+Text("\(step.wrappedUnit)")
-                                            //.font(.headline)
-                                        Text("pace")
-                                            .font(.subheadline)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    .padding(.leading)
-                                }
+                                DetailRowView(step: step)
                             }
                             //.deleteDisabled(newSteps.count < 2)
                         }
+                        .onDelete(perform: nil)
                     }
                 }
             }
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                //addFirstStep()
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(role: .cancel) {
