@@ -32,8 +32,11 @@ struct EditView: View {
                             }
                         }
                     */
+                } header: {
+                    Text("Title")
                 }
-                Section(header: Text("Steps")) {
+                
+                Section {
                     if vm.workout.stepArray.isEmpty {
                         HStack {
                             Spacer()
@@ -52,12 +55,14 @@ struct EditView: View {
                         }
                         .onDelete(perform: nil)
                     }
+                } header: {
+                    Text("Steps")
                 }
             }
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         dismiss()
                     } label: {

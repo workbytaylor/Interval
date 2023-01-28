@@ -18,11 +18,34 @@ struct DetailView: View {
     var body: some View {
         //ZStack {
             List {
-                ForEach(workout.stepArray) { step in
-                    DetailRowView(step: step)
+                /*
+                Section {
+                    Text("The purpose of this workout is to...")
+                } header: {
+                    Text("Notes")
                 }
+                */
+                
+                Section {
+                    if workout.stepArray.isEmpty {
+                        HStack {
+                            Spacer()
+                            Text("No steps")
+                            Spacer()
+                        }
+                        .foregroundStyle(.secondary)
+                        .listRowBackground(Color.clear)
+                    } else {
+                        ForEach(workout.stepArray) { step in
+                            DetailRowView(step: step)
+                        }
+                    }
+                } header: {
+                    Text("Steps")
+                }
+                
             }
-            .listStyle(.insetGrouped)
+            .listStyle(.automatic)
         //}
             .navigationBarTitle(workout.title)
         .toolbar {

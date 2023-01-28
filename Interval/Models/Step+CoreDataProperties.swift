@@ -24,7 +24,7 @@ extension Step {
     @NSManaged public var unit: String?
     @NSManaged public var workout: Workout?
     
-    public override func awakeFromInsert() {
+    public override func awakeFromInsert() {    // default values
         super.awakeFromInsert()
         
         setPrimitiveValue(UUID(), forKey: "id")

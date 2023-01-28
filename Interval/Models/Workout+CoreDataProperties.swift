@@ -31,8 +31,8 @@ extension Workout {
     
     // order steps based on index
     public var stepArray: [Step] {
-        let set = steps as? Set<Step> ?? []
-        return set.sorted {
+        let setOfSteps = steps as? Set<Step> ?? []
+        return setOfSteps.sorted {
             $0.index < $1.index
         }
     }
@@ -70,7 +70,7 @@ extension Workout {
 
 }
 
-extension Workout {
+extension Workout { // provides preview to use with CoreData
     
     @discardableResult
     static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Workout] {

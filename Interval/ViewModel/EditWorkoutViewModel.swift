@@ -11,7 +11,7 @@ import CoreData
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
-    //@Published var steps: [Step]  // make steps @Published? so they update?
+    @Published var stepArray: [Step]  // make steps @Published? so steps update?
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -25,15 +25,14 @@ final class EditWorkoutViewModel: ObservableObject {
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
-            //self.steps =  // initialize steps?
+            self.stepArray = existingWorkoutCopy.stepArray  //TODO: doesn't solve the problem
+                
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
             self.isNew = true
+            self.stepArray = []
         }
-        
-        // self.workout.steps = self.workout.steps  // load steps
-        //TODO: How can I add steps to this same context?
     }
     
     func save() throws {

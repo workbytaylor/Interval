@@ -12,7 +12,6 @@ import SwiftUI
 final class WorkoutsProvider {
     
     static let shared = WorkoutsProvider()
-    
     private let persistentContainer: NSPersistentContainer
     
     var viewContext: NSManagedObjectContext {
@@ -23,9 +22,7 @@ final class WorkoutsProvider {
         persistentContainer.newBackgroundContext()
     }
     
-    
     private init() {
-        
         persistentContainer = NSPersistentContainer(name: "Interval")
         if EnvironmentValues.isPreview {
             persistentContainer.persistentStoreDescriptions.first?.url = .init(URL(fileURLWithPath: "/dev/null"))
@@ -60,9 +57,6 @@ final class WorkoutsProvider {
             try context.save()
         }
     }
-    
-    
-    
     
 }
 
