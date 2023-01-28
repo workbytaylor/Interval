@@ -11,8 +11,6 @@ struct EditView: View {
     
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
-    @State private var showStepEditor: Bool = false
-    @State private var hasError: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -70,10 +68,6 @@ struct EditView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 //addFirstStep()
-            }
-            .sheet(isPresented: $showStepEditor) {
-                EditStepView()
-                    .presentationDetents([.large])
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

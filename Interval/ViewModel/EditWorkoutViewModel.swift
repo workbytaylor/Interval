@@ -11,7 +11,7 @@ import CoreData
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
-    @Published var step: Step
+    //@Published var steps: [Step]  // make steps @Published?
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -25,6 +25,7 @@ final class EditWorkoutViewModel: ObservableObject {
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
+            //self.steps =  // initialize steps?
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
