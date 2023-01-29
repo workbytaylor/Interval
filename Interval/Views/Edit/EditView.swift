@@ -62,6 +62,7 @@ struct EditView: View {
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         dismiss()
@@ -69,6 +70,7 @@ struct EditView: View {
                         Text("Cancel").tint(.red)
                     }
                 }
+                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         do {
@@ -79,15 +81,16 @@ struct EditView: View {
                         }
                     } label: {
                         Text("Save")
+                        //Image(systemName: "xmark.circle.fill")
                     }
-                    .disabled(!vm.workout.isValid)  // or if steps == 0
+                    //.symbolRenderingMode(.hierarchical)
+                    //.foregroundStyle(.secondary)
+                    .disabled(!vm.workout.isValid)
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
                             vm.addStep(type: "time")
-                            //vm.workout.objectWillChange.send()
-                            
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
@@ -96,6 +99,7 @@ struct EditView: View {
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
                         }
+                        // Duplicate/copy workout
                     } label: {
                         HStack {
                             Image(systemName: "plus")

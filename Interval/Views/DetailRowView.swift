@@ -9,18 +9,46 @@ import SwiftUI
 
 struct DetailRowView: View {
     
-    @ObservedObject var step: Step   // change to observedobject?
+    var step: Step   // change to observedobject?
     
     var body: some View {
         HStack {
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                 .frame(width: 40)
-            Text("\(step.magnitude)")+Text(" \(step.wrappedUnit)")
-            Text("5.15 /km")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+            
+            VStack(alignment: .leading) {
+                Text("\(step.magnitude) \(step.wrappedUnit)")
+                    .font(.headline)
+                
+                let paceMinutes = step.pace/60
+                let paceSeconds = step.pace%60
+                
+                Text("\(paceMinutes).\(paceSeconds) /km")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                
+                /*
+                Spacer()
+                
+                Menu {
+                    Text("Take it easy! Don't rush, let your body relax.")
+                } label: {
+                    Image(systemName: "info")
+                }
+                */
+            }
+            
         }
     }
+    
+    private func paceMinutes(_ pace: Int) {
+        
+    }
+    
+    private func paceSeconds() {
+        
+    }
+    
 }
 
 /*

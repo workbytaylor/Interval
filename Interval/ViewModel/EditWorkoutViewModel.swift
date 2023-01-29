@@ -46,7 +46,7 @@ final class EditWorkoutViewModel: ObservableObject {
         if type == "distance" {
             step.unit = "km"
         } else if type == "time" {
-            step.unit = "minutes"
+            step.unit = "Minutes"
         }
         
         step.pace = 315

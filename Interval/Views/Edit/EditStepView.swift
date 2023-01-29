@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditStepView: View {
     
-    @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
     @State private var lengthToggle: Bool = false
@@ -28,7 +27,7 @@ struct EditStepView: View {
     @State private var secondPace: Int = 0
     
     @State private var paceMinuteOptions = 1...99
-    @State private var paceSecondOptions = Array(stride(from: 0, to: 55, by: 5))
+    @State private var paceSecondOptions = Array(stride(from: 0, to: 60, by: 5))
     
     
     var body: some View {
@@ -88,6 +87,7 @@ struct EditStepView: View {
                                 }
                             }
                             .pickerStyle(.wheel)
+                            
                             Text(":")
                             Picker("", selection: $secondPace) {
                                 ForEach(paceSecondOptions, id: \.self) { secondPace in  // add double zero (00)
