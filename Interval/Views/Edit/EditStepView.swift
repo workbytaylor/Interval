@@ -101,6 +101,20 @@ struct EditStepView: View {
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    Button {
+                        // delete step
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "trash")
+                            Text("Delete Step")
+                        }
+                        .tint(.red)
+                    }
+                }
+            }
         }
     }
 }

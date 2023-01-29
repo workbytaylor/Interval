@@ -20,18 +20,18 @@ struct EditView: View {
                         .font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                      /*
                         .overlay(alignment: .trailing) {
                             if vm.workout.title != "" {
                                 Button {
-                                    vm.workout.title = ""
+                                    vm.eraseTitle()
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                 }
+                                .symbolRenderingMode(.hierarchical)
                                 .foregroundStyle(.secondary)
                             }
                         }
-                    */
+                    
                 } header: {
                     Text("Title")
                 }
@@ -51,9 +51,24 @@ struct EditView: View {
                             } label: {
                                 DetailRowView(step: step)
                             }
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    do {
+                                        // delete step
+                                        // from tunds:
+                                        // try provider.delete(contact, in: provider.newContext)
+                                    }/* catch {
+                                        print(error)
+                                    }
+                                         */
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                        .tint(.red)
+                                }
+                            }
+                            //.swipe disabled?
                             //.deleteDisabled(newSteps.count < 2)
                         }
-                        .onDelete(perform: nil)
                     }
                 } header: {
                     Text("Steps")
@@ -90,12 +105,16 @@ struct EditView: View {
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
-                            vm.addStep(type: "time")
+                            withAnimation {
+                                vm.addStep(type: "time")
+                            }
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
-                            vm.addStep(type: "distance")
+                            withAnimation {
+                                vm.addStep(type: "distance")
+                            }
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
                         }

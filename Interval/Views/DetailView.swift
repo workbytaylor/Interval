@@ -26,6 +26,44 @@ struct DetailView: View {
                 }
                 */
                 
+                
+                Section {
+                    HStack(alignment: .center) {
+                        Image(systemName: "repeat")
+                            .frame(width: 40)
+                        
+                        
+                        VStack(alignment: .leading) {
+                            Text("Work")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                            Text("10 minutes")
+                                .font(.headline)
+                            Text("5.15 /km")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            
+                            Spacer()
+                            
+                            Text("Rest")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("10 minutes")
+                                .font(.headline)
+                            Text("5.15 /km")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            
+                        }
+                        Spacer()
+                        Text("x2")
+                        
+                    }
+                } header: {
+                    Text("Test section")
+                }
+                
+                
                 Section {
                     if workout.stepArray.isEmpty {
                         HStack {
@@ -55,7 +93,7 @@ struct DetailView: View {
                         Button(role: .destructive) {
                             showDeleteAlert = true
                         } label: {
-                            Label("Delete workout", systemImage: "trash")
+                            Label("Delete Workout", systemImage: "trash")
                         }
                     }
                     

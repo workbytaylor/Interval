@@ -55,8 +55,15 @@ final class EditWorkoutViewModel: ObservableObject {
         objectWillChange.send() //updates list of steps
     }
     
-    func deleteStep() {
-        // delete step
+    func eraseTitle() {
+        self.workout.title = ""
+        objectWillChange.send()
+    }
+    
+    func deleteStep(at offsets: IndexSet) throws {
+        //context.step.delete(atOffsets: offsets)
+        //context.delete(step)
+        //objectWillChange.send()
     }
     
     
