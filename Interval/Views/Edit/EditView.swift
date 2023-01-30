@@ -103,6 +103,8 @@ struct EditView: View {
                     .disabled(!vm.workout.isValid)
                 }
                 ToolbarItem(placement: .bottomBar) {
+                    
+                    
                     Menu {
                         Button {
                             withAnimation {
@@ -118,13 +120,17 @@ struct EditView: View {
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
                         }
-                        // Duplicate/copy workout
                     } label: {
                         HStack {
                             Image(systemName: "plus")
                             Text("Add Step")
                         }
+                    } primaryAction: {
+                        withAnimation {
+                            vm.addStep(type: "distance")
+                        }
                     }
+                    
                 }
             }
         }

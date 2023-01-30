@@ -12,32 +12,30 @@ struct DetailRowView: View {
     var step: Step   // change to observedobject?
     
     var body: some View {
+        
         HStack {
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                //.frame(width: 40)
+                .font(.title2)
             
             VStack(alignment: .leading) {
                 Text("\(step.magnitude) \(step.wrappedUnit)")
-                    .font(.headline)
                 
                 let paceMinutes = step.pace/60
                 let paceSeconds = step.pace%60
                 
+                
                 Text("\(paceMinutes).\(paceSeconds) /km")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                
-                /*
-                Spacer()
-                
-                Menu {
-                    Text("Take it easy! Don't rush, let your body relax.")
-                } label: {
-                    Image(systemName: "info")
-                }
-                */
             }
-            
+            Spacer()
+            Menu {
+                Text("Step notes here")
+            } label: {
+                Image(systemName: "ellipsis")
+                    
+            }
+            .disabled(.random())
         }
     }
     

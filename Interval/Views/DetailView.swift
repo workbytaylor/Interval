@@ -41,13 +41,12 @@ struct DetailView: View {
                         }
                         Spacer()
                         Menu {
-                            
+                            Text("Step notes here")
                         } label: {
                             Image(systemName: "info")
                         }
-                        
+                        .disabled(true)
                     }
-                    
                 } header: {
                     Text("New step design")
                 }

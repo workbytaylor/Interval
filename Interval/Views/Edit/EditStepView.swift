@@ -29,6 +29,7 @@ struct EditStepView: View {
     @State private var paceMinuteOptions = 1...99
     @State private var paceSecondOptions = Array(stride(from: 0, to: 60, by: 5))
     
+    @State var notes: String = ""
     
     var body: some View {
         NavigationStack {
@@ -98,6 +99,16 @@ struct EditStepView: View {
                         }
                     }
                 }
+                
+                TextField("Notes", text: $notes, axis: .vertical)
+                    .lineLimit(3, reservesSpace: true)
+                    .onChange(of: notes) { characters in
+                        let maxCount = 80
+                            if characters.count > maxCount {
+                                self.notes = String(characters.prefix(maxCount))
+                            }
+                        }
+                
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
