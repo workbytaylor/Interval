@@ -12,7 +12,7 @@ struct EditStepView: View {
     @Environment(\.dismiss) var dismiss
     
     
-    @State private var stepType: String = "Distance"
+    @State private var stepType = stepTypes.distance
     enum stepTypes: String, CaseIterable {
         case distance = "Distance"
         case time = "Time"
@@ -33,7 +33,7 @@ struct EditStepView: View {
     @State private var minutePace: Int = 5
     @State private var secondPace: Int = 0
     
-    @State private var paceMinuteOptions = 1...99
+    @State private var paceMinuteOptions = 1...20
     @State private var paceSecondOptions = Array(stride(from: 0, to: 60, by: 5))
     
     //@State var notes: String = ""
@@ -48,7 +48,7 @@ struct EditStepView: View {
                         }
                     }
                     HStack {
-                        Text("Length")    // Duration / distance
+                        Text("\(stepType.rawValue)")    // Duration / distance
                         Spacer()
                         Button {
                             withAnimation {
