@@ -28,40 +28,28 @@ struct DetailView: View {
                 
                 
                 Section {
-                    VStack {
-                        HStack(alignment: .center) {
-                            Image(systemName: "stopwatch")
+                    
+                    HStack {
+                        Image(systemName: "stopwatch")
+                            .font(.title2)
+                        
+                        VStack(alignment: .leading) {
+                            Text("800 m")
+                            Text("5.15 /km")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Menu {
                             
-                            VStack(alignment: .leading) {
-                                Text("10 minutes")
-                                    .font(.headline)
-                                Text("5.15 /km")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                                
-                            }
-                            Spacer()
-
+                        } label: {
+                            Image(systemName: "info")
                         }
                         
-                        HStack(alignment: .center) {
-                            Image(systemName: "stopwatch")
-                            
-                            VStack(alignment: .leading) {
-                                Text("10 minutes")
-                                    .font(.headline)
-                                Text("5.15 /km")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                                
-                            }
-                            Spacer()
-                            Text("x2")
-                            
-                        }
                     }
+                    
                 } header: {
-                    Text("Repeat step")
+                    Text("New step design")
                 }
                 
                 
