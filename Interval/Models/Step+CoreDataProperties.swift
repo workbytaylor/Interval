@@ -40,3 +40,34 @@ extension Step {
         unit ?? "Unknown unit"
     }
 }
+
+
+extension Step {
+    
+    @discardableResult
+    static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Step] {
+        var steps = [Step]()
+        for i in 0..<count {
+            let step = Step(context: context)
+            step.id = UUID()
+            step.index = Int16(count)
+            step.magnitude = Int16(800+i)
+            step.pace = 360
+            step.type = "distance"
+            step.unit = "m"
+            steps.append(step)
+        }
+        return steps
+    }
+    
+    static func preview(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Step {
+        return makePreview(count: 1, in: context)[0]
+    }
+    
+    static func empty(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Step {
+        return Step(context: context)
+    }
+    
+    
+    
+}

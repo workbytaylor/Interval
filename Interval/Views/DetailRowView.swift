@@ -14,7 +14,7 @@ struct DetailRowView: View {
     var body: some View {
         HStack {
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                .frame(width: 40)
+                //.frame(width: 40)
             
             VStack(alignment: .leading) {
                 Text("\(step.magnitude) \(step.wrappedUnit)")
@@ -51,10 +51,14 @@ struct DetailRowView: View {
     
 }
 
-/*
+
 struct DetailRowView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailRowView(step: .preview())
+        
+        List {
+            DetailRowView(step: .preview())
+        }
+        
     }
 }
-*/
+
