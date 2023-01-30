@@ -12,6 +12,14 @@ struct ContentRowView: View {
     @ObservedObject var workout: Workout
     
     var body: some View {
+        LabeledContent {
+            Text("\(workout.stepArray.count) steps")
+        } label: {
+            Text(workout.title)
+        }
+        
+        // Past design
+        /*
         HStack {
             Text(workout.title)
                 .font(.headline)
@@ -19,6 +27,7 @@ struct ContentRowView: View {
                 .foregroundStyle(.secondary)
                 .font(.subheadline)
         }
+         */
     }
 }
 

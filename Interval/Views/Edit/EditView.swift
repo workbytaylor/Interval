@@ -125,11 +125,11 @@ struct EditView: View {
                             Image(systemName: "plus")
                             Text("Add Step")
                         }
-                    } primaryAction: {
+                    }/* primaryAction: {
                         withAnimation {
                             vm.addStep(type: "distance")
                         }
-                    }
+                    }*/
                     
                 }
             }

@@ -13,9 +13,11 @@ struct DetailRowView: View {
     
     var body: some View {
         
+        
+        
         HStack {
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                .font(.title2)
+                //.font(.title3)
             
             VStack(alignment: .leading) {
                 Text("\(step.magnitude) \(step.wrappedUnit)")
@@ -23,20 +25,16 @@ struct DetailRowView: View {
                 let paceMinutes = step.pace/60
                 let paceSeconds = step.pace%60
                 
-                
                 Text("\(paceMinutes).\(paceSeconds) /km")
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            Spacer()
-            Menu {
-                Text("Step notes here")
-            } label: {
-                Image(systemName: "ellipsis")
-                    
-            }
-            .disabled(.random())
         }
+        
+        
+        
+        
+        
     }
     
     private func paceMinutes(_ pace: Int) {

@@ -11,6 +11,13 @@ struct EditStepView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    
+    @State private var stepType: String = "Distance"
+    enum stepTypes: String, CaseIterable {
+        case distance = "Distance"
+        case time = "Time"
+    }
+    
     @State private var lengthToggle: Bool = false
     @State private var paceToggle: Bool = false
     
@@ -29,14 +36,19 @@ struct EditStepView: View {
     @State private var paceMinuteOptions = 1...99
     @State private var paceSecondOptions = Array(stride(from: 0, to: 60, by: 5))
     
-    @State var notes: String = ""
+    //@State var notes: String = ""
     
     var body: some View {
         NavigationStack {
             List {
                 Section {
+                    Picker("Type", selection: $stepType) {
+                        ForEach(stepTypes.allCases, id: \.self) { type in
+                            Text(type.rawValue)
+                        }
+                    }
                     HStack {
-                        Label("Length", systemImage: "arrow.left.and.right")
+                        Text("Length")    // Duration / distance
                         Spacer()
                         Button {
                             withAnimation {
@@ -48,7 +60,6 @@ struct EditStepView: View {
                         .buttonStyle(.bordered)
                         .foregroundColor(lengthToggle == true ? .accentColor : .primary)
                     }
-                    
                     if lengthToggle == true {
                         HStack {
                             Picker("Magnitude", selection: $magnitude) {
@@ -65,9 +76,11 @@ struct EditStepView: View {
                             .pickerStyle(.wheel)
                         }
                     }
-                    
+                }
+                
+                Section {
                     HStack {
-                        Label("Pace", systemImage: "stopwatch")
+                        Text("Pace")
                         Spacer()
                         Button {
                             withAnimation {
@@ -79,7 +92,6 @@ struct EditStepView: View {
                         .buttonStyle(.bordered)
                         .foregroundColor(paceToggle == true ? .accentColor : .primary)
                     }
-                    
                     if paceToggle == true {
                         HStack(spacing: .zero) {
                             Picker("", selection: $minutePace) {
@@ -100,6 +112,8 @@ struct EditStepView: View {
                     }
                 }
                 
+                
+                /*
                 TextField("Notes", text: $notes, axis: .vertical)
                     .lineLimit(3, reservesSpace: true)
                     .onChange(of: notes) { characters in
@@ -108,7 +122,7 @@ struct EditStepView: View {
                                 self.notes = String(characters.prefix(maxCount))
                             }
                         }
-                
+                */
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)

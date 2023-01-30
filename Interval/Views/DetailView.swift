@@ -26,33 +26,6 @@ struct DetailView: View {
                 }
                 */
                 
-                
-                Section {
-                    
-                    HStack {
-                        Image(systemName: "stopwatch")
-                            .font(.title2)
-                        
-                        VStack(alignment: .leading) {
-                            Text("800 m")
-                            Text("5.15 /km")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Menu {
-                            Text("Step notes here")
-                        } label: {
-                            Image(systemName: "info")
-                        }
-                        .disabled(true)
-                    }
-                } header: {
-                    Text("New step design")
-                }
-                
-                
-                
                 Section {
                     if workout.stepArray.isEmpty {
                         HStack {
