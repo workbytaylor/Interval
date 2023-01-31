@@ -11,6 +11,7 @@ struct EditView: View {
     
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
+    @FocusState private var isTitleFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -31,6 +32,7 @@ struct EditView: View {
                                 .foregroundStyle(.secondary)
                             }
                         }
+                        .focused($isTitleFocused)
                     
                 } header: {
                     Text("Title")
@@ -77,6 +79,9 @@ struct EditView: View {
             }
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                isTitleFocused = true
+            }
             .toolbar {
                 
                 ToolbarItem(placement: .cancellationAction) {

@@ -71,6 +71,7 @@ struct DetailView: View {
                     Image(systemName: "ellipsis.circle.fill")
                 }
                 .symbolRenderingMode(.hierarchical)
+                .font(.title2)
             }
         }
         .sheet(item: $workoutToEdit,

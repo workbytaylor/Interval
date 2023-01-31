@@ -41,6 +41,7 @@ struct ContentView: View {
                         Image(systemName: "plus.circle.fill")
                     }
                     .symbolRenderingMode(.hierarchical)
+                    .font(.title2)
                 }
             }
             .sheet(item: $workoutToEdit,
