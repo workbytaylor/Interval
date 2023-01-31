@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 final class EditWorkoutViewModel: ObservableObject {
     
@@ -14,6 +15,7 @@ final class EditWorkoutViewModel: ObservableObject {
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
+    
     
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider

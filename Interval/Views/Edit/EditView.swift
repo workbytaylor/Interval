@@ -11,7 +11,7 @@ struct EditView: View {
     
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
-    @FocusState private var isTitleFocused: Bool
+    @FocusState var isTitleFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -77,10 +77,11 @@ struct EditView: View {
                     Text("Steps")
                 }
             }
+            .background(Color(red: 242/255, green: 241/255, blue: 247/255)) // prevents white from showing when keyboard dismissed
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                isTitleFocused = true
+                isTitleFocused = vm.isNew == true ? true : false
             }
             .toolbar {
                 
@@ -104,6 +105,8 @@ struct EditView: View {
                         Text("Save")
                         //Image(systemName: "xmark.circle.fill")
                     }
+                    .controlSize(.small)
+                    .buttonStyle(.bordered)
                     //.symbolRenderingMode(.hierarchical)
                     //.foregroundStyle(.secondary)
                     .disabled(!vm.workout.isValid)
