@@ -12,6 +12,7 @@ struct EditStepView: View {
     @Environment(\.dismiss) var dismiss
     
     
+    
     @State private var stepType = stepTypes.distance
     enum stepTypes: String, CaseIterable {
         case distance = "Distance"
@@ -114,6 +115,7 @@ struct EditStepView: View {
                 
                 
                 /*
+                 // Notes for each step - necessary?
                 TextField("Notes", text: $notes, axis: .vertical)
                     .lineLimit(3, reservesSpace: true)
                     .onChange(of: notes) { characters in
@@ -126,10 +128,11 @@ struct EditStepView: View {
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
+            /*
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button {
-                        // delete step
+                        //vm.deleteStep(step)
                         dismiss()
                     } label: {
                         HStack {
@@ -140,6 +143,7 @@ struct EditStepView: View {
                     }
                 }
             }
+             */
         }
     }
 }

@@ -68,8 +68,9 @@ struct DetailView: View {
                     }
                     
                 } label: {
-                    Image(systemName: "ellipsis")
+                    Image(systemName: "ellipsis.circle.fill")
                 }
+                .symbolRenderingMode(.hierarchical)
             }
         }
         .sheet(item: $workoutToEdit,
@@ -83,7 +84,7 @@ struct DetailView: View {
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 do {
-                    try provider.delete(workout, in: provider.viewContext)  // change viewContext to newContext to make safer
+                    try provider.delete(workout, in: provider.viewContext)  // change viewContext to newContext to make safer?
                     dismiss()
                 } catch {
                     print(error)    // handles error from throwing fn

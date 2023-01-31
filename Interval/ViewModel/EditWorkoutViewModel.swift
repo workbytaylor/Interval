@@ -60,11 +60,19 @@ final class EditWorkoutViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    func deleteStep(at offsets: IndexSet) throws {
-        //context.step.delete(atOffsets: offsets)
-        //context.delete(step)
-        //objectWillChange.send()
+    func deleteStep(_ step: Step) throws {
+        context.delete(step)
+        objectWillChange.send()
+        // renumber all steps after this
     }
+    
+    func onDeleteStep(_ offsets: IndexSet) {
+        for index in offsets {
+            let step = workout.stepArray[index]
+                context.delete(step)
+            }
+    }
+    
     
     
     

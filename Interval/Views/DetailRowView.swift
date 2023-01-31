@@ -16,6 +16,7 @@ struct DetailRowView: View {
         
         
         HStack {
+            Text(String(step.index))
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
                 //.font(.title3)
             

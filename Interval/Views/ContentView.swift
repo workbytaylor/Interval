@@ -30,7 +30,6 @@ struct ContentView: View {
                         //.listRowSeparator(.hidden)
                     }
                     //.listStyle(.plain)
-                    
                 }
             }
             .navigationTitle("Workouts")
@@ -39,8 +38,9 @@ struct ContentView: View {
                     Button {
                         workoutToEdit = .empty(context: provider.newContext)
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "plus.circle.fill")
                     }
+                    .symbolRenderingMode(.hierarchical)
                 }
             }
             .sheet(item: $workoutToEdit,

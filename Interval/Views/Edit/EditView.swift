@@ -51,24 +51,25 @@ struct EditView: View {
                             } label: {
                                 DetailRowView(step: step)
                             }
-                            .swipeActions(edge: .trailing) {
+                            /*
+                            .swipeActions {
                                 Button(role: .destructive) {
                                     do {
-                                        // delete step
-                                        // from tunds:
-                                        // try provider.delete(contact, in: provider.newContext)
-                                    }/* catch {
+                                        try vm.deleteStep(step)
+                                        
+                                    } catch {
                                         print(error)
                                     }
-                                         */
+                                         
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                         .tint(.red)
                                 }
                             }
-                            //.swipe disabled?
-                            //.deleteDisabled(newSteps.count < 2)
+                             */
+                            .deleteDisabled(vm.workout.stepArray.count < 2)
                         }
+                        .onDelete(perform: vm.onDeleteStep)
                     }
                 } header: {
                     Text("Steps")
