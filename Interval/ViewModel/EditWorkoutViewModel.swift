@@ -16,7 +16,6 @@ final class EditWorkoutViewModel: ObservableObject {
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
     
-    
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider
         self.context = provider.newContext
@@ -38,7 +37,13 @@ final class EditWorkoutViewModel: ObservableObject {
         try provider.persist(in: context)
     }
     
-    // unsure if this should be in provider, vm, or object? leave here.
+    // TODO: Move to provider??
+    func eraseTitle() {
+        self.workout.title = ""
+        objectWillChange.send()
+    }
+    
+    // TODO: Move to provider
     func addStep(type: String) {
         let step = Step(context: context)
         step.id = UUID()
@@ -57,11 +62,7 @@ final class EditWorkoutViewModel: ObservableObject {
         objectWillChange.send() //updates list of steps
     }
     
-    func eraseTitle() {
-        self.workout.title = ""
-        objectWillChange.send()
-    }
-    
+    // TODO: Move to provider
     func deleteStep(_ offsets: IndexSet) {
         //print(offsets)
         for i in offsets {
@@ -69,11 +70,10 @@ final class EditWorkoutViewModel: ObservableObject {
             context.delete(step)
         }
         objectWillChange.send()
-        renumberSteps(offsets)  // does not need to be nested
+        //renumberSteps(offsets)  // does not need to be nested
     }
     
-    //glitch in state only, data flow works
-    
+    // TODO: Move to provider
     func renumberSteps(_ offsets: IndexSet) {
         for i in offsets {
             let stepIndex = Int(workout.stepArray[i].index)

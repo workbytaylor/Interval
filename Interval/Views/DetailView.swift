@@ -80,11 +80,10 @@ struct DetailView: View {
             EditView(vm: .init(provider: provider,
                               workout: workout))
         })
-        
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 do {
-                    try provider.delete(workout, in: provider.viewContext)  // change viewContext to newContext to make safer?
+                    try provider.deleteWorkout(workout, in: provider.viewContext)  // change viewContext to newContext to make safer?
                     dismiss()
                 } catch {
                     print(error)    // handles error from throwing fn

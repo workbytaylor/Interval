@@ -40,7 +40,7 @@ final class WorkoutsProvider {
         try? context.existingObject(with: workout.objectID) as? Workout
     }
     
-    func delete(_ workout: Workout,
+    func deleteWorkout(_ workout: Workout,
                 in context: NSManagedObjectContext) throws {
         if let existingWorkout = exists(workout, in: context) {
             context.delete(existingWorkout)
@@ -50,6 +50,15 @@ final class WorkoutsProvider {
                 }
             }
         }
+    }
+    
+    func deleteStep(_ step: Step,
+                in context: NSManagedObjectContext) throws {
+        
+    }
+    
+    func eraseTitle() throws {
+        
     }
     
     func persist(in context: NSManagedObjectContext) throws {

@@ -58,7 +58,6 @@ struct EditView: View {
                                 Button(role: .destructive) {
                                     do {
                                         try vm.deleteStep(step)
-                                        
                                     } catch {
                                         print(error)
                                     }
