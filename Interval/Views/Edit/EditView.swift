@@ -71,7 +71,7 @@ struct EditView: View {
                              */
                             .deleteDisabled(vm.workout.stepArray.count < 2)
                         }
-                        .onDelete(perform: vm.onDeleteStep)
+                        .onDelete(perform: vm.deleteStep)
                     }
                 } header: {
                     Text("Steps")
@@ -103,18 +103,11 @@ struct EditView: View {
                         }
                     } label: {
                         Text("Save")
-                            .bold()
                         //Image(systemName: "xmark.circle.fill")
                     }
-                    .controlSize(.small)
-                    .buttonStyle(.bordered)
-                    //.symbolRenderingMode(.hierarchical)
-                    //.foregroundStyle(.secondary)
                     .disabled(!vm.workout.isValid)
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    
-                    
                     Menu {
                         Button {
                             withAnimation {
@@ -140,7 +133,6 @@ struct EditView: View {
                             vm.addStep(type: "distance")
                         }
                     }*/
-                    
                 }
             }
         }

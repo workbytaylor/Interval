@@ -68,9 +68,8 @@ struct DetailView: View {
                     }
                     
                 } label: {
-                    Image(systemName: "ellipsis.circle.fill")
+                    Image(systemName: "ellipsis")
                 }
-                .symbolRenderingMode(.hierarchical)
                 .font(.title2)
             }
         }

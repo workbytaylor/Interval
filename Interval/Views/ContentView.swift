@@ -38,9 +38,8 @@ struct ContentView: View {
                     Button {
                         workoutToEdit = .empty(context: provider.newContext)
                     } label: {
-                        Image(systemName: "plus.circle.fill")
+                        Image(systemName: "plus")
                     }
-                    .symbolRenderingMode(.hierarchical)
                     .font(.title2)
                 }
             }

@@ -62,20 +62,33 @@ final class EditWorkoutViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    func deleteStep(_ step: Step) throws {
-        context.delete(step)
+    func deleteStep(_ offsets: IndexSet) {
+        //print(offsets)
+        for i in offsets {
+            let step = workout.stepArray[i]
+            context.delete(step)
+        }
         objectWillChange.send()
-        // renumber all steps after this
+        renumberSteps(offsets)  // does not need to be nested
     }
     
-    func onDeleteStep(_ offsets: IndexSet) {
-        for index in offsets {
-            let step = workout.stepArray[index]
-                context.delete(step)
+    //glitch in state only, data flow works
+    
+    func renumberSteps(_ offsets: IndexSet) {
+        for i in offsets {
+            let stepIndex = Int(workout.stepArray[i].index)
+            if stepIndex < workout.stepArray.count {
+                let renumRange = stepIndex..<workout.stepArray.count
+                for num in renumRange {
+                    var count = num
+                    let step = workout.stepArray[num]
+                    step.index = Int16(count)
+                    count += 1
+                }
             }
+        }
+        objectWillChange.send()
     }
-    
-    
     
     
 }

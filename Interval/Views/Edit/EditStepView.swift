@@ -42,15 +42,7 @@ struct EditStepView: View {
             List {
                 Section {
                     
-                    HStack {
-                        Picker("Type", selection: $stepType) {
-                            ForEach(stepTypes.allCases, id: \.self) { type in
-                                Text(type.rawValue)
-                            }
-                        }
-                        .labelsHidden()
-                        .padding(.leading, -14)
-                        Spacer()
+                    LabeledContent {
                         Button {
                             withAnimation {
                                 lengthToggle.toggle()
@@ -60,61 +52,40 @@ struct EditStepView: View {
                         }
                         .buttonStyle(.bordered)
                         .foregroundColor(lengthToggle == true ? .accentColor : .primary)
-                    }
-                    
-                    if lengthToggle == !true {
-                        HStack(spacing: .zero) {
-                            Picker("Unit", selection: $unitType) {
-                                ForEach(stepTypes.allCases, id: \.self) { type in
-                                    Text(type.rawValue)
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            Text(":")
+                    } label: {
+                        ZStack(alignment: .leading) {
+                            Text(" ")
                             Picker("Type", selection: $stepType) {
                                 ForEach(stepTypes.allCases, id: \.self) { type in
                                     Text(type.rawValue)
                                 }
                             }
+                            .labelsHidden()
+                            .padding(.leading, -14)
+                        }
+                    }
+                    
+                    if lengthToggle == true {
+                        HStack(spacing: .zero) {
+                            Picker("Magnitude", selection: $magnitude) {
+                                ForEach(1..<101, id: \.self) { magnitude in
+                                    Text(String(magnitude))
+                                }
+                                
+                            }
+                            
+                            .pickerStyle(.wheel)
+                            Text(":")
+                            Picker("Unit", selection: $unit) {
+                                ForEach(Units.allCases, id: \.self) { unit in
+                                    Text(unit.rawValue)
+                                }
+                            }
                             .pickerStyle(.wheel)
                         }
-                        
-                        
-                        
-                        
-                        
-                    }
-                    
-                    
-                    /*
-                    Picker("Type", selection: $stepType) {
-                        ForEach(stepTypes.allCases, id: \.self) { type in
-                            Text(type.rawValue)
-                        }
-                    }
-                     */
-                     
-                    HStack {
-                        Text("\(stepType.rawValue)")    // Duration / distance
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                lengthToggle.toggle()
-                            }
-                        } label: {
-                            Text("\(magnitude) \(unit.rawValue)")
-                        }
-                        .buttonStyle(.bordered)
-                        .foregroundColor(lengthToggle == true ? .accentColor : .primary)
                     }
                      
-                    
-                //}
-                
-                //Section {
-                    HStack {
-                        Text("Pace")
-                        Spacer()
+                    LabeledContent {
                         Button {
                             withAnimation {
                                 paceToggle.toggle()
@@ -124,7 +95,10 @@ struct EditStepView: View {
                         }
                         .buttonStyle(.bordered)
                         .foregroundColor(paceToggle == true ? .accentColor : .primary)
+                    } label: {
+                        Text("Pace")
                     }
+                     
                     if paceToggle == true {
                         HStack(spacing: .zero) {
                             Picker("", selection: $minutePace) {
