@@ -43,11 +43,35 @@ struct EditStepView: View {
         NavigationStack {
             List {
                 Section {
+                    
+                    HStack {
+                        Picker("Type", selection: $stepType) {
+                            ForEach(stepTypes.allCases, id: \.self) { type in
+                                Text(type.rawValue)
+                            }
+                        }
+                        .labelsHidden()
+                        .padding(.leading, -14)
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                lengthToggle.toggle()
+                            }
+                        } label: {
+                            Text("\(magnitude) \(unit.rawValue)")
+                        }
+                        .buttonStyle(.bordered)
+                        .foregroundColor(lengthToggle == true ? .accentColor : .primary)
+                    }
+                    
+                    
+                    /*
                     Picker("Type", selection: $stepType) {
                         ForEach(stepTypes.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
                     }
+                     
                     HStack {
                         Text("\(stepType.rawValue)")    // Duration / distance
                         Spacer()
@@ -61,25 +85,11 @@ struct EditStepView: View {
                         .buttonStyle(.bordered)
                         .foregroundColor(lengthToggle == true ? .accentColor : .primary)
                     }
-                    if lengthToggle == true {
-                        HStack {
-                            Picker("Magnitude", selection: $magnitude) {
-                                ForEach(1..<101, id: \.self) { magnitude in
-                                    Text(String(magnitude))
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            Picker("Unit", selection: $unit) {
-                                ForEach(Units.allCases, id: \.self) { unit in
-                                    Text(unit.rawValue)
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                        }
-                    }
-                }
+                     */
+                    
+                //}
                 
-                Section {
+                //Section {
                     HStack {
                         Text("Pace")
                         Spacer()

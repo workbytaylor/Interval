@@ -103,6 +103,7 @@ struct EditView: View {
                         }
                     } label: {
                         Text("Save")
+                            .bold()
                         //Image(systemName: "xmark.circle.fill")
                     }
                     .controlSize(.small)
