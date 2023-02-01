@@ -10,9 +10,7 @@ import SwiftUI
 struct EditStepView: View {
     
     @Environment(\.dismiss) var dismiss
-    
-    
-    
+
     @State private var stepType = stepTypes.distance
     enum stepTypes: String, CaseIterable {
         case distance = "Distance"
@@ -64,6 +62,29 @@ struct EditStepView: View {
                         .foregroundColor(lengthToggle == true ? .accentColor : .primary)
                     }
                     
+                    if lengthToggle == !true {
+                        HStack(spacing: .zero) {
+                            Picker("Unit", selection: $unitType) {
+                                ForEach(stepTypes.allCases, id: \.self) { type in
+                                    Text(type.rawValue)
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                            Text(":")
+                            Picker("Type", selection: $stepType) {
+                                ForEach(stepTypes.allCases, id: \.self) { type in
+                                    Text(type.rawValue)
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                        }
+                        
+                        
+                        
+                        
+                        
+                    }
+                    
                     
                     /*
                     Picker("Type", selection: $stepType) {
@@ -71,6 +92,7 @@ struct EditStepView: View {
                             Text(type.rawValue)
                         }
                     }
+                     */
                      
                     HStack {
                         Text("\(stepType.rawValue)")    // Duration / distance
@@ -85,7 +107,7 @@ struct EditStepView: View {
                         .buttonStyle(.bordered)
                         .foregroundColor(lengthToggle == true ? .accentColor : .primary)
                     }
-                     */
+                     
                     
                 //}
                 
