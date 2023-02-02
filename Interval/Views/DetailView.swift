@@ -68,9 +68,8 @@ struct DetailView: View {
                     }
                     
                 } label: {
-                    Image(systemName: "ellipsis")
+                    Image(systemName: "ellipsis.circle")
                 }
-                .font(.title2)
             }
         }
         .sheet(item: $workoutToEdit,

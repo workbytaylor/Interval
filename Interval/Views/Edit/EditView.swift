@@ -18,7 +18,7 @@ struct EditView: View {
             List {
                 Section {
                     TextField("Add Title", text: $vm.workout.title)
-                        .font(.system(.title2, design: .default, weight: .semibold))
+                        //.font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                         .overlay(alignment: .trailing) {
@@ -28,7 +28,7 @@ struct EditView: View {
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                 }
-                                .symbolRenderingMode(.hierarchical)
+                                //.symbolRenderingMode(.hierarchical)
                                 .foregroundStyle(.secondary)
                             }
                         }
@@ -77,13 +77,13 @@ struct EditView: View {
                 }
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255)) // prevents white from showing when keyboard dismissed
+            //.background currently only works in darkmode
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 isTitleFocused = vm.isNew == true ? true : false
             }
             .toolbar {
-                
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         dismiss()
@@ -102,7 +102,6 @@ struct EditView: View {
                         }
                     } label: {
                         Text("Save")
-                        //Image(systemName: "xmark.circle.fill")
                     }
                     .disabled(!vm.workout.isValid)
                 }

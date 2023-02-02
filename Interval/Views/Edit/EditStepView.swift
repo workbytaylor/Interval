@@ -93,7 +93,7 @@ struct EditStepView: View {
                         } label: {
                             Text("\(minutePace).")+Text(secondPace < 10 ? "0" :  "")+Text("\(secondPace)")+Text(" /km")
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(.bordered) // this could be the cause of the padding
                         .foregroundColor(paceToggle == true ? .accentColor : .primary)
                     } label: {
                         Text("Pace")
