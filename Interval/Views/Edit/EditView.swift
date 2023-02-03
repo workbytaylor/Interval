@@ -13,6 +13,8 @@ struct EditView: View {
     @ObservedObject var vm: EditWorkoutViewModel
     @FocusState var isTitleFocused: Bool
     
+    var provider = WorkoutsProvider.shared
+    
     var body: some View {
         NavigationStack {
             List {
@@ -43,11 +45,12 @@ struct EditView: View {
                             } label: {
                                 DetailRowView(step: step)
                             }
+                            .deleteDisabled(vm.workout.stepArray.count < 2)
                             /*
                             .swipeActions {
                                 Button(role: .destructive) {
                                     do {
-                                        try vm.deleteStep(step)
+                                        try vm.deleteStep(step)//provider.deleteStep(step, in: provider.viewContext)
                                     } catch {
                                         print(error)
                                     }
@@ -58,9 +61,11 @@ struct EditView: View {
                                 }
                             }
                              */
-                            .deleteDisabled(vm.workout.stepArray.count < 2)
+                            
                         }
-                        .onDelete(perform: vm.deleteStep)
+                        
+                        .onDelete(perform: vm.deleteStepWithOffsets)
+                        
                     }
                 } header: {
                     Text("Steps")
@@ -95,18 +100,27 @@ struct EditView: View {
                     }
                     .disabled(!vm.workout.isValid)
                 }
+                
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
                             withAnimation {
-                                vm.addStep(type: "time")
+                                do {
+                                    try vm.addStep("time")
+                                } catch {
+                                    print(error)
+                                }
                             }
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
                             withAnimation {
-                                vm.addStep(type: "distance")
+                                do {
+                                    try vm.addStep("distance")
+                                } catch {
+                                    print(error)
+                                }
                             }
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
@@ -116,11 +130,7 @@ struct EditView: View {
                             Image(systemName: "plus")
                             Text("Add Step")
                         }
-                    }/* primaryAction: {
-                        withAnimation {
-                            vm.addStep(type: "distance")
-                        }
-                    }*/
+                    }
                 }
             }
         }

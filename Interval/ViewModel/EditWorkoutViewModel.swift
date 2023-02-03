@@ -16,11 +16,16 @@ final class EditWorkoutViewModel: ObservableObject {
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
     
+    
+    
+    
+    
+    
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider
         self.context = provider.newContext
         if let workout, // unwrap
-           let existingWorkoutCopy = provider.exists(workout,
+           let existingWorkoutCopy = provider.workoutExists(workout,
                                                      in: context) {  //does object exist in coreData?
             // if yes, load the object
             self.workout = existingWorkoutCopy
@@ -34,38 +39,39 @@ final class EditWorkoutViewModel: ObservableObject {
     }
     
     func save() throws {
-        try provider.persist(in: context)
-    }
-     
-    // TODO: Move to provider
-    func addStep(type: String) {
-        let step = Step(context: context)
-        step.id = UUID()
-        step.type = type
-        step.magnitude = 5
-        
-        if type == "distance" {
-            step.unit = "km"
-        } else if type == "time" {
-            step.unit = "Minutes"
-        }
-        
-        step.pace = 315
-        step.index = Int16(workout.stepArray.count + 1)
-        step.workout = workout
-        objectWillChange.send() //updates list of steps
+        try provider.persist(in: self.context)
     }
     
-    // TODO: Move to provider
-    func deleteStep(_ offsets: IndexSet) {
-        //print(offsets)
+    func addStep(_ type: String) throws {
+        try provider.addStep(workout, in: self.context, type: type)
+        objectWillChange.send() // only needed if you want edits to be temporary
+        //try save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
+    }
+    
+    func deleteStepWithOffsets(_ offsets: IndexSet) {
         for i in offsets {
             let step = workout.stepArray[i]
-            context.delete(step)
+            
+            do {
+                try provider.deleteStepWithOffsets(step, in: self.context)
+                //try save()
+                //objectWillChange.send()   // uncommenting this does not work
+                // TODO: Issue lies in stepArray not updating when step deleted
+            } catch {
+                print(error)
+            }
+            
+            
+            
+            
         }
-        objectWillChange.send()
-        //renumberSteps(offsets)  // does not need to be nested
+        
+        
     }
+    
+    
+    
+    
     
     // TODO: Move to provider
     func renumberSteps(_ offsets: IndexSet) {

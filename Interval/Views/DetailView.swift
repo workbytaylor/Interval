@@ -11,43 +11,41 @@ struct DetailView: View {
     
     @Environment(\.dismiss) var dismiss
     @ObservedObject var workout: Workout
-    let provider: WorkoutsProvider
+    var provider: WorkoutsProvider
     @State private var showDeleteAlert: Bool = false
     @State private var workoutToEdit: Workout?
     
     var body: some View {
-        //ZStack {
-            List {
-                /*
-                Section {
-                    Text("The purpose of this workout is to...")
-                } header: {
-                    Text("Notes")
-                }
-                */
-                
-                Section {
-                    if workout.stepArray.isEmpty {
-                        HStack {
-                            Spacer()
-                            Text("No steps")
-                            Spacer()
-                        }
-                        .foregroundStyle(.secondary)
-                        .listRowBackground(Color.clear)
-                    } else {
-                        ForEach(workout.stepArray) { step in
-                            DetailRowView(step: step)
-                        }
-                    }
-                } header: {
-                    Text("Steps")
-                }
-                
+        List {
+            /*
+            Section {
+                Text("The purpose of this workout is to...")
+            } header: {
+                Text("Notes")
             }
-            .listStyle(.automatic)
-        //}
-            .navigationBarTitle(workout.title)
+            */
+            
+            Section {
+                if workout.stepArray.isEmpty {
+                    HStack {
+                        Spacer()
+                        Text("No steps")
+                        Spacer()
+                    }
+                    .foregroundStyle(.secondary)
+                    .listRowBackground(Color.clear)
+                } else {
+                    ForEach(workout.stepArray) { step in
+                        DetailRowView(step: step)
+                    }
+                }
+            } header: {
+                Text("Steps")
+            }
+            
+        }
+        .listStyle(.automatic)
+        .navigationBarTitle(workout.title)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Menu {
@@ -58,7 +56,6 @@ struct DetailView: View {
                             Label("Delete Workout", systemImage: "trash")
                         }
                     }
-                    
                     Section {
                         Button {
                             workoutToEdit = workout
@@ -66,10 +63,10 @@ struct DetailView: View {
                             Label("Edit", systemImage: "square.and.pencil")
                         }
                     }
-                    
                 } label: {
                     Image(systemName: "ellipsis.circle")
                 }
+                
             }
         }
         .sheet(item: $workoutToEdit,
@@ -82,10 +79,10 @@ struct DetailView: View {
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 do {
-                    try provider.deleteWorkout(workout, in: provider.viewContext)  // change viewContext to newContext to make safer?
+                    try provider.deleteWorkout(workout, in: provider.newContext)
                     dismiss()
                 } catch {
-                    print(error)    // handles error from throwing fn
+                    print(error)
                 }
             }
             Button("Cancel", role: .cancel) {  }

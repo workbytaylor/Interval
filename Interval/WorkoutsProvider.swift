@@ -35,14 +35,19 @@ final class WorkoutsProvider {
         }
     }
     
-    func exists(_ workout: Workout,
+    func workoutExists(_ workout: Workout,
                 in context: NSManagedObjectContext) -> Workout? {
         try? context.existingObject(with: workout.objectID) as? Workout
     }
     
+    func stepExists(_ step: Step,
+                    in context: NSManagedObjectContext) -> Step? {
+        try? context.existingObject(with: step.objectID) as? Step
+    }
+    
     func deleteWorkout(_ workout: Workout,
                 in context: NSManagedObjectContext) throws {
-        if let existingWorkout = exists(workout, in: context) {
+        if let existingWorkout = workoutExists(workout, in: context) {
             context.delete(existingWorkout)
             Task(priority: .background) {
                 try await context.perform {
@@ -52,13 +57,55 @@ final class WorkoutsProvider {
         }
     }
     
+    // delete a step, does not work yet
+    /*
     func deleteStep(_ step: Step,
-                in context: NSManagedObjectContext) throws {
+                 in context: NSManagedObjectContext) throws {
+        if let existingStep = stepExists(step, in: context) {
+            context.delete(existingStep)
+        }
+        Task(priority: .background) {
+            try await context.perform {
+                try context.save()
+            }
+        }
+    }
+     */
+    
+    
+    func deleteStepWithOffsets(_ step: Step,
+                               in context: NSManagedObjectContext) throws {
+        if let existingStep = stepExists(step, in: context) {
+            context.delete(existingStep)
+        }
+    }
+    
+    func renumberSteps() throws {
         
     }
     
-    func eraseTitle() throws {
-        
+    
+    // add a new step
+    func addStep(_ workout: Workout,    // called in vm as addStep
+                    in context: NSManagedObjectContext,
+                    type: String) throws {  // of? type
+        if let existingWorkout = workoutExists(workout, in: context) {
+            let step = Step(context: context)
+            step.id = UUID()
+            step.type = type
+            step.magnitude = 5
+            switch type {
+            case "distance":
+                step.unit = "kilometers"
+            case "time":
+                step.unit = "minutes"
+            default:
+                step.unit = "unknown step unit"
+            }
+            step.pace = 315
+            step.index = Int16(existingWorkout.stepArray.count + 1)
+            step.workout = existingWorkout
+        }
     }
     
     func persist(in context: NSManagedObjectContext) throws {

@@ -30,6 +30,7 @@ extension Workout {
         setPrimitiveValue(UUID(), forKey: "id")
     }
     
+    
     // order steps based on index
     public var stepArray: [Step] {
         let setOfSteps = steps as? Set<Step> ?? []
@@ -37,6 +38,8 @@ extension Workout {
             $0.index < $1.index
         }
     }
+    
+    
 }
 
 extension Workout {
@@ -57,12 +60,14 @@ extension Workout {
 // MARK: Generated accessors for steps
 extension Workout {
 
+    //single steps
     @objc(addStepsObject:)
     @NSManaged public func addToSteps(_ value: Step)
 
     @objc(removeStepsObject:)
     @NSManaged public func removeFromSteps(_ value: Step)
 
+    //multiple steps
     @objc(addSteps:)
     @NSManaged public func addToSteps(_ values: NSSet)
 

@@ -17,17 +17,6 @@ struct ContentRowView: View {
         } label: {
             Text(workout.title)
         }
-        
-        // Past design
-        /*
-        HStack {
-            Text(workout.title)
-                .font(.headline)
-            Text("\(workout.stepArray.count) steps")
-                .foregroundStyle(.secondary)
-                .font(.subheadline)
-        }
-         */
     }
 }
 

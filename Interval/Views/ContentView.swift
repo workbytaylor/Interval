@@ -27,9 +27,7 @@ struct ContentView: View {
                                 ContentRowView(workout: workout)
                             }
                         }
-                        //.listRowSeparator(.hidden)
                     }
-                    //.listStyle(.plain)
                 }
             }
             .navigationTitle("Workouts")
