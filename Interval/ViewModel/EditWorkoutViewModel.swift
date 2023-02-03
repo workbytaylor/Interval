@@ -36,13 +36,7 @@ final class EditWorkoutViewModel: ObservableObject {
     func save() throws {
         try provider.persist(in: context)
     }
-    
-    // TODO: Move to provider??
-    func eraseTitle() {
-        self.workout.title = ""
-        objectWillChange.send()
-    }
-    
+     
     // TODO: Move to provider
     func addStep(type: String) {
         let step = Step(context: context)

@@ -45,6 +45,9 @@ struct EditStepView: View {
                     LabeledContent {
                         Button {
                             withAnimation {
+                                if paceToggle == true {
+                                    paceToggle.toggle()
+                                }
                                 lengthToggle.toggle()
                             }
                         } label: {
@@ -71,9 +74,7 @@ struct EditStepView: View {
                                 ForEach(1..<101, id: \.self) { magnitude in
                                     Text(String(magnitude))
                                 }
-                                
                             }
-                            
                             .pickerStyle(.wheel)
                             Text(":")
                             Picker("Unit", selection: $unit) {
@@ -88,6 +89,9 @@ struct EditStepView: View {
                     LabeledContent {
                         Button {
                             withAnimation {
+                                if lengthToggle == true {
+                                    lengthToggle = false
+                                }
                                 paceToggle.toggle()
                             }
                         } label: {
@@ -108,29 +112,22 @@ struct EditStepView: View {
                             }
                             .pickerStyle(.wheel)
                             
-                            Text(":")
+                            //Text(".")
                             Picker("", selection: $secondPace) {
-                                ForEach(paceSecondOptions, id: \.self) { secondPace in  // add double zero (00)
-                                    Text("\(secondPace) s")
+                                ForEach(paceSecondOptions, id: \.self) { secondPace in
+                                    if secondPace < 10 {
+                                        Text("0\(secondPace) s")
+                                    } else {
+                                        Text("\(secondPace) s")
+                                    }
+                                    
+                                    
                                 }
                             }
                             .pickerStyle(.wheel)
                         }
                     }
                 }
-                
-                
-                /*
-                 // Notes for each step - necessary?
-                TextField("Notes", text: $notes, axis: .vertical)
-                    .lineLimit(3, reservesSpace: true)
-                    .onChange(of: notes) { characters in
-                        let maxCount = 80
-                            if characters.count > maxCount {
-                                self.notes = String(characters.prefix(maxCount))
-                            }
-                        }
-                */
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)

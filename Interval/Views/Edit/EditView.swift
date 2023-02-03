@@ -18,22 +18,12 @@ struct EditView: View {
             List {
                 Section {
                     TextField("Add Title", text: $vm.workout.title)
-                        //.font(.system(.title2, design: .default, weight: .semibold))
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                        .overlay(alignment: .trailing) {
-                            if vm.workout.title != "" {
-                                Button {
-                                    vm.eraseTitle()
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                }
-                                //.symbolRenderingMode(.hierarchical)
-                                .foregroundStyle(.secondary)
-                            }
-                        }
                         .focused($isTitleFocused)
-                    
+                        .onAppear {
+                            UITextField.appearance().clearButtonMode = .whileEditing
+                        }
                 } header: {
                     Text("Title")
                 }
