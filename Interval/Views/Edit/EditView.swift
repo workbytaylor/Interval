@@ -61,11 +61,8 @@ struct EditView: View {
                                 }
                             }
                              */
-                            
                         }
-                        
                         .onDelete(perform: vm.deleteStepWithOffsets)
-                        
                     }
                 } header: {
                     Text("Steps")
@@ -83,6 +80,7 @@ struct EditView: View {
                     Button(role: .cancel) {
                         dismiss()
                     } label: {
+                        //Image(systemName: "xmark").tint(.red)
                         Text("Cancel").tint(.red)
                     }
                 }
@@ -96,6 +94,7 @@ struct EditView: View {
                             print(error)
                         }
                     } label: {
+                        //Image(systemName: "checkmark")
                         Text("Save")
                     }
                     .disabled(!vm.workout.isValid)

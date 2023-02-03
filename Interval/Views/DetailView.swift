@@ -64,7 +64,9 @@ struct DetailView: View {
                         }
                     }
                 } label: {
-                    Image(systemName: "ellipsis.circle")
+                    Image(systemName: "square.and.pencil")
+                } primaryAction: {
+                    workoutToEdit = workout
                 }
                 
             }

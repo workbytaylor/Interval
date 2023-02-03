@@ -46,7 +46,7 @@ struct EditStepView: View {
                         Button {
                             withAnimation {
                                 if paceToggle == true {
-                                    paceToggle.toggle()
+                                    paceToggle = false
                                 }
                                 lengthToggle.toggle()
                             }
@@ -76,7 +76,6 @@ struct EditStepView: View {
                                 }
                             }
                             .pickerStyle(.wheel)
-                            Text(":")
                             Picker("Unit", selection: $unit) {
                                 ForEach(Units.allCases, id: \.self) { unit in
                                     Text(unit.rawValue)
