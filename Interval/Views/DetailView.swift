@@ -16,9 +16,8 @@ struct DetailView: View {
     @State private var workoutToEdit: Workout?
     
     @FetchRequest(
-        sortDescriptors: [SortDescriptor(\.index, order: .forward)]/*,
-        predicate: NSPredicate()*/
-    
+        sortDescriptors: [SortDescriptor(\.index, order: .forward)],
+        predicate: NSPredicate(format: "workout == %@", workout)
     ) var fetchedSteps: FetchedResults<Step>
     
     
