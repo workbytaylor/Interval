@@ -12,13 +12,10 @@ import SwiftUI
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
+    @Published var steps: [Step]    // don't think this is the right method, likely need fetchrequest
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
-    
-    
-    
-    
     
     
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
@@ -30,11 +27,13 @@ final class EditWorkoutViewModel: ObservableObject {
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
+            self.steps = existingWorkoutCopy.stepArray  // does not update steps in EditView when deleted or added
             
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
             self.isNew = true
+            self.steps = []
         }
     }
     

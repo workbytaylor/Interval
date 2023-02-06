@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentRowView: View {
-    @Environment(\.managedObjectContext) private var moc
+    @Environment(\.managedObjectContext) private var moc    //unsure if this is really needed
     @ObservedObject var workout: Workout
     
     var body: some View {

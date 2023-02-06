@@ -11,7 +11,6 @@ import CoreData
 
 
 extension Step {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Step> {
         return NSFetchRequest<Step>(entityName: "Step")
     }
@@ -41,9 +40,7 @@ extension Step {
     }
 }
 
-
 extension Step {
-    
     @discardableResult
     static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Step] {
         var steps = [Step]()
@@ -67,7 +64,8 @@ extension Step {
     static func empty(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Step {
         return Step(context: context)
     }
-    
-    
-    
+}
+
+extension Step {
+    // sort descriptors and NSPredicate
 }

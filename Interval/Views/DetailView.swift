@@ -15,33 +15,10 @@ struct DetailView: View {
     @State private var showDeleteAlert: Bool = false
     @State private var workoutToEdit: Workout?
     
-    @FetchRequest(
-        sortDescriptors: [SortDescriptor(\.index, order: .forward)],
-        predicate: NSPredicate(format: "workout == %@", workout)
-    ) var fetchedSteps: FetchedResults<Step>
-    
     
     
     var body: some View {
         List {
-            Section {
-                ForEach(fetchedSteps) { step in
-                    Text(String(step.index))
-                }
-            } header: {
-                Text("Fetched Steps")
-            }
-            
-            
-            
-            /*
-            Section {
-                Text("The purpose of this workout is to...")
-            } header: {
-                Text("Notes")
-            }
-            */
-            
             Section {
                 if workout.stepArray.isEmpty {
                     HStack {

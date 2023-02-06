@@ -31,7 +31,7 @@ struct EditView: View {
                 }
                 
                 Section {
-                    if vm.workout.stepArray.isEmpty {
+                    if vm.steps.isEmpty {
                         HStack {
                             Spacer()
                             NoDataView(item: "step")
@@ -39,7 +39,7 @@ struct EditView: View {
                         }
                         .listRowBackground(Color.clear)
                     } else {
-                        ForEach(vm.workout.stepArray, id: \.id) { step in
+                        ForEach(vm.steps, id: \.id) { step in
                             NavigationLink {
                                 EditStepView()
                             } label: {

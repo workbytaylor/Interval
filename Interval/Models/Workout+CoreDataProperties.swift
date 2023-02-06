@@ -24,12 +24,10 @@ extension Workout {
         !title.isEmpty
     }
     
-    
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         setPrimitiveValue(UUID(), forKey: "id")
     }
-    
     
     // order steps based on index
     public var stepArray: [Step] {
@@ -38,8 +36,6 @@ extension Workout {
             $0.index < $1.index
         }
     }
-    
-    
 }
 
 extension Workout {
@@ -56,28 +52,7 @@ extension Workout {
     }
 }
 
-
-// MARK: Generated accessors for steps
-extension Workout {
-
-    //single steps
-    @objc(addStepsObject:)
-    @NSManaged public func addToSteps(_ value: Step)
-
-    @objc(removeStepsObject:)
-    @NSManaged public func removeFromSteps(_ value: Step)
-
-    //multiple steps
-    @objc(addSteps:)
-    @NSManaged public func addToSteps(_ values: NSSet)
-
-    @objc(removeSteps:)
-    @NSManaged public func removeFromSteps(_ values: NSSet)
-
-}
-
-extension Workout { // provides preview to use with CoreData
-    
+extension Workout { // provides preview to use with CoreData    
     @discardableResult
     static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Workout] {
         var workouts = [Workout]()
