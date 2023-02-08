@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct EditView: View {
-    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var vm: EditWorkoutViewModel
     @FocusState var isTitleFocused: Bool
@@ -68,8 +67,7 @@ struct EditView: View {
                     Text("Steps")
                 }
             }
-            .background(Color(red: 242/255, green: 241/255, blue: 247/255)) // prevents white from showing when keyboard dismissed
-            //.background currently only works in darkmode
+            .background(Color(red: 242/255, green: 241/255, blue: 247/255)) // prevents white from showing when keyboard dismissed, currently only works in darkmode
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
@@ -80,7 +78,6 @@ struct EditView: View {
                     Button(role: .cancel) {
                         dismiss()
                     } label: {
-                        //Image(systemName: "xmark").tint(.red)
                         Text("Cancel").tint(.red)
                     }
                 }
@@ -94,10 +91,10 @@ struct EditView: View {
                             print(error)
                         }
                     } label: {
-                        //Image(systemName: "checkmark")
+                        //Image(systemName: "xmark.circle.fill")
                         Text("Save")
                     }
-                    .disabled(!vm.workout.isValid)
+                    .disabled(!vm.workout.isValid)  // disabled if isValid = false
                 }
                 
                 ToolbarItem(placement: .bottomBar) {

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct DetailRowView: View {
-    
-    var step: Step   // change to observedobject?
+    var step: Step
     
     var body: some View {
         HStack {

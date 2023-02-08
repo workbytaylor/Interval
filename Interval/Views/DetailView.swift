@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct DetailView: View {
-    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var workout: Workout
     var provider: WorkoutsProvider
+    
     @State private var showDeleteAlert: Bool = false
     @State private var workoutToEdit: Workout?
-    
-    
     
     var body: some View {
         List {
@@ -62,7 +60,6 @@ struct DetailView: View {
                 } primaryAction: {
                     workoutToEdit = workout
                 }
-                
             }
         }
         .sheet(item: $workoutToEdit,
