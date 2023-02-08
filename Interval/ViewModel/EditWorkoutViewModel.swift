@@ -21,13 +21,19 @@ final class EditWorkoutViewModel: ObservableObject {
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider
         self.context = provider.newContext
-        if let workout, // unwrap
+        if let workout, // is there a workout?
            let existingWorkoutCopy = provider.workoutExists(workout,
-                                                     in: context) {  //does object exist in coreData?
+                                                     in: context) {  //does the workout exist in coreData?
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
             self.steps = existingWorkoutCopy.stepArray  // does not update steps in EditView when deleted or added
+            
+            // the stepArray is not updated when the list is updated
+            // TODO: try fetchrequest with CoreData
+            // X try objectwillchange.send in step array    // did not work
+            // TODO: try changing NSSet declaration in Workout to Set<Type>?
+            // TODO: try .onchange
             
         } else {
             // if no, create new workout
