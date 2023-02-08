@@ -8,14 +8,22 @@
 import SwiftUI
 import CoreData
 
+struct SearchConfig: Equatable {
+    var query: String = ""
+}
+
 struct ContentView: View {
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
     @State private var workoutToEdit: Workout?
+    @State private var searchConfig: SearchConfig = .init()
     var provider = WorkoutsProvider.shared
     
     var body: some View {
         NavigationStack {
             ZStack {
+                
+                // change to switch statement with different cases
+                // add case for search, but no views match
                 if workouts.isEmpty {
                     NoDataView(item: "workout")
                 } else {
@@ -30,7 +38,11 @@ struct ContentView: View {
                     }
                 }
             }
+            .searchable(text: $searchConfig.query)
             .navigationTitle("Workouts")
+            .onChange(of: searchConfig) { newValue in
+                workouts.nsPredicate = Workout.filter(newValue.query)
+            }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {

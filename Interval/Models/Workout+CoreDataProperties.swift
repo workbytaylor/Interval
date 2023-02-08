@@ -20,11 +20,11 @@ extension Workout {
     @NSManaged public var title: String//?  //making title optional prevents textfield from working
     @NSManaged public var steps: NSSet?
     
-    var isValid: Bool {
+    var isValid: Bool { // add conditions here to validate workout title in EditView
         !title.isEmpty
     }
     
-    public override func awakeFromInsert() {
+    public override func awakeFromInsert() {    // adds default value for id property
         super.awakeFromInsert()
         setPrimitiveValue(UUID(), forKey: "id")
     }
@@ -38,7 +38,7 @@ extension Workout {
     }
 }
 
-extension Workout {
+extension Workout { // Fetches all workouts for ContentView
     private static var workoutsFetchRequest: NSFetchRequest<Workout> {
         NSFetchRequest(entityName: "Workout")
     }
@@ -49,6 +49,10 @@ extension Workout {
             NSSortDescriptor(keyPath: \Workout.title, ascending: true)
         ]
         return request
+    }
+    
+    static func filter(_ query: String) -> NSPredicate { // fetch request for ContentView, filter by search text
+        query.isEmpty ? NSPredicate(value: true) : NSPredicate(format: "title CONTAINS[cd] %@", query) // [cd] means any case (Upper/Lower)
     }
 }
 

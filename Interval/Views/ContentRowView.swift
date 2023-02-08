@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentRowView: View {
-    @Environment(\.managedObjectContext) private var moc    // is this needed?
+    //@Environment(\.managedObjectContext) private var moc    // Is this needed? No. Tunds uses it for toggling favourites.
     @ObservedObject var workout: Workout
     
     var body: some View {

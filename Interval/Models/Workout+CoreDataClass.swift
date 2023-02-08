@@ -13,3 +13,5 @@ import CoreData
 public class Workout: NSManagedObject, Identifiable {
 
 }
+
+// TODO: Combine workout files

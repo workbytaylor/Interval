@@ -12,7 +12,7 @@ import SwiftUI
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
-    @Published var steps: [Step]    // don't think this is the right method, likely need fetchrequest
+    //@Published var steps: [Step]    // don't think this is the right method, likely need fetchrequest
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -27,24 +27,24 @@ final class EditWorkoutViewModel: ObservableObject {
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
-            self.steps = existingWorkoutCopy.stepArray  // does not update steps in EditView when deleted or added
+            //self.steps = existingWorkoutCopy.stepArray  // does not update steps in EditView when deleted or added
             
             // the stepArray is not updated when the list is updated
             // TODO: try fetchrequest with CoreData
             // X try objectwillchange.send in step array    // did not work
-            // TODO: try changing NSSet declaration in Workout to Set<Type>?
+            // X try changing NSSet declaration in Workout to Set<Type>?
             // TODO: try .onchange
             
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
             self.isNew = true
-            self.steps = []
+            //self.steps = []
         }
     }
     
     func save() throws {
-        try provider.persist(in: self.context)
+        try provider.persist(in: context)
     }
     
     func addStep(_ type: String) throws {

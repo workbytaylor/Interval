@@ -13,3 +13,5 @@ import CoreData
 public class Step: NSManagedObject, Identifiable {
 
 }
+
+// TODO: Combine Step files
