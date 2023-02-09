@@ -33,12 +33,12 @@ struct EditView: View {
                     if vm.workout.stepArray.isEmpty {
                         HStack {
                             Spacer()
-                            NoDataView(item: "step")
+                            NoDataView(item: "Steps")
                             Spacer()
                         }
                         .listRowBackground(Color.clear)
                     } else {
-                        ForEach(/*vm.steps, id: \.id*/ vm.workout.stepArray) { step in
+                        ForEach(vm.workout.stepArray) { step in
                             NavigationLink {
                                 EditStepView()
                             } label: {
@@ -71,7 +71,7 @@ struct EditView: View {
             .navigationTitle(vm.isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                isTitleFocused = vm.isNew == true ? true : false
+                if vm.isNew { isTitleFocused = true }
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

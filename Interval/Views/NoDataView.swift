@@ -12,11 +12,7 @@ struct NoDataView: View {
     let item: String
     
     var body: some View {
-        HStack {
-            Text("Tap")
-            Image(systemName: "plus")
-            Text("to add your first \(item)")
-        }
+        Text("No \(item)")
         .font(.callout)
         .foregroundStyle(.secondary)
     }
@@ -25,7 +21,7 @@ struct NoDataView: View {
 struct NoDataView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            NoDataView(item: "workout")
+            NoDataView(item: "Workouts")
         }
     }
 }

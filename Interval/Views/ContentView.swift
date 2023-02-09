@@ -25,7 +25,7 @@ struct ContentView: View {
                 // change to switch statement with different cases
                 // add case for search, but no views match
                 if workouts.isEmpty {
-                    NoDataView(item: "workout")
+                    NoDataView(item: "Workouts")
                 } else {
                     List {
                         ForEach(workouts, id: \.id) { workout in
@@ -55,7 +55,8 @@ struct ContentView: View {
             .sheet(item: $workoutToEdit,
                    onDismiss: {
                         workoutToEdit = nil
-                }, content: { workout in
+                },
+                   content: { workout in
                 EditView(vm: .init(provider: provider,
                                   workout: workout))
             })
