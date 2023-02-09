@@ -12,11 +12,9 @@ import SwiftUI
 final class EditWorkoutViewModel: ObservableObject {
     
     @Published var workout: Workout
-    @Published var steps: [Step]
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
-    
     
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider
@@ -28,21 +26,12 @@ final class EditWorkoutViewModel: ObservableObject {
             self.workout = existingWorkoutCopy
             self.isNew = false
             
-            if let workout.steps,
-               let existingStepsCopy = provider.stepExists(workout.steps,
-                                                           in: context) {
-                self.steps = existingStepsCopy
-            }
-            
-            
-            // the stepArray is not updated when the list is updated
             // TODO: try fetchrequest with CoreData
             
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
             self.isNew = true
-            //self.steps = []
         }
     }
     
@@ -68,17 +57,8 @@ final class EditWorkoutViewModel: ObservableObject {
             } catch {
                 print(error)
             }
-            
-            
-            
-            
         }
-        
-        
     }
-    
-    
-    
     
     
     // TODO: Move to provider

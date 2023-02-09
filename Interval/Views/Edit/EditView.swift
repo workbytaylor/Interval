@@ -14,6 +14,14 @@ struct EditView: View {
     
     var provider = WorkoutsProvider.shared
     
+    //@FetchRequest private var steps: FetchedResults<Step>
+    //@State private var selectedWorkout: Workout
+    
+    //init(workout: Workout) {
+      //  self.selectedWorkout = workout
+    //}
+    
+    
     var body: some View {
         NavigationStack {
             List {
@@ -27,6 +35,14 @@ struct EditView: View {
                         }
                 } header: {
                     Text("Title")
+                }
+                
+                Section {
+                    //ForEach(steps) { step in
+                      //  DetailRowView(step: step)
+                    //}
+                } header: {
+                    Text("@Published steps")
                 }
                 
                 Section {

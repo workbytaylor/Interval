@@ -21,7 +21,6 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                
                 // change to switch statement with different cases
                 // add case for search, but no views match
                 if workouts.isEmpty {
@@ -58,7 +57,9 @@ struct ContentView: View {
                 },
                    content: { workout in
                 EditView(vm: .init(provider: provider,
-                                  workout: workout))
+                                   workout: workout)//,
+                         //selectedWorkout: workout
+                )
             })
         }
     }

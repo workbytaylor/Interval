@@ -67,5 +67,17 @@ extension Step {
 }
 
 extension Step {
-    // sort descriptors and NSPredicate
+    private static var stepsFetchRequest: NSFetchRequest<Step> {
+        NSFetchRequest(entityName: "Step")
+    }
+    
+    // filter for steps that relate to selected workout
+    static func filteredSteps(of workout: Workout) -> NSPredicate {
+        NSPredicate(format: "workout = %@", workout)
+    }
+    
+    // sort filtered steps by index, ascending
+    //static func sortedSteps() -> NSSortDescriptor {
+        
+    //}
 }

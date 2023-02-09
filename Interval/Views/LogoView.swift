@@ -10,7 +10,6 @@ import SwiftUI
 struct LogoView: View {
     var body: some View {
         Text("0")
-            .font(.system(size: 34, design: .monospaced))
     }
 }
 
