@@ -9,12 +9,8 @@
 import Foundation
 import CoreData
 
-
-extension Workout {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Workout> {
-        return NSFetchRequest<Workout>(entityName: "Workout")
-    }
+@objc(Workout)
+public class Workout: NSManagedObject, Identifiable {
 
     @NSManaged public var id: UUID?
     @NSManaged public var title: String//?  //making title optional prevents textfield from working
@@ -29,8 +25,7 @@ extension Workout {
         setPrimitiveValue(UUID(), forKey: "id")
     }
     
-    // order steps based on index
-    public var stepArray: [Step] {
+    public var stepArray: [Step] {  // order steps based on index
         let setOfSteps = steps as? Set<Step> ?? []
         return setOfSteps.sorted {
             $0.index < $1.index
@@ -38,7 +33,8 @@ extension Workout {
     }
 }
 
-extension Workout { // Fetches all workouts for ContentView
+// FETCH REQUESTS
+extension Workout {
     private static var workoutsFetchRequest: NSFetchRequest<Workout> {
         NSFetchRequest(entityName: "Workout")
     }
@@ -56,7 +52,8 @@ extension Workout { // Fetches all workouts for ContentView
     }
 }
 
-extension Workout { // provides preview to use with CoreData    
+// FOR PREVIEWS
+extension Workout {
     @discardableResult
     static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Workout] {
         var workouts = [Workout]()
@@ -76,6 +73,4 @@ extension Workout { // provides preview to use with CoreData
     static func empty(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Workout {
         return Workout(context: context)
     }
-    
-    
 }

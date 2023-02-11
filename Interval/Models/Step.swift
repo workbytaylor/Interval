@@ -10,10 +10,8 @@ import Foundation
 import CoreData
 
 
-extension Step {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Step> {
-        return NSFetchRequest<Step>(entityName: "Step")
-    }
+@objc(Step)
+public class Step: NSManagedObject, Identifiable {
 
     @NSManaged public var id: UUID?
     @NSManaged public var index: Int16
@@ -25,7 +23,6 @@ extension Step {
     
     public override func awakeFromInsert() {    // default values
         super.awakeFromInsert()
-        
         setPrimitiveValue(UUID(), forKey: "id")
         setPrimitiveValue(5, forKey: "magnitude")
         setPrimitiveValue(315, forKey: "pace")
@@ -40,6 +37,24 @@ extension Step {
     }
 }
 
+// FETCH REQUESTS
+extension Step {
+    private static var stepsFetchRequest: NSFetchRequest<Step> {
+        NSFetchRequest(entityName: "Step")
+    }
+    
+    // filter for steps that relate to selected workout
+    static func filteredSteps(of workout: Workout) -> NSPredicate {
+        NSPredicate(format: "workout = %@", workout)
+    }
+    
+    // sort filtered steps by index, ascending
+    //static func sortedSteps() -> NSSortDescriptor {
+        
+    //}
+}
+
+// FOR PREVIEWS
 extension Step {
     @discardableResult
     static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Step] {
@@ -66,18 +81,5 @@ extension Step {
     }
 }
 
-extension Step {
-    private static var stepsFetchRequest: NSFetchRequest<Step> {
-        NSFetchRequest(entityName: "Step")
-    }
-    
-    // filter for steps that relate to selected workout
-    static func filteredSteps(of workout: Workout) -> NSPredicate {
-        NSPredicate(format: "workout = %@", workout)
-    }
-    
-    // sort filtered steps by index, ascending
-    //static func sortedSteps() -> NSSortDescriptor {
-        
-    //}
-}
+
+
