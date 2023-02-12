@@ -56,8 +56,8 @@ struct ContentView: View {
                         workoutToEdit = nil
                 },
                    content: { workout in
-                EditView(vm: .init(provider: provider,
-                                   workout: workout)//,
+                EditView(/*vm: .init(*/provider: provider,
+                                   workout: workout/*)*///,
                          //selectedWorkout: workout
                 )
             })

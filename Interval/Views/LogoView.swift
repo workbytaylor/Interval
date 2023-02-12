@@ -10,6 +10,10 @@ import SwiftUI
 struct LogoView: View {
     var body: some View {
         Text("0")
+            .font(
+                .system(size: 96).width(.condensed)
+            )
+            .rotationEffect(.degrees(90))
     }
 }
 

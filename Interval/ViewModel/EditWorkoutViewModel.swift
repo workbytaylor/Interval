@@ -4,7 +4,7 @@
 //
 //  Created by Nilakshi Roy on 2023-01-20.
 //
-
+/*
 import Foundation
 import CoreData
 import SwiftUI
@@ -15,7 +15,7 @@ final class EditWorkoutViewModel: ObservableObject {
     let isNew: Bool
     private let provider: WorkoutsProvider
     private let context: NSManagedObjectContext
-    
+    /*
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider
         self.context = provider.newContext
@@ -34,7 +34,7 @@ final class EditWorkoutViewModel: ObservableObject {
             self.isNew = true
         }
     }
-    
+    */
     func save() throws {
         try provider.persist(in: context)
     }
@@ -80,3 +80,4 @@ final class EditWorkoutViewModel: ObservableObject {
     
     
 }
+*/
