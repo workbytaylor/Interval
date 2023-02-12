@@ -127,7 +127,7 @@ struct EditView: View {
                         //Image(systemName: "xmark.circle.fill")
                         Text("Save")
                     }
-                    .disabled(!workout.isValid)  // disabled if isValid = false
+                    //.disabled(workout.title.isEmpty)
                 }
                 
                 ToolbarItem(placement: .bottomBar) {

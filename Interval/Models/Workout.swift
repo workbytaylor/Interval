@@ -13,12 +13,8 @@ import CoreData
 public class Workout: NSManagedObject, Identifiable {
 
     @NSManaged public var id: UUID?
-    @NSManaged public var title: String//?  //making title optional prevents textfield from working
+    @NSManaged public var title: String //making title optional prevents textfield from working
     @NSManaged public var steps: NSSet?
-    
-    public var isValid: Bool { // add conditions here to validate workout title in EditView
-        !title.isEmpty
-    }
     
     public override func awakeFromInsert() {    // adds default value for id property
         super.awakeFromInsert()
