@@ -16,7 +16,7 @@ public class Workout: NSManagedObject, Identifiable {
     @NSManaged public var title: String//?  //making title optional prevents textfield from working
     @NSManaged public var steps: NSSet?
     
-    var isValid: Bool { // add conditions here to validate workout title in EditView
+    public var isValid: Bool { // add conditions here to validate workout title in EditView
         !title.isEmpty
     }
     

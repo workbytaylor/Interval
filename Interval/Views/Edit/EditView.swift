@@ -103,6 +103,9 @@ struct EditView: View {
             .onAppear {
                 if isNew { isTitleFocused = true }
             }
+            .onChange(of: workout.title) { title in
+                // recompute isValid
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
