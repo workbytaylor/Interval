@@ -45,6 +45,7 @@ final class EditWorkoutViewModel: ObservableObject {
         //try save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
     }
     
+ //TODO: move to view
     func deleteStepWithOffsets(_ offsets: IndexSet) {
         for i in offsets {
             let step = workout.stepArray[i]
@@ -52,7 +53,6 @@ final class EditWorkoutViewModel: ObservableObject {
             do {
                 try provider.deleteStepWithOffsets(step, in: self.context)
                 //try save()
-                //objectWillChange.send()   // uncommenting this does not work
                 // TODO: Issue lies in stepArray not updating when step deleted
             } catch {
                 print(error)
@@ -61,7 +61,7 @@ final class EditWorkoutViewModel: ObservableObject {
     }
     
     
-    // TODO: Move to provider
+    // TODO: Move to provider?
     func renumberSteps(_ offsets: IndexSet) {
         for i in offsets {
             let stepIndex = Int(workout.stepArray[i].index)

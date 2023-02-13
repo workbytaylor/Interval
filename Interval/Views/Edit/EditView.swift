@@ -134,22 +134,22 @@ struct EditView: View {
                     Menu {
                         Button {
                             withAnimation {
-                          //      do {
-                                    //try vm.addStep("time")
-                            //    } catch {
-                              //      print(error)
-                                //}
+                                do {
+                                    try addStep("time")
+                                } catch {
+                                    print(error)
+                                }
                             }
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
                             withAnimation {
-                                //do {
-                                    //try vm.addStep("distance")
-                                //} catch {
-                                  //  print(error)
-                                //}
+                                do {
+                                    try addStep("distance")
+                                } catch {
+                                    print(error)
+                                }
                             }
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
@@ -163,6 +163,11 @@ struct EditView: View {
                 }
             }
         }
+    }
+    
+    func addStep(_ type: String) throws {
+        try provider.addStep(workout, in: self.context, type: type)
+        //try save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
     }
 }
 
