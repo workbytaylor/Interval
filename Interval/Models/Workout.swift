@@ -27,6 +27,16 @@ public class Workout: NSManagedObject, Identifiable {
             $0.index < $1.index
         }
     }
+    
+    var isValid: Bool {
+            !title.isEmpty
+    }
+    
+    
+    
+    
+    
+    
 }
 
 // FETCH REQUESTS

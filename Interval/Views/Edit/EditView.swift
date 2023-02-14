@@ -12,6 +12,9 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @FocusState var isTitleFocused: Bool
     @ObservedObject var workout: Workout
+    
+    //@State private var isValid: Bool = false
+    
     let isNew: Bool
     var provider: WorkoutsProvider
     private let context: NSManagedObjectContext
@@ -19,14 +22,13 @@ struct EditView: View {
     init(provider: WorkoutsProvider, workout: Workout? = nil) {
         self.provider = provider
         self.context = provider.newContext
+        
         if let workout, // is there a workout?
            let existingWorkoutCopy = provider.workoutExists(workout,
                                                             in: context) {  //does it exist in coreData?
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
-            
-            // TODO: fetchrequest for steps
             
         } else {
             // if no, create new workout
@@ -49,14 +51,6 @@ struct EditView: View {
                         }
                 } header: {
                     Text("Title")
-                }
-                
-                Section {
-                    //ForEach(steps) { step in
-                      //  DetailRowView(step: step)
-                    //}
-                } header: {
-                    Text("@Published steps")
                 }
                 
                 Section {
@@ -103,9 +97,6 @@ struct EditView: View {
             .onAppear {
                 if isNew { isTitleFocused = true }
             }
-            .onChange(of: workout.title) { title in
-                // recompute isValid
-            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
@@ -127,7 +118,7 @@ struct EditView: View {
                         //Image(systemName: "xmark.circle.fill")
                         Text("Save")
                     }
-                    //.disabled(workout.title.isEmpty)
+                    //.disabled(!isValid)
                 }
                 
                 ToolbarItem(placement: .bottomBar) {
@@ -164,11 +155,6 @@ struct EditView: View {
             }
         }
     }
-    
-    func addStep(_ type: String) throws {
-        try provider.addStep(workout, in: self.context, type: type)
-        //try save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
-    }
 }
 
 struct AddView_Previews: PreviewProvider {
@@ -176,5 +162,14 @@ struct AddView_Previews: PreviewProvider {
         let preview = WorkoutsProvider.shared
         EditView(provider: preview)
             .environment(\.managedObjectContext, preview.viewContext)
+    }
+}
+
+
+private extension EditView {
+    
+    func addStep(_ type: String) throws {
+        try provider.addStep(self.workout, in: self.context, type: type)
+        //try save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
     }
 }
