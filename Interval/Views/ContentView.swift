@@ -52,14 +52,11 @@ struct ContentView: View {
                 }
             }
             .sheet(item: $workoutToEdit,
-                   onDismiss: {
-                        workoutToEdit = nil
-                },
+                   onDismiss: { workoutToEdit = nil },
                    content: { workout in
-                EditView(/*vm: .init(*/provider: provider,
-                                   workout: workout/*)*///,
-                         //selectedWorkout: workout
-                )
+                        EditView(provider: provider,
+                                 workout: workout
+                        )
             })
         }
     }

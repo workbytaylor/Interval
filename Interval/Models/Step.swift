@@ -43,10 +43,45 @@ extension Step {
         NSFetchRequest(entityName: "Step")
     }
     
+    // sorted by index
+    static func filtered(filterKey: Workout, filterValue: String) -> NSFetchRequest<Step> {
+        let request: NSFetchRequest<Step> = stepsFetchRequest
+        //sort steps by index
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Step.index, ascending: true)
+        ]
+        // filter steps by workout
+        request.predicate = NSPredicate(format: "%K = %@", filterKey, filterValue)
+        
+        
+        
+        return request
+    }
+    
+    
+    
+    /*
+     static func all() -> NSFetchRequest<Workout> {  // fetch request for ContentView, sort by title ascending
+         let request: NSFetchRequest<Workout> = workoutsFetchRequest
+         request.sortDescriptors = [
+             NSSortDescriptor(keyPath: \Workout.title, ascending: true)
+         ]
+         return request
+     }
+     */
+    
+    
+    
     // filter for steps that relate to selected workout
-    static func filteredSteps(of workout: Workout) -> NSPredicate {
+    static func filtered(of workout: Workout) -> NSPredicate {
         NSPredicate(format: "workout = %@", workout)
     }
+    
+    
+    
+    
+    
+    
     
     // sort filtered steps by index, ascending
     //static func sortedSteps() -> NSSortDescriptor {

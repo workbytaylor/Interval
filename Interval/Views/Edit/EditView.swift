@@ -13,7 +13,7 @@ struct EditView: View {
     @FocusState var isTitleFocused: Bool
     @ObservedObject var workout: Workout
     
-    //@State private var isValid: Bool = false
+    @FetchRequest var steps: FetchedResults<Step>
     
     let isNew: Bool
     var provider: WorkoutsProvider
@@ -35,6 +35,15 @@ struct EditView: View {
             self.workout = Workout(context: self.context)
             self.isNew = true
         }
+        
+        _steps = FetchRequest(
+                entity: Step.entity(),
+                sortDescriptors: [
+                    NSSortDescriptor(keyPath: \Step.index, ascending: true)
+                ],
+                predicate: NSPredicate(format: "workout == %@", workout ?? "")
+            )
+        
         self.isTitleFocused = isNew
     }
     
@@ -62,7 +71,8 @@ struct EditView: View {
                         }
                         .listRowBackground(Color.clear)
                     } else {
-                        ForEach(workout.stepArray) { step in
+                        
+                        ForEach(steps) { step in
                             NavigationLink {
                                 EditStepView()
                             } label: {
@@ -85,6 +95,7 @@ struct EditView: View {
                             }
                              */
                         }
+                        
                         //.onDelete(perform: deleteStepWithOffsets)
                     }
                 } header: {
@@ -170,6 +181,21 @@ private extension EditView {
     
     func addStep(_ type: String) throws {
         try provider.addStep(self.workout, in: self.context, type: type)
-        //try save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
+        try context.save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
     }
+    
+    /*
+    func addMocStep(_ type: String) throws {
+        let newStep = Step(context: context)
+        newStep.id = UUID()
+        newStep.index = Int16(steps.count)
+        newStep.magnitude = 800
+        newStep.unit = "meters"
+        newStep.pace = 315
+        newStep.type = type
+        newStep.workout = workout
+        try context.save()  // this causes the list to update
+    }
+    */
+    
 }
