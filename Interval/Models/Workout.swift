@@ -14,7 +14,7 @@ public class Workout: NSManagedObject, Identifiable {
 
     @NSManaged public var id: UUID?
     @NSManaged public var title: String //making title optional prevents textfield from working
-    @NSManaged public var steps: NSSet?
+    @NSManaged public var steps: NSMutableSet?//NSSet?
     
     public override func awakeFromInsert() {    // adds default value for id property
         super.awakeFromInsert()
