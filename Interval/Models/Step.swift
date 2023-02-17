@@ -58,8 +58,6 @@ extension Step {
         return request
     }
     
-    
-    
     /*
      static func all() -> NSFetchRequest<Workout> {  // fetch request for ContentView, sort by title ascending
          let request: NSFetchRequest<Workout> = workoutsFetchRequest
@@ -70,51 +68,13 @@ extension Step {
      }
      */
     
-    
-    
     // filter for steps that relate to selected workout
     static func filtered(of workout: Workout) -> NSPredicate {
         NSPredicate(format: "workout = %@", workout)
     }
     
-    
-    
-    
-    
-    
-    
-    // sort filtered steps by index, ascending
-    //static func sortedSteps() -> NSSortDescriptor {
-        
-    //}
 }
 
-// FOR PREVIEWS
-extension Step {
-    @discardableResult
-    static func makePreview(count: Int, in context: NSManagedObjectContext) -> [Step] {
-        var steps = [Step]()
-        for i in 0..<count {
-            let step = Step(context: context)
-            step.id = UUID()
-            step.index = Int16(count)
-            step.magnitude = Int16(800+i)
-            step.pace = 360
-            step.type = "distance"
-            step.unit = "m"
-            steps.append(step)
-        }
-        return steps
-    }
-    
-    static func preview(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Step {
-        return makePreview(count: 1, in: context)[0]
-    }
-    
-    static func empty(context: NSManagedObjectContext = WorkoutsProvider.shared.viewContext) -> Step {
-        return Step(context: context)
-    }
-}
 
 
 

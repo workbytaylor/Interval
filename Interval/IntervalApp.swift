@@ -10,10 +10,14 @@ import SwiftUI
 @main
 struct IntervalApp: App {
     
+    @StateObject private var workoutsProvider = WorkoutsProvider()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, WorkoutsProvider.shared.viewContext)
+            NavigationStack {
+                ContentView()
+                    .environment(\.managedObjectContext, workoutsProvider.container.viewContext)
+            }
         }
     }
 }

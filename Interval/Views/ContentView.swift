@@ -14,22 +14,19 @@ struct SearchConfig: Equatable {
 
 struct ContentView: View {
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
-    @State private var workoutToEdit: Workout?
     @State private var searchConfig: SearchConfig = .init()
-    var provider = WorkoutsProvider.shared
+    @State private var showSheet: Bool = false
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 // change to switch statement with different cases
-                // add case for search, but no views match
                 if workouts.isEmpty {
                     NoDataView(item: "Workouts")
                 } else {
                     List {
-                        ForEach(workouts, id: \.id) { workout in
+                        ForEach(workouts) { workout in
                             NavigationLink {
-                                DetailView(workout: workout, provider: provider)
+                                DetailView(workout: workout)
                             } label: {
                                 ContentRowView(workout: workout)
                             }
@@ -45,34 +42,20 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        workoutToEdit = Workout(context: provider.newContext)//.empty(context: provider.newContext)
+                        showSheet.toggle()
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(item: $workoutToEdit,
-                   onDismiss: { workoutToEdit = nil },
-                   content: { workout in
-                        EditView(provider: provider,
-                                 workout: workout
-                        )
-            })
-        }
+            .sheet(isPresented: $showSheet) {
+                CreateView()
+            }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let preview = WorkoutsProvider.shared
-        ContentView(provider: preview)
-            .environment(\.managedObjectContext, preview.viewContext)
-            .onAppear{ Workout.makePreview(count: 4, in: preview.viewContext) }
-            .previewDisplayName("Workouts with data")
-        
-        let emptyPreview = WorkoutsProvider.shared
-        ContentView(provider: emptyPreview)
-            .environment(\.managedObjectContext, emptyPreview.viewContext)
-            .previewDisplayName("Workouts with no data")
+        ContentView()
     }
 }

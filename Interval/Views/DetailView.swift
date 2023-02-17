@@ -10,10 +10,8 @@ import SwiftUI
 struct DetailView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var workout: Workout
-    var provider: WorkoutsProvider
-    
     @State private var showDeleteAlert: Bool = false
-    @State private var workoutToEdit: Workout?
+    @State private var showSheet: Bool = false
     
     var body: some View {
         List {
@@ -50,7 +48,7 @@ struct DetailView: View {
                     }
                     Section {
                         Button {
-                            workoutToEdit = workout
+                            showSheet.toggle()
                         } label: {
                             Label("Edit", systemImage: "square.and.pencil")
                         }
@@ -58,25 +56,28 @@ struct DetailView: View {
                 } label: {
                     Image(systemName: "square.and.pencil")
                 } primaryAction: {
-                    workoutToEdit = workout
+                    //workoutToEdit = workout
                 }
             }
         }
-        .sheet(item: $workoutToEdit,
+        .sheet(isPresented: $showSheet) {
+            EditView(workout: workout)
+        }
+        /*.sheet(item: $workoutToEdit,
                onDismiss: {
             workoutToEdit = nil
         }, content: { workout in
-            EditView(provider: provider,
-                              workout: workout)
-        })
+            EditView(workout: workout)
+        })*/
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
-                do {
-                    try provider.deleteWorkout(workout, in: provider.newContext)
+                //do {
+                    // delete workout
+                    // delete steps
                     dismiss()
-                } catch {
-                    print(error)
-                }
+                //} catch {
+                  //  print(error)
+                //}
             }
             Button("Cancel", role: .cancel) {  }
         } message: {
@@ -89,10 +90,8 @@ struct DetailView: View {
 struct DetailView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let previewProvider = WorkoutsProvider.shared
         NavigationStack {
-            DetailView(workout: .preview(context: previewProvider.viewContext), provider: previewProvider)
-            //no data because there are no steps, yet
+            DetailView(workout: Workout())
         }
     }
 }

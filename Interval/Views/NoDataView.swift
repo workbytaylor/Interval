@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct NoDataView: View {
-    
     let item: String
     
     var body: some View {

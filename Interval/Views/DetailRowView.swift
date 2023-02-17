@@ -27,14 +27,13 @@ struct DetailRowView: View {
             }
         }
     }
-    
 }
 
 
 struct DetailRowView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            DetailRowView(step: .preview())
+            DetailRowView(step: Step())
         }
     }
 }

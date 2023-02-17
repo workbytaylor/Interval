@@ -10,48 +10,30 @@ import CoreData
 
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
-    @FocusState var isTitleFocused: Bool
-    @ObservedObject var workout: Workout
+    @ObservedObject var selectedWorkout: Workout
     @FetchRequest var steps: FetchedResults<Step>
     
-    let isNew: Bool
-    var provider: WorkoutsProvider
     private let context: NSManagedObjectContext
     
-    init(provider: WorkoutsProvider, workout: Workout? = nil) {
-        self.provider = provider
-        self.context = provider.newContext
-        
-        if let workout, // is there a workout?
-           let existingWorkoutCopy = provider.workoutExists(workout, in: context) {  //does it exist in coreData?
-            // if yes, load the object
-            self.workout = existingWorkoutCopy
-            self.isNew = false
-        } else {
-            // if no, create new workout
-            self.workout = Workout(context: self.context)
-            self.isNew = true
-        }
-        
+    init(workout: Workout) {
+        self.selectedWorkout = workout
+       
         _steps = FetchRequest(
-                entity: Step.entity(),
-                sortDescriptors: [
-                    NSSortDescriptor(keyPath: \Step.index, ascending: true)
-                ],
-                predicate: NSPredicate(format: "workout == %@", workout ?? "")
-            )
-        
-        self.isTitleFocused = isNew
+            entity: Step.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \Step.index, ascending: true)
+            ],
+            predicate: NSPredicate(format: "workout == %@", workout)
+        )
     }
     
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    TextField("Add Title", text: $workout.title)
+                    TextField("Add Title", text: $selectedWorkout.title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                        .focused($isTitleFocused)
                         .onAppear {
                             UITextField.appearance().clearButtonMode = .whileEditing
                         }
@@ -60,7 +42,7 @@ struct EditView: View {
                 }
                 
                 Section {
-                    if workout.stepArray.isEmpty {
+                    if selectedWorkout.stepArray.isEmpty {
                         HStack {
                             Spacer()
                             NoDataView(item: "Steps")
@@ -75,7 +57,7 @@ struct EditView: View {
                             } label: {
                                 DetailRowView(step: step)
                             }
-                            .deleteDisabled(workout.stepArray.count < 2)
+                            .deleteDisabled(selectedWorkout.stepArray.count < 2)
                             /*
                             .swipeActions {
                                 Button(role: .destructive) {
@@ -100,11 +82,8 @@ struct EditView: View {
                 }
             }
             .background(Color(red: 242/255, green: 241/255, blue: 247/255)) // prevents white from showing when keyboard dismissed, currently only works in darkmode
-            .navigationTitle(/*vm.*/isNew ? "New workout" : "Edit workout")
+            .navigationTitle("Edit workout")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                //if isNew { isTitleFocused = true }
-            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
@@ -116,12 +95,7 @@ struct EditView: View {
                  
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        do {
-                            try provider.persist(in: context)
-                            dismiss()
-                        } catch {
-                            print(error)
-                        }
+                        // save
                     } label: {
                         //Image(systemName: "xmark.circle.fill")
                         Text("Save")
@@ -133,22 +107,14 @@ struct EditView: View {
                     Menu {
                         Button {
                             withAnimation {
-                                do {
-                                    try addStep("time")
-                                } catch {
-                                    print(error)
-                                }
+                                // add time step
                             }
                         } label: {
                             Label("Time", systemImage: "stopwatch")
                         }
                         Button {
                             withAnimation {
-                                do {
-                                    try provider.addStep(workout, in: context, type: "distance")
-                                } catch {
-                                    print(error)
-                                }
+                                // add distance step
                             }
                         } label: {
                             Label("Distance", systemImage: "lines.measurement.horizontal")
@@ -167,32 +133,6 @@ struct EditView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        let preview = WorkoutsProvider.shared
-        EditView(provider: preview)
-            .environment(\.managedObjectContext, preview.viewContext)
+        EditView(workout: Workout())
     }
-}
-
-
-private extension EditView {
-    
-    func addStep(_ type: String) throws {
-        try provider.addStep(self.workout, in: self.context, type: type)
-        try? context.save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
-    }
-    
-    /*
-    func addMocStep(_ type: String) throws {
-        let newStep = Step(context: context)
-        newStep.id = UUID()
-        newStep.index = Int16(steps.count)
-        newStep.magnitude = 800
-        newStep.unit = "meters"
-        newStep.pace = 315
-        newStep.type = type
-        newStep.workout = workout
-        try context.save()  // this causes the list to update
-    }
-    */
-    
 }
