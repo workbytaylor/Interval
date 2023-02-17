@@ -51,7 +51,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showSheet) {
             NavigationStack {
-                CreateView(newWorkout: Workout(), steps: [])
+                CreateView(newWorkout: Workout(), steps: )
             }
         }
     }
