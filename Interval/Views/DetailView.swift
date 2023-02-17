@@ -58,12 +58,14 @@ struct DetailView: View {
                 } label: {
                     Image(systemName: "square.and.pencil")
                 } primaryAction: {
-                    //workoutToEdit = workout
+                    showSheet.toggle()
                 }
             }
         }
         .sheet(isPresented: $showSheet) {
-            EditView(workout: workout)
+            NavigationStack {
+                EditView(workout: workout)
+            }
         }
         /*.sheet(item: $workoutToEdit,
                onDismiss: {

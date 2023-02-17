@@ -28,7 +28,6 @@ struct EditView: View {
     }
     
     var body: some View {
-        NavigationStack {
             List {
                 Section {
                     TextField("Add Title", text: $workout.title)
@@ -127,7 +126,6 @@ struct EditView: View {
                     }
                 }
             }
-        }
     }
 }
 
