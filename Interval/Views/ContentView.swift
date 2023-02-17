@@ -45,7 +45,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        workoutToEdit = .empty(context: provider.newContext)
+                        workoutToEdit = Workout(context: provider.newContext)//.empty(context: provider.newContext)
                     } label: {
                         Image(systemName: "plus")
                     }

@@ -66,8 +66,8 @@ struct DetailView: View {
                onDismiss: {
             workoutToEdit = nil
         }, content: { workout in
-            EditView(/*vm: .init(*/provider: provider,
-                              workout: workout/*)*/)
+            EditView(provider: provider,
+                              workout: workout)
         })
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {

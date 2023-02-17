@@ -12,7 +12,6 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @FocusState var isTitleFocused: Bool
     @ObservedObject var workout: Workout
-    
     @FetchRequest var steps: FetchedResults<Step>
     
     let isNew: Bool
@@ -24,12 +23,10 @@ struct EditView: View {
         self.context = provider.newContext
         
         if let workout, // is there a workout?
-           let existingWorkoutCopy = provider.workoutExists(workout,
-                                                            in: context) {  //does it exist in coreData?
+           let existingWorkoutCopy = provider.workoutExists(workout, in: context) {  //does it exist in coreData?
             // if yes, load the object
             self.workout = existingWorkoutCopy
             self.isNew = false
-            
         } else {
             // if no, create new workout
             self.workout = Workout(context: self.context)
@@ -106,7 +103,7 @@ struct EditView: View {
             .navigationTitle(/*vm.*/isNew ? "New workout" : "Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                if isNew { isTitleFocused = true }
+                //if isNew { isTitleFocused = true }
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -148,7 +145,7 @@ struct EditView: View {
                         Button {
                             withAnimation {
                                 do {
-                                    try addStep("distance")
+                                    try provider.addStep(workout, in: context, type: "distance")
                                 } catch {
                                     print(error)
                                 }
@@ -181,7 +178,7 @@ private extension EditView {
     
     func addStep(_ type: String) throws {
         try provider.addStep(self.workout, in: self.context, type: type)
-        try context.save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
+        try? context.save()  // add save here if you want to remove the cancel button, delete objectwillchange.send() above
     }
     
     /*

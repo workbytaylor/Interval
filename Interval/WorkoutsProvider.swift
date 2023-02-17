@@ -86,7 +86,7 @@ final class WorkoutsProvider {
     
     
     // add a new step
-    func addStep(_ workout: Workout,    // called in vm as addStep
+    func addStep(_ workout: Workout,
                     in context: NSManagedObjectContext,
                     type: String) throws {  // of? type
         if let existingWorkout = workoutExists(workout, in: context) {
