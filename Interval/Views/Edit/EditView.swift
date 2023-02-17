@@ -10,13 +10,13 @@ import CoreData
 
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var selectedWorkout: Workout
+    @ObservedObject var workout: Workout
     @FetchRequest var steps: FetchedResults<Step>
     
-    private let context: NSManagedObjectContext
+    //private let context: NSManagedObjectContext
     
     init(workout: Workout) {
-        self.selectedWorkout = workout
+        self.workout = workout
        
         _steps = FetchRequest(
             entity: Step.entity(),
@@ -31,7 +31,7 @@ struct EditView: View {
         NavigationStack {
             List {
                 Section {
-                    TextField("Add Title", text: $selectedWorkout.title)
+                    TextField("Add Title", text: $workout.title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                         .onAppear {
@@ -42,7 +42,7 @@ struct EditView: View {
                 }
                 
                 Section {
-                    if selectedWorkout.stepArray.isEmpty {
+                    if workout.stepArray.isEmpty {
                         HStack {
                             Spacer()
                             NoDataView(item: "Steps")
@@ -57,7 +57,7 @@ struct EditView: View {
                             } label: {
                                 DetailRowView(step: step)
                             }
-                            .deleteDisabled(selectedWorkout.stepArray.count < 2)
+                            .deleteDisabled(workout.stepArray.count < 2)
                             /*
                             .swipeActions {
                                 Button(role: .destructive) {

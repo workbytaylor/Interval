@@ -13,44 +13,45 @@ struct SearchConfig: Equatable {
 }
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var moc    // is this needed?
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
+    
     @State private var searchConfig: SearchConfig = .init()
     @State private var showSheet: Bool = false
     
     var body: some View {
-            ZStack {
-                // change to switch statement with different cases
-                if workouts.isEmpty {
-                    NoDataView(item: "Workouts")
-                } else {
-                    List {
-                        ForEach(workouts) { workout in
-                            NavigationLink {
-                                DetailView(workout: workout)
-                            } label: {
-                                ContentRowView(workout: workout)
-                            }
+        ZStack {
+            if workouts.isEmpty {
+                NoDataView(item: "Workouts")
+            } else {
+                List {
+                    ForEach(workouts) { workout in
+                        NavigationLink {
+                            DetailView(workout: workout)
+                        } label: {
+                            ContentRowView(workout: workout)
                         }
                     }
                 }
             }
-            .searchable(text: $searchConfig.query)
-            .navigationTitle("Workouts")
-            .onChange(of: searchConfig) { newValue in
-                workouts.nsPredicate = Workout.filter(newValue.query)
-            }
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        showSheet.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+        }
+        .searchable(text: $searchConfig.query)
+        .navigationTitle("Workouts")
+        .onChange(of: searchConfig) { newValue in
+            workouts.nsPredicate = Workout.filter(newValue.query)
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    showSheet.toggle()
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $showSheet) {
-                CreateView()
-            }
+        }
+        .sheet(isPresented: $showSheet) {
+            CreateView()
+        }
     }
 }
 

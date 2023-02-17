@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) var moc
+    
     @ObservedObject var workout: Workout
     @State private var showDeleteAlert: Bool = false
     @State private var showSheet: Bool = false
