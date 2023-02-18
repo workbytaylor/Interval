@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @State var newWorkout: Workout = Workout()
-    @State var steps: [Step]
+    @State var steps: [Step] = [Step()]
     
     var body: some View {
         List {
