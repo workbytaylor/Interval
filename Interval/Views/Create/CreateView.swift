@@ -37,6 +37,23 @@ struct CreateView: View {
                     .listRowBackground(Color.clear)
                 } else {
                     // list setps
+                    
+                    Section {
+                        
+                    } header: {
+                        Text("Steps")
+                    }
+                    
+                    Section {
+                        Button {
+                            withAnimation {
+                                // add step
+                            }
+                        } label: {
+                            Label("Add Step", systemImage: "plus")
+                        }
+                    }
+                    .listRowBackground(Color.accentColor.opacity(0.1))
                 }
             } header: {
                 Text("Steps")

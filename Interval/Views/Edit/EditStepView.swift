@@ -99,7 +99,7 @@ struct EditStepView: View {
                         .buttonStyle(.bordered) // this could be the cause of the padding
                         .foregroundColor(paceToggle == true ? .accentColor : .primary)
                     } label: {
-                        Text("Pace")
+                        Text("Goal Pace")
                     }
                      
                     if paceToggle == true {

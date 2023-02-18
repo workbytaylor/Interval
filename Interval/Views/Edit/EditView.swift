@@ -77,8 +77,18 @@ struct EditView: View {
                 } header: {
                     Text("Steps")
                 }
+                
+                Section {
+                    Button {
+                        withAnimation {
+                            // add step
+                        }
+                    } label: {
+                        Label("Add Step", systemImage: "plus")
+                    }
+                }
+                .listRowBackground(Color.accentColor.opacity(0.1))
             }
-            .background(Color(red: 242/255, green: 241/255, blue: 247/255)) // prevents white from showing when keyboard dismissed, currently only works in darkmode
             .navigationTitle("Edit workout")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -98,7 +108,7 @@ struct EditView: View {
                         Text("Save")
                     }
                 }
-                
+                /*
                 ToolbarItem(placement: .bottomBar) {
                     Menu {
                         Button {
@@ -122,6 +132,7 @@ struct EditView: View {
                         }
                     }
                 }
+                 */
             }
     }
 }
