@@ -12,12 +12,10 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var workout: Workout
     @FetchRequest var steps: FetchedResults<Step>
-    
     //private let context: NSManagedObjectContext
     
     init(workout: Workout) {
         self.workout = workout
-       
         _steps = FetchRequest(
             entity: Step.entity(),
             sortDescriptors: [
@@ -99,7 +97,6 @@ struct EditView: View {
                         //Image(systemName: "xmark.circle.fill")
                         Text("Save")
                     }
-                    //.disabled(!isValid)
                 }
                 
                 ToolbarItem(placement: .bottomBar) {

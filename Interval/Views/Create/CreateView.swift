@@ -9,13 +9,15 @@ import SwiftUI
 
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
-    @State var newWorkout: Workout = Workout()
-    @State var steps: [Step] = [Step()]
+    @Environment(\.managedObjectContext) var moc
+    //@State var newWorkout: Workout
+    @State var title: String = ""
+    @State var steps: [Step] = []
     
     var body: some View {
         List {
             Section {
-                TextField("Add Title", text: $newWorkout.title)
+                TextField("Add Title", text: $title)
                     .autocorrectionDisabled(false)
                     .autocapitalization(.sentences)
                     .onAppear {
@@ -25,12 +27,17 @@ struct CreateView: View {
                 Text("Title")
             }
             
-            Section {
-                // list steps
-                
-                
-                
-                
+            Section {   // list steps
+                if steps == [] {
+                    HStack {
+                        Spacer()
+                        NoDataView(item: "Steps")
+                        Spacer()
+                    }
+                    .listRowBackground(Color.clear)
+                } else {
+                    // list setps
+                }
             } header: {
                 Text("Steps")
             }
@@ -45,12 +52,33 @@ struct CreateView: View {
                     Text("Cancel").tint(.red)
                 }
             }
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    saveNewWorkout()
+                    dismiss()
+                } label: {
+                    Text("Save")
+                }
+                .disabled(title.isEmpty)
+            }
         }
     }
 }
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateView(newWorkout: Workout(), steps: [])
+        CreateView()
     }
+}
+
+
+extension CreateView {
+    func saveNewWorkout() {
+        let newWorkout = Workout(context: moc)
+        newWorkout.id = UUID()
+        newWorkout.title = title
+        // add steps to workout?
+        try? moc.save()
+    }
+    
 }
