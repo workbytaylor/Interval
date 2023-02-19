@@ -5,6 +5,8 @@
 //  Created by Nilakshi Roy on 2023-02-16.
 //
 
+
+// what was the purpose of making this view?
 import SwiftUI
 
 struct NewEditView: View {

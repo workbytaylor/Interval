@@ -88,6 +88,7 @@ struct EditView: View {
                     }
                 }
                 .listRowBackground(Color.accentColor.opacity(0.1))
+                 
             }
             .navigationTitle("Edit workout")
             .navigationBarTitleDisplayMode(.inline)

@@ -26,6 +26,8 @@ public class Step: NSManagedObject, Identifiable {
         setPrimitiveValue(UUID(), forKey: "id")
         setPrimitiveValue(5, forKey: "magnitude")
         setPrimitiveValue(315, forKey: "pace")
+        setPrimitiveValue("distance", forKey: "type")
+        setPrimitiveValue("meters", forKey: "unit")
     }
     
     public var wrappedType: String {

@@ -27,7 +27,7 @@ struct CreateView: View {
                 Text("Title")
             }
             
-            Section {   // list steps
+            Section {   // steps
                 if steps == [] {
                     HStack {
                         Spacer()
@@ -36,10 +36,12 @@ struct CreateView: View {
                     }
                     .listRowBackground(Color.clear)
                 } else {
-                    // list setps
+                    // list steps
                     
                     Section {
-                        
+                        ForEach(steps) { step in
+                            DetailRowView(step: step)
+                        }
                     } header: {
                         Text("Steps")
                     }
@@ -48,6 +50,7 @@ struct CreateView: View {
                         Button {
                             withAnimation {
                                 // add step
+                                steps.append(Step())    // TODO: This may not be right
                             }
                         } label: {
                             Label("Add Step", systemImage: "plus")
@@ -90,6 +93,8 @@ struct CreateView_Previews: PreviewProvider {
 
 
 extension CreateView {
+    
+    // workout is not created until the save button is tapped
     func saveNewWorkout() {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
@@ -97,5 +102,8 @@ extension CreateView {
         // add steps to workout?
         try? moc.save()
     }
+    
+    
+    
     
 }
