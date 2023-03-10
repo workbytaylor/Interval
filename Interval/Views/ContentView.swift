@@ -18,6 +18,7 @@ struct ContentView: View {
     
     @State private var searchConfig: SearchConfig = .init()
     @State private var showSheet: Bool = false
+    //@State var newWorkout: Workout?
     
     var body: some View {
         ZStack {
@@ -43,13 +44,16 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    
-                    showSheet.toggle()
+                    let newWorkout = Workout(context: moc)
+                    //showSheet.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
         }
+        
+        
+        
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 CreateView()

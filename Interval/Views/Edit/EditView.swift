@@ -40,12 +40,15 @@ struct EditView: View {
                 
                 Section {
                     if workout.stepArray.isEmpty {
+                        NoDataView(item: "Steps")
+                        /*
                         HStack {
                             Spacer()
                             NoDataView(item: "Steps")
                             Spacer()
                         }
                         .listRowBackground(Color.clear)
+                         */
                     } else {
                         
                         ForEach(steps) { step in
@@ -104,6 +107,7 @@ struct EditView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         // save
+                        dismiss()
                     } label: {
                         //Image(systemName: "xmark.circle.fill")
                         Text("Save")

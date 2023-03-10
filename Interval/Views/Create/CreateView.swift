@@ -10,9 +10,23 @@ import SwiftUI
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
-    //@State var newWorkout: Workout
+    @State var newWorkout: Workout
     @State var title: String = ""
-    @State var steps: [Step] = []
+    @FetchRequest var steps: FetchedResults<Step>
+    //@FetchRequest var workout: FetchedResults<Workout>
+    
+    init() {
+        self.newWorkout = 
+        
+        _steps = FetchRequest(
+            entity: Step.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \Step.index, ascending: true)
+            ],
+            predicate: NSPredicate(format: "workout == %@", newWorkout)
+        )
+    }
+    
     
     var body: some View {
         List {
@@ -27,40 +41,33 @@ struct CreateView: View {
                 Text("Title")
             }
             
-            Section {   // steps
-                if steps == [] {
-                    HStack {
-                        Spacer()
-                        NoDataView(item: "Steps")
-                        Spacer()
-                    }
-                    .listRowBackground(Color.clear)
+            Section {
+                if steps.isEmpty {
+                    // no steps
+                    NoDataView(item: "Steps")
                 } else {
                     // list steps
-                    
-                    Section {
-                        ForEach(steps) { step in
-                            DetailRowView(step: step)
-                        }
-                    } header: {
-                        Text("Steps")
+                    ForEach(steps) { step in
+                        DetailRowView(step: step)
                     }
-                    
-                    Section {
-                        Button {
-                            withAnimation {
-                                // add step
-                                steps.append(Step())    // TODO: This may not be right
-                            }
-                        } label: {
-                            Label("Add Step", systemImage: "plus")
-                        }
-                    }
-                    .listRowBackground(Color.accentColor.opacity(0.1))
                 }
             } header: {
                 Text("Steps")
             }
+            
+            // add step button
+            Section {
+                Button {
+                    withAnimation {
+                        // add step
+                        let newStep = Step(context: moc)    // TODO: Fix this list
+                        //newStep.workout = newWorkout
+                    }
+                } label: {
+                    Label("Add Step", systemImage: "plus")
+                }
+            }
+            .listRowBackground(Color.accentColor.opacity(0.1))
         }
         .navigationTitle("New workout")
         .navigationBarTitleDisplayMode(.inline)
@@ -82,6 +89,9 @@ struct CreateView: View {
                 .disabled(title.isEmpty)
             }
         }
+        //.onAppear {
+          //  let newWorkout = Workout(context: moc)
+        //}
     }
 }
 
@@ -102,8 +112,4 @@ extension CreateView {
         // add steps to workout?
         try? moc.save()
     }
-    
-    
-    
-    
 }

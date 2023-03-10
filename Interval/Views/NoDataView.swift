@@ -11,9 +11,14 @@ struct NoDataView: View {
     let item: String
     
     var body: some View {
-        Text("No \(item)")
-        .font(.callout)
-        .foregroundStyle(.secondary)
+        HStack {
+            Spacer()
+            Text("No \(item)")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+            Spacer()
+        }
+        .listRowBackground(Color.clear)
     }
 }
 
