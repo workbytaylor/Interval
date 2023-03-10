@@ -7,26 +7,21 @@
 
 import SwiftUI
 
+
+struct createStep: Identifiable {
+    let id: UUID
+    var index: Int16
+    var magnitude: Int16
+    var pace: Int16
+    var type: String
+    var unit: String
+}
+
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
-    @State var newWorkout: Workout
-    @State var title: String = ""
-    @FetchRequest var steps: FetchedResults<Step>
-    //@FetchRequest var workout: FetchedResults<Workout>
-    
-    init() {
-        self.newWorkout = 
-        
-        _steps = FetchRequest(
-            entity: Step.entity(),
-            sortDescriptors: [
-                NSSortDescriptor(keyPath: \Step.index, ascending: true)
-            ],
-            predicate: NSPredicate(format: "workout == %@", newWorkout)
-        )
-    }
-    
+    @State private var title: String = ""
+    @State private var createSteps: [createStep] = []
     
     var body: some View {
         List {
@@ -42,13 +37,28 @@ struct CreateView: View {
             }
             
             Section {
-                if steps.isEmpty {
+                if createSteps.isEmpty {
                     // no steps
                     NoDataView(item: "Steps")
                 } else {
                     // list steps
-                    ForEach(steps) { step in
-                        DetailRowView(step: step)
+                    ForEach(createSteps) { step in
+                        //DetailRowView(step: step)
+                        HStack {
+                            Text(String(step.index))
+                            Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                            
+                            VStack(alignment: .leading) {
+                                Text("\(step.magnitude) \(step.unit)")
+                                
+                                let paceMinutes = step.pace/60
+                                let paceSeconds = step.pace%60
+                                
+                                Text("\(paceMinutes).\(paceSeconds) /km")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
                     }
                 }
             } header: {
@@ -61,7 +71,6 @@ struct CreateView: View {
                     withAnimation {
                         // add step
                         let newStep = Step(context: moc)    // TODO: Fix this list
-                        //newStep.workout = newWorkout
                     }
                 } label: {
                     Label("Add Step", systemImage: "plus")
@@ -90,7 +99,7 @@ struct CreateView: View {
             }
         }
         //.onAppear {
-          //  let newWorkout = Workout(context: moc)
+          //  add first step
         //}
     }
 }
