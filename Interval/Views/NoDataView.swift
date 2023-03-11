@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct NoDataView: View {
-    let item: String
     
     var body: some View {
         HStack {
             Spacer()
-            Text("No \(item)")
+            Text("None")
             .font(.callout)
             .foregroundStyle(.secondary)
             Spacer()
@@ -25,7 +24,7 @@ struct NoDataView: View {
 struct NoDataView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            NoDataView(item: "Workouts")
+            NoDataView()
         }
     }
 }

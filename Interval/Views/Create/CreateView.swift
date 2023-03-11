@@ -8,20 +8,20 @@
 import SwiftUI
 
 
-struct createStep: Identifiable {
-    let id: UUID
+struct CreateViewStep: Identifiable {
+    let id: UUID = UUID()
     var index: Int16
-    var magnitude: Int16
-    var pace: Int16
-    var type: String
-    var unit: String
+    var magnitude: Int16 = 5
+    var pace: Int16 = 330   // seconds per km
+    var type: String = "time"
+    var unit: String = "minutes"
 }
 
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     @State private var title: String = ""
-    @State private var createSteps: [createStep] = []
+    @State private var createViewSteps: [CreateViewStep] = []
     
     var body: some View {
         List {
@@ -37,27 +37,21 @@ struct CreateView: View {
             }
             
             Section {
-                if createSteps.isEmpty {
-                    // no steps
-                    NoDataView(item: "Steps")
-                } else {
-                    // list steps
-                    ForEach(createSteps) { step in
-                        //DetailRowView(step: step)
-                        HStack {
-                            Text(String(step.index))
-                            Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                // list all steps in new workout
+                ForEach(createViewSteps) { step in
+                    HStack {
+                        Text(String(step.index))
+                        Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                        
+                        VStack(alignment: .leading) {
+                            Text("\(step.magnitude) \(step.unit)")
                             
-                            VStack(alignment: .leading) {
-                                Text("\(step.magnitude) \(step.unit)")
-                                
-                                let paceMinutes = step.pace/60
-                                let paceSeconds = step.pace%60
-                                
-                                Text("\(paceMinutes).\(paceSeconds) /km")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
+                            let paceMinutes = step.pace/60
+                            let paceSeconds = step.pace%60
+                            
+                            Text("\(paceMinutes).\(paceSeconds) /km")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -65,18 +59,14 @@ struct CreateView: View {
                 Text("Steps")
             }
             
-            // add step button
-            Section {
-                Button {
-                    withAnimation {
-                        // add step
-                        let newStep = Step(context: moc)    // TODO: Fix this list
-                    }
-                } label: {
-                    Label("Add Step", systemImage: "plus")
-                }
+            // add new step to end of list
+            Button {
+                createViewSteps.append(CreateViewStep(index: Int16(createViewSteps.count+1)))
+            } label: {
+                Label("Add Step", systemImage: "plus")
             }
             .listRowBackground(Color.accentColor.opacity(0.1))
+            
         }
         .navigationTitle("New workout")
         .navigationBarTitleDisplayMode(.inline)
@@ -99,7 +89,7 @@ struct CreateView: View {
             }
         }
         //.onAppear {
-          //  add first step
+          //  add first step?
         //}
     }
 }
@@ -118,7 +108,9 @@ extension CreateView {
         let newWorkout = Workout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = title
-        // add steps to workout?
+        
+        // TODO: add steps to workout?
+        
         try? moc.save()
     }
 }

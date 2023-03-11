@@ -13,24 +13,26 @@ struct SearchConfig: Equatable {
 }
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var moc    // is this needed?
+    @Environment(\.managedObjectContext) var moc
     @FetchRequest(fetchRequest: Workout.all()) private var workouts
-    
     @State private var searchConfig: SearchConfig = .init()
     @State private var showSheet: Bool = false
-    //@State var newWorkout: Workout?
     
     var body: some View {
         ZStack {
             if workouts.isEmpty {
-                NoDataView(item: "Workouts")
+                NoDataView()
             } else {
                 List {
                     ForEach(workouts) { workout in
                         NavigationLink {
                             DetailView(workout: workout)
                         } label: {
-                            ContentRowView(workout: workout)
+                            LabeledContent {
+                                Text("\(workout.stepArray.count) steps")
+                            } label: {
+                                Text(workout.title)
+                            }
                         }
                     }
                 }
@@ -44,16 +46,12 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    let newWorkout = Workout(context: moc)
-                    //showSheet.toggle()
+                    showSheet.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
         }
-        
-        
-        
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 CreateView()

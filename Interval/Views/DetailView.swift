@@ -19,15 +19,7 @@ struct DetailView: View {
         List {
             Section {
                 if workout.stepArray.isEmpty {
-                    NoDataView(item: "Steps")
-                    
-                    //HStack {
-                      //  Spacer()
-                        //Text("No steps")
-                        //Spacer()
-                    //}
-                    //.foregroundStyle(.secondary)
-                    //.listRowBackground(Color.clear)
+                    NoDataView()
                 } else {
                     ForEach(workout.stepArray) { step in
                         DetailRowView(step: step)
