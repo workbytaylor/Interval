@@ -12,6 +12,9 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var workout: Workout
+    
+    @StateObject private var workoutsProvider = WorkoutsProvider()
+    
     @FetchRequest var steps: FetchedResults<Step>
     
     init(workout: Workout) {
