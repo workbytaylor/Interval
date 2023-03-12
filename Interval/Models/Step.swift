@@ -39,6 +39,7 @@ public class Step: NSManagedObject, Identifiable {
     }
 }
 
+/*
 // FETCH REQUESTS
 extension Step {
     private static var stepsFetchRequest: NSFetchRequest<Step> {
@@ -55,20 +56,8 @@ extension Step {
         // filter steps by workout
         request.predicate = NSPredicate(format: "%K = %@", filterKey, filterValue)
         
-        
-        
         return request
     }
-    
-    /*
-     static func all() -> NSFetchRequest<Workout> {  // fetch request for ContentView, sort by title ascending
-         let request: NSFetchRequest<Workout> = workoutsFetchRequest
-         request.sortDescriptors = [
-             NSSortDescriptor(keyPath: \Workout.title, ascending: true)
-         ]
-         return request
-     }
-     */
     
     // filter for steps that relate to selected workout
     static func filtered(of workout: Workout) -> NSPredicate {
@@ -77,6 +66,6 @@ extension Step {
     
 }
 
-
+*/
 
 

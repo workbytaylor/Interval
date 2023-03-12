@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9506F83529328F0200E20F83 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9506F83429328F0200E20F83 /* DetailView.swift */; };
-		95368A32297B82DF0056C5B9 /* WorkoutsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95368A31297B82DF0056C5B9 /* WorkoutsProvider.swift */; };
+		95368A32297B82DF0056C5B9 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95368A31297B82DF0056C5B9 /* DataController.swift */; };
 		95615796295EA50C00EBD61D /* EditStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95615795295EA50C00EBD61D /* EditStepView.swift */; };
 		959FFC0B29854B440049136E /* DetailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959FFC0A29854B440049136E /* DetailRowView.swift */; };
 		95A29FAD29668F88002DFA8B /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A29FA929668F88002DFA8B /* Step.swift */; };
@@ -55,7 +55,7 @@
 
 /* Begin PBXFileReference section */
 		9506F83429328F0200E20F83 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		95368A31297B82DF0056C5B9 /* WorkoutsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsProvider.swift; sourceTree = "<group>"; };
+		95368A31297B82DF0056C5B9 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		95615795295EA50C00EBD61D /* EditStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepView.swift; sourceTree = "<group>"; };
 		959FFC0A29854B440049136E /* DetailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRowView.swift; sourceTree = "<group>"; };
 		95A29FA929668F88002DFA8B /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				95ECF4802944F2F70021CCD1 /* Interval.xcdatamodeld */,
-				95368A31297B82DF0056C5B9 /* WorkoutsProvider.swift */,
+				95368A31297B82DF0056C5B9 /* DataController.swift */,
 				95ACF50E2922026E00E9B2AF /* IntervalApp.swift */,
 				95ACF5342922050B00E9B2AF /* Models */,
 				95ACF532292202E800E9B2AF /* Views */,
@@ -304,7 +304,7 @@
 				9506F83529328F0200E20F83 /* DetailView.swift in Sources */,
 				95615796295EA50C00EBD61D /* EditStepView.swift in Sources */,
 				959FFC0B29854B440049136E /* DetailRowView.swift in Sources */,
-				95368A32297B82DF0056C5B9 /* WorkoutsProvider.swift in Sources */,
+				95368A32297B82DF0056C5B9 /* DataController.swift in Sources */,
 				95DE46A1297E40DD0061E507 /* NoDataView.swift in Sources */,
 				95ECF4822944F2F70021CCD1 /* Interval.xcdatamodeld in Sources */,
 				95A29FAF29668F88002DFA8B /* Workout.swift in Sources */,
