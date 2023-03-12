@@ -10,13 +10,13 @@ import SwiftUI
 @main
 struct IntervalApp: App {
     
-    @StateObject private var workoutsProvider = WorkoutsProvider()
+    @StateObject private var dataController = DataController()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 ContentView()
-                    .environment(\.managedObjectContext, workoutsProvider.container.viewContext)
+                    .environment(\.managedObjectContext, dataController.container.viewContext)
             }
         }
     }

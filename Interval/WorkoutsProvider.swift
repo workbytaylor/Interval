@@ -9,14 +9,14 @@ import Foundation
 import CoreData
 import SwiftUI
 
-final class WorkoutsProvider: ObservableObject {
+class DataController: ObservableObject {
     let container = NSPersistentContainer(name: "Interval")
     
     init() {
         //container.viewContext.automaticallyMergesChangesFromParent = true
-        container.loadPersistentStores { _, error in
-            if let error {
-                fatalError("Unable to load store with error: \(error.localizedDescription)")
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                print("CoreData failed to load: \(error.localizedDescription)")
             }
         }
     }
