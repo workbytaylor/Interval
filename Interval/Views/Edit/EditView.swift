@@ -11,8 +11,8 @@ import CoreData
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
-    @ObservedObject var workout: Workout
-    @FetchRequest var steps: FetchedResults<Step>
+    @ObservedObject private var workout: Workout
+    @FetchRequest private var steps: FetchedResults<Step>
     
     init(workout: Workout) {
         

@@ -59,6 +59,7 @@ struct DetailView: View {
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 EditView(workout: workout)
+                    //.environment(\.managedObjectContext, moc)
             }
         }
         /*.sheet(item: $workoutToEdit,
