@@ -16,8 +16,8 @@ struct IntervalApp: App {
         WindowGroup {
             NavigationStack {
                 ContentView()
-                    .environment(\.managedObjectContext, dataController.container.viewContext)
             }
+            .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }

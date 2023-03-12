@@ -59,7 +59,7 @@ struct DetailView: View {
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 EditView(workout: workout)
-                    .environment(\.managedObjectContext, self.moc)
+                    //.environment(\.managedObjectContext, moc) //I think sheets inherit the parent environment, no need to pass
             }
         }
         /*.sheet(item: $workoutToEdit,
