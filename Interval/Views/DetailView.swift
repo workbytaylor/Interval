@@ -62,12 +62,6 @@ struct DetailView: View {
                     //.environment(\.managedObjectContext, moc) //I think sheets inherit the parent environment, no need to pass
             }
         }
-        /*.sheet(item: $workoutToEdit,
-               onDismiss: {
-            workoutToEdit = nil
-        }, content: { workout in
-            EditView(workout: workout)
-        })*/
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 //do {

@@ -39,6 +39,26 @@ struct CreateView: View {
             Section {
                 // list all steps in new workout
                 ForEach(createViewSteps) { step in
+                    NavigationLink {
+                        EditStepView()
+                    } label: {
+                        HStack {
+                            Text(String(step.index))
+                            Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                            
+                            VStack(alignment: .leading) {
+                                Text("\(step.magnitude) \(step.unit)")
+                                
+                                let paceMinutes = step.pace/60
+                                let paceSeconds = step.pace%60
+                                
+                                Text("\(paceMinutes).\(paceSeconds) /km")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    
                     HStack {
                         Text(String(step.index))
                         Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")

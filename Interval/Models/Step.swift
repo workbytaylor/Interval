@@ -39,33 +39,4 @@ public class Step: NSManagedObject, Identifiable {
     }
 }
 
-/*
-// FETCH REQUESTS
-extension Step {
-    private static var stepsFetchRequest: NSFetchRequest<Step> {
-        NSFetchRequest(entityName: "Step")
-    }
-    
-    // sorted by index
-    static func filtered(filterKey: Workout, filterValue: String) -> NSFetchRequest<Step> {
-        let request: NSFetchRequest<Step> = stepsFetchRequest
-        //sort steps by index
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Step.index, ascending: true)
-        ]
-        // filter steps by workout
-        request.predicate = NSPredicate(format: "%K = %@", filterKey, filterValue)
-        
-        return request
-    }
-    
-    // filter for steps that relate to selected workout
-    static func filtered(of workout: Workout) -> NSPredicate {
-        NSPredicate(format: "workout = %@", workout)
-    }
-    
-}
-
-*/
-
 
