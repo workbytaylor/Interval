@@ -58,39 +58,29 @@ struct CreateView: View {
                             }
                         }
                     }
-                    
-                    HStack {
-                        Text(String(step.index))
-                        Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
-                        
-                        VStack(alignment: .leading) {
-                            Text("\(step.magnitude) \(step.unit)")
-                            
-                            let paceMinutes = step.pace/60
-                            let paceSeconds = step.pace%60
-                            
-                            Text("\(paceMinutes).\(paceSeconds) /km")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
                 }
             } header: {
                 Text("Steps")
             }
-            
-            // add new step to end of list
-            Button {
-                createViewSteps.append(CreateViewStep(index: Int16(createViewSteps.count+1)))
-            } label: {
-                Label("Add Step", systemImage: "plus")
-            }
-            .listRowBackground(Color.accentColor.opacity(0.1))
-            
         }
         .navigationTitle("New workout")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                // add new step to end of list
+                Button {
+                    createViewSteps.append(CreateViewStep(index: Int16(createViewSteps.count+1)))
+                } label: {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add step")
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .tint(.blue)
+            }
+            
             ToolbarItem(placement: .cancellationAction) {
                 Button(role: .cancel) {
                     dismiss()
