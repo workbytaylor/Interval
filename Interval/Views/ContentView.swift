@@ -29,7 +29,9 @@ struct ContentView: View {
                             DetailView(workout: workout)
                         } label: {
                             LabeledContent {
-                                Text("\(workout.stepArray.count) steps")
+                                let stepCount = workout.stepArray.count
+                                let stringCount = String(stepCount)
+                                Text(stepCount > 1 ? stringCount+" steps" : stringCount+" step")
                             } label: {
                                 Text(workout.title)
                             }

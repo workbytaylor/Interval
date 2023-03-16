@@ -64,13 +64,14 @@ struct DetailView: View {
         }
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
-                //do {
-                    // delete workout
-                    // delete steps
+                do {
+                    try deleteSteps()   // deletes all steps in the workout to prevent stray steps
+                    try deleteWorkout() // deletes the workout
+                    try moc.save()
                     dismiss()
-                //} catch {
-                  //  print(error)
-                //}
+                } catch {
+                    print(error)
+                }
             }
             Button("Cancel", role: .cancel) {  }
         } message: {
@@ -89,3 +90,19 @@ struct DetailView_Previews: PreviewProvider {
     }
 }
 
+
+extension DetailView {
+    
+    private func deleteSteps() throws {
+        //moc.delete(steps.workout)
+        // does not work, likely need fetchrequest to get steps for deletion
+        // TODO: replace stepArray down the line with fetchrequest
+    }
+    
+    private func deleteWorkout() throws {
+        moc.delete(workout)
+    }
+    
+    
+    
+}

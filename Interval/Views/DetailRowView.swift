@@ -12,7 +12,7 @@ struct DetailRowView: View {
     
     var body: some View {
         HStack {
-            Text(String(step.index))
+            //Text(String(step.index))
             Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
             
             VStack(alignment: .leading) {

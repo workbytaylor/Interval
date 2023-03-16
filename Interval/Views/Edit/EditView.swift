@@ -4,6 +4,7 @@
 //
 //  Created by Nilakshi Roy on 2022-11-23.
 //
+// The purpose of this view is to edit or delete an existing workout
 
 import SwiftUI
 import CoreData
@@ -15,7 +16,6 @@ struct EditView: View {
     @FetchRequest private var steps: FetchedResults<Step>
     
     init(workout: Workout) {
-        
         self.workout = workout
         _steps = FetchRequest(
             entity: Step.entity(),
@@ -27,41 +27,48 @@ struct EditView: View {
     }
     
     var body: some View {
-        List {
-            Section {
-                TextField("Add Title", text: $workout.title)
-                    .autocorrectionDisabled(false)
-                    .autocapitalization(.sentences)
-                    .onAppear {
-                        UITextField.appearance().clearButtonMode = .whileEditing
-                    }
-            } header: {
-                Text("Title")
-            }
-            
-            Section {
-                ForEach(steps) { step in
-                    NavigationLink {
-                        EditStepView()
-                    } label: {
-                        DetailRowView(step: step)
-                    }
-                    .deleteDisabled(workout.stepArray.count < 2)
+        ZStack(alignment: .bottomTrailing) {
+            List {
+                Section {
+                    TextField("Add Title", text: $workout.title)
+                        .autocorrectionDisabled(false)
+                        .autocapitalization(.sentences)
+                        .onAppear {
+                            UITextField.appearance().clearButtonMode = .whileEditing
+                        }
+                } header: {
+                    Text("Title")
                 }
-                //.onDelete(perform: deleteStepWithOffsets)
-                //.onMove()
                 
-            } header: {
-                Text("Steps")
+                Section {
+                    ForEach(steps) { step in
+                        NavigationLink {
+                            EditStepView()
+                        } label: {
+                            DetailRowView(step: step)
+                        }
+                        .deleteDisabled(workout.stepArray.count < 2)
+                    }
+                    //.onDelete(perform: deleteStep)
+                    //.onMove(perform: renumberSteps)
+                    
+                } header: {
+                    Text("Steps")
+                }
             }
             
             Button {
-                    // TODO: Add step
+                // TODO: Add step
             } label: {
-                Label("Add Step", systemImage: "plus")
+                Image(systemName: "plus")
+                    .foregroundColor(.white)
+                    .font(.headline)
             }
-            .listRowBackground(Color.accentColor.opacity(0.1))
-            
+            .frame(width: 60, height: 60)
+            .background(Color.accentColor)
+            .clipShape(Circle())
+            //.shadow(color: .gray, radius: 2, x: 0, y: 2)
+            .padding()
         }
         .navigationTitle("Edit workout")
         .navigationBarTitleDisplayMode(.inline)
@@ -90,4 +97,19 @@ struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         EditView(workout: Workout())
     }
+}
+
+
+extension EditView {
+    
+    private func deleteStep() throws {
+        // delete step
+    }
+    
+    private func renumberSteps() throws {
+        // renumber steps
+    }
+    
+    
+    
 }
