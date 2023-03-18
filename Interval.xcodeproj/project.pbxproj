@@ -181,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				95CABB03292E8C33006E7AAE /* EditView.swift */,
-				95615795295EA50C00EBD61D /* EditStepView.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -190,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				95D04F28299F1F2F00839875 /* CreateView.swift */,
+				95615795295EA50C00EBD61D /* EditStepView.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";

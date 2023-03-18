@@ -35,13 +35,17 @@ struct EditStepView: View {
     @State private var paceMinuteOptions = 1...20
     @State private var paceSecondOptions = Array(stride(from: 0, to: 60, by: 5))
     
+    @State private var repeatStep: Bool = false
+    @State private var repeatCount: Int = 2
+    private let range = 1...50
+    
     //@State var notes: String = ""
     
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    
+                    //TODO: Header + Other HeADER
                     LabeledContent {
                         Button {
                             withAnimation {
@@ -127,6 +131,109 @@ struct EditStepView: View {
                         }
                     }
                 }
+                
+                Toggle(isOn: $repeatStep) {
+                    Text("Repeat")
+                }
+                if repeatStep == true {
+                    Stepper(value: $repeatCount, in: range) {
+                        Text("How many times?")
+                    }
+                    
+                    // TODO: Change below to repeat
+                    // TODO: Extract to separate views
+                    Section {
+                        LabeledContent {
+                            Button {
+                                withAnimation {
+                                    if paceToggle == true {
+                                        paceToggle = false
+                                    }
+                                    lengthToggle.toggle()
+                                }
+                            } label: {
+                                Text("\(magnitude) \(unit.rawValue)")
+                            }
+                            .buttonStyle(.bordered)
+                            .foregroundColor(lengthToggle == true ? .accentColor : .primary)
+                        } label: {
+                            ZStack(alignment: .leading) {
+                                Text(" ")
+                                Picker("Type", selection: $stepType) {
+                                    ForEach(stepTypes.allCases, id: \.self) { type in
+                                        Text(type.rawValue)
+                                    }
+                                }
+                                .labelsHidden()
+                                .padding(.leading, -14)
+                            }
+                        }
+                        
+                        if lengthToggle == true {
+                            HStack(spacing: .zero) {
+                                Picker("Magnitude", selection: $magnitude) {
+                                    ForEach(1..<101, id: \.self) { magnitude in
+                                        Text(String(magnitude))
+                                    }
+                                }
+                                .pickerStyle(.wheel)
+                                Picker("Unit", selection: $unit) {
+                                    ForEach(Units.allCases, id: \.self) { unit in
+                                        Text(unit.rawValue)
+                                    }
+                                }
+                                .pickerStyle(.wheel)
+                            }
+                        }
+                         
+                        LabeledContent {
+                            Button {
+                                withAnimation {
+                                    if lengthToggle == true {
+                                        lengthToggle = false
+                                    }
+                                    paceToggle.toggle()
+                                }
+                            } label: {
+                                Text("\(minutePace).")+Text(secondPace < 10 ? "0" :  "")+Text("\(secondPace)")+Text(" /km")
+                            }
+                            .buttonStyle(.bordered) // this could be the cause of the padding
+                            .foregroundColor(paceToggle == true ? .accentColor : .primary)
+                        } label: {
+                            Text("Goal Pace")
+                        }
+                         
+                        if paceToggle == true {
+                            HStack(spacing: .zero) {
+                                Picker("", selection: $minutePace) {
+                                    ForEach(paceMinuteOptions, id: \.self) { minute in
+                                        Text("\(minute) m")
+                                    }
+                                }
+                                .pickerStyle(.wheel)
+                                
+                                //Text(".")
+                                Picker("", selection: $secondPace) {
+                                    ForEach(paceSecondOptions, id: \.self) { secondPace in
+                                        if secondPace < 10 {
+                                            Text("0\(secondPace) s")
+                                        } else {
+                                            Text("\(secondPace) s")
+                                        }
+                                        
+                                        
+                                    }
+                                }
+                                .pickerStyle(.wheel)
+                            }
+                        }
+                    }
+                    
+
+                }
+                
+                
+                
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
