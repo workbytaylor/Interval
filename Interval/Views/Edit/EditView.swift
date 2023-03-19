@@ -43,7 +43,7 @@ struct EditView: View {
                 Section {
                     ForEach(steps) { step in
                         NavigationLink {
-                            EditStepView()
+                            Text("Edit View with CoreData")    // step: step may need to be removed
                         } label: {
                             DetailRowView(step: step)
                         }

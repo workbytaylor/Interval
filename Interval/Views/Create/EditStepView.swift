@@ -10,8 +10,15 @@ import SwiftUI
 struct EditStepView: View {
     
     @Environment(\.dismiss) var dismiss
-
-    @State private var stepType = stepTypes.distance
+    
+    @State var step: CreateViewStep
+    
+    @State private var type: String = ""
+    @State private var magnitude: Int16 = 0
+    @State private var unit: String = ""
+    @State private var pace: Int16 = 1
+    
+    //@State private var stepType = stepTypes.distance
     enum stepTypes: String, CaseIterable {
         case distance = "Distance"
         case time = "Time"
@@ -20,8 +27,8 @@ struct EditStepView: View {
     @State private var lengthToggle: Bool = false
     @State private var paceToggle: Bool = false
     
-    @State private var magnitude: Int = 5
-    @State private var unit = Units.minutes
+    //@State private var magnitude: Int = 5
+    //@State private var unit = Units.minutes
     enum Units: String, CaseIterable {
         case seconds = "Seconds"
         case minutes = "Minutes"
@@ -39,7 +46,7 @@ struct EditStepView: View {
         NavigationStack {
             List {
                 Section {
-                    Picker("Type", selection: $stepType) {
+                    Picker("Step type", selection: $step.type) {
                         ForEach(stepTypes.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
@@ -120,12 +127,24 @@ struct EditStepView: View {
             }
             .navigationTitle("Edit Step")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                type = step.type
+                magnitude = step.magnitude
+                unit = step.unit
+                pace = step.pace
+            }
+            .onChange(of: [type, magnitude, unit, pace]) { newStep in
+                step.type = type
+                step.magnitude = magnitude
+                step.unit = unit
+                step.pace = pace
+            }
         }
     }
 }
 
 struct EditStepView_Previews: PreviewProvider {
     static var previews: some View {
-        EditStepView()
+        EditStepView(step: CreateViewStep())
     }
 }

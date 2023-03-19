@@ -42,7 +42,7 @@ struct CreateView: View {
                     // list all steps in new workout
                     ForEach($createViewSteps, id: \.self, editActions: .all) { $step in
                         NavigationLink {
-                            EditStepView()
+                            EditStepView(step: step)
                         } label: {
                             HStack {
                                 Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
