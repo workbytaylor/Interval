@@ -60,7 +60,7 @@ struct EditStepView: View {
                                 lengthToggle.toggle()
                             }
                         } label: {
-                            Text("\(magnitude) \(unit.rawValue)")
+                            Text("\(magnitude) \(unit)")
                         }
                         .buttonStyle(.bordered)
                         .foregroundColor(lengthToggle == true ? .accentColor : .primary)
@@ -133,12 +133,14 @@ struct EditStepView: View {
                 unit = step.unit
                 pace = step.pace
             }
+            /*
             .onChange(of: [type, magnitude, unit, pace]) { newStep in
                 step.type = type
                 step.magnitude = magnitude
                 step.unit = unit
                 step.pace = pace
             }
+             */
         }
     }
 }
