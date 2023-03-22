@@ -13,7 +13,7 @@ struct FormView: View {
     
     @State private var type = types.distance
     @State private var magnitude = 5
-    @State private var unit = "km"
+    @State private var unit = distanceUnits.km
     @State private var pace = 300
     
     @State private var selectedUnits = distanceUnits.allCases
@@ -45,11 +45,13 @@ struct FormView: View {
                 
                 // set step pace (magnitude + unit)
                 LabeledContent {
-                    Button("\(magnitude) \(unit)") {    //TODO: does not update?
+                    Button {
                         lengthToggle.toggle()
+                    } label: {
+                        Text("\(magnitude) \(unit.rawValue)")
                     }
                 } label: {
-                    Text("Length")  // TODO: make dynamic later
+                    Text(type.rawValue)
                 }
                 
                 if lengthToggle == true {   // two wheel pickers: magnitude + unit
@@ -60,6 +62,9 @@ struct FormView: View {
                             }
                         }
                         .pickerStyle(.wheel)
+                        
+                        
+                        
                         
                         Picker("Unit", selection: $unit) {
                             ForEach(selectedUnits/*TODO: change selectedUnits on change of type*/, id: \.self) { unit in
