@@ -13,10 +13,10 @@ struct FormView: View {
     
     @State private var type = types.distance
     @State private var magnitude = 5
-    @State private var unit = distanceUnits.km
+    @State private var unit = distanceUnits.km  // load with .onAppear?
     @State private var pace = 300
     
-    @State private var selectedUnits = distanceUnits.allCases
+    @State private var selectedUnits: [String] = []
     @State private var lengthToggle: Bool = false
     @State private var magnitudeOptions = 1..<101
     
@@ -40,6 +40,14 @@ struct FormView: View {
                 Picker("Type", selection: $type) {
                     ForEach(types.allCases, id: \.self) { type in
                         Text(type.rawValue)
+                    }
+                }
+                .onChange(of: type) { type in
+                    switch type {
+                    case .time:
+                        selectedUnits = timeUnits.allCases.map {$0.rawValue}
+                    case .distance:
+                        selectedUnits = distanceUnits.allCases.map {$0.rawValue}
                     }
                 }
                 
@@ -68,7 +76,7 @@ struct FormView: View {
                         
                         Picker("Unit", selection: $unit) {
                             ForEach(selectedUnits/*TODO: change selectedUnits on change of type*/, id: \.self) { unit in
-                                Text(unit.rawValue)
+                                Text(unit)
                             }
                         }
                         .pickerStyle(.wheel)
