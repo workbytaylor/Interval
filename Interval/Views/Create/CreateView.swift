@@ -22,7 +22,7 @@ struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     @State private var title: String = ""
-    @State private var createViewSteps: [CreateViewStep] = [CreateViewStep()]
+    @State var createViewSteps: [CreateViewStep] = [CreateViewStep()]
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -43,10 +43,20 @@ struct CreateView: View {
                     ForEach($createViewSteps, id: \.self, editActions: .all) { $step in
                         NavigationLink {
                             //EditStepView(step: step)
-                            FormView()
+                            FormView(step: $step)
                         } label: {
                             HStack {
-                                Image(systemName: step.type == "distance" ? "lines.measurement.horizontal" : "stopwatch")
+                                    // TODO: Replace with function later
+                                    switch step.type {
+                                    case "distance":
+                                        Image(systemName: "lines.measurement.horizontal")
+                                    case "time":
+                                        Image(systemName: "stopwatch")
+                                default:
+                                        Image(systemName: "xmark")
+                                }
+                                        
+                                        
                                 
                                 VStack(alignment: .leading) {
                                     Text("\(step.magnitude) \(step.unit)")
