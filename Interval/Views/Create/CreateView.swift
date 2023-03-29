@@ -4,25 +4,16 @@
 //
 //  Created by Nilakshi Roy on 2023-02-16.
 //
-// The purpose of this view is to create and edit a brand new workout, then to save this workout
+// The purpose of this view is to create, edit and save a new workout
 
 
 import SwiftUI
-
-
-struct CreateViewStep: Identifiable, Hashable {
-    let id: UUID = UUID()
-    var magnitude: Int16 = 5
-    var pace: Int16 = 330   // seconds per km
-    var type: String = "time"
-    var unit: String = "minutes"
-}
 
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     @State private var title: String = ""
-    @State var createViewSteps: [CreateViewStep] = [CreateViewStep()]
+    @State var newSteps: [Step] = [Step()]
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -40,23 +31,20 @@ struct CreateView: View {
                 
                 Section {
                     // list all steps in new workout
-                    ForEach($createViewSteps, id: \.self, editActions: .all) { $step in
+                    ForEach($newSteps, id: \.id, editActions: .all) { $step in
                         NavigationLink {
-                            //EditStepView(step: step)
                             FormView(step: $step)
                         } label: {
                             HStack {
-                                    // TODO: Replace with function later
-                                    switch step.type {
-                                    case "distance":
-                                        Image(systemName: "lines.measurement.horizontal")
-                                    case "time":
-                                        Image(systemName: "stopwatch")
+                                // TODO: Replace with function later
+                                switch step.type {
+                                case "distance":
+                                    Image(systemName: "lines.measurement.horizontal")
+                                case "time":
+                                    Image(systemName: "stopwatch")
                                 default:
-                                        Image(systemName: "xmark")
+                                    Image(systemName: "xmark")
                                 }
-                                        
-                                        
                                 
                                 VStack(alignment: .leading) {
                                     Text("\(step.magnitude) \(step.unit)")
@@ -70,7 +58,7 @@ struct CreateView: View {
                                 }
                             }
                         }
-                        .deleteDisabled(createViewSteps.count < 2)
+                        .deleteDisabled(newSteps.count < 2)
                     }
                 } header: {
                     Text("Steps")
@@ -78,7 +66,7 @@ struct CreateView: View {
             }
             
             Button {
-                createViewSteps.append(CreateViewStep())
+                newSteps.append(Step())
             } label: {
                 Image(systemName: "plus")
                     .foregroundColor(.white)
@@ -124,14 +112,14 @@ extension CreateView {
     
     // workout is not created until the save button is tapped
     private func saveNewWorkout() {
-        let newWorkout = Workout(context: moc)
+        let newWorkout = CoreDataWorkout(context: moc)
         newWorkout.id = UUID()
         newWorkout.title = title
         var index: Int16 = 0
         
         // add steps to new workout in CoreData
-        for step in createViewSteps {
-            let newStep = Step(context: moc)
+        for step in newSteps {
+            let newStep = CoreDataStep(context: moc)
             newStep.id = step.id
             index += 1
             newStep.index = index
@@ -139,7 +127,7 @@ extension CreateView {
             newStep.pace = step.pace
             newStep.type = step.type
             newStep.unit = step.unit
-            newStep.workout = newWorkout
+            newStep.cdWorkout = newWorkout
         }
         try? moc.save()
     }

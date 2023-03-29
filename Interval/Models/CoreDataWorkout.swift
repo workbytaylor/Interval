@@ -9,12 +9,12 @@
 import Foundation
 import CoreData
 
-@objc(Workout)
-public class Workout: NSManagedObject, Identifiable {
+@objc(CoreDataWorkout)
+public class CoreDataWorkout: NSManagedObject, Identifiable {
 
     @NSManaged public var id: UUID?
     @NSManaged public var title: String //making title optional prevents textfield from working
-    @NSManaged public var steps: NSMutableSet?//NSSet?
+    @NSManaged public var coreDataSteps: NSMutableSet?//NSSet?
     
     /*
     public override func awakeFromInsert() {    // adds default value for id property
@@ -23,8 +23,8 @@ public class Workout: NSManagedObject, Identifiable {
     }
      */
     
-    public var stepArray: [Step] {  // order steps based on index
-        let setOfSteps = steps as? Set<Step> ?? []
+    public var stepArray: [CoreDataStep] {  // order steps based on index
+        let setOfSteps = coreDataSteps as? Set<CoreDataStep> ?? []
         return setOfSteps.sorted {
             $0.index < $1.index
         }
@@ -32,15 +32,15 @@ public class Workout: NSManagedObject, Identifiable {
 }
 
 // FETCH REQUESTS
-extension Workout {
-    private static var workoutsFetchRequest: NSFetchRequest<Workout> {
-        NSFetchRequest(entityName: "Workout")
+extension CoreDataWorkout {
+    private static var workoutsFetchRequest: NSFetchRequest<CoreDataWorkout> {
+        NSFetchRequest(entityName: "CoreDataWorkout")
     }
     
-    static func all() -> NSFetchRequest<Workout> {  // fetch request for ContentView, sort by title ascending
-        let request: NSFetchRequest<Workout> = workoutsFetchRequest
+    static func all() -> NSFetchRequest<CoreDataWorkout> {  // fetch request for ContentView, sort by title ascending
+        let request: NSFetchRequest<CoreDataWorkout> = workoutsFetchRequest
         request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Workout.title, ascending: true)
+            NSSortDescriptor(keyPath: \CoreDataWorkout.title, ascending: true)
         ]
         return request
     }

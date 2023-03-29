@@ -11,7 +11,7 @@ struct EditStepView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State var step: CreateViewStep
+    @State var step: Step
     
     @State private var type: String = ""
     @State private var magnitude: Int16 = 0
@@ -147,6 +147,6 @@ struct EditStepView: View {
 
 struct EditStepView_Previews: PreviewProvider {
     static var previews: some View {
-        EditStepView(step: CreateViewStep())
+        EditStepView(step: Step())
     }
 }

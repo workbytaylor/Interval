@@ -11,16 +11,18 @@ struct FormView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    @Binding var step: CreateViewStep
+    @Binding var step: Step
     
-    //@State var type: String
     var types: [String] = ["distance", "time"]
+    var distanceUnits: [String] = ["kilometers", "meters"]
+    var timeUnits: [String] = ["hours", "minutes", "seconds"]
+    var magnitudeRange = Int16(1)...Int16(1000)
     
+    @State var magnitude: Int16 = 10
     
-    /*init(step: CreateViewStep) {
-        self.step = step
-        _type = State(initialValue: step.type)
-    }*/
+    //@State var lengthPicker: Bool = false
+    @State var paceToggle: Bool = false
+    @State var lengthToggle: Bool = false
     
     var body: some View {
         List {
@@ -32,11 +34,37 @@ struct FormView: View {
                     }
                 }
                 
+                LabeledContent {
+                    Button {
+                        withAnimation {
+                            if paceToggle == true {
+                                paceToggle = false
+                            }
+                            lengthToggle.toggle()
+                        }
+                    } label: {
+                        Text("\(step.magnitude) \(step.unit)")
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(lengthToggle == true ? .accentColor : .primary)
+                } label: {
+                    Text("Length")
+                }
+                if lengthToggle == true {
+                    switch step.type {
+                    case "distance":
+                        DistancePicker(step: $step)
+                    case "time":
+                        TimePicker(step: $step)
+                    default:
+                        Text("Invalid step type")
+                    }
+                }
+                
+                
                 // length picker
                 // repeat button
                 //
-                
-                
                 
             }
         }
@@ -45,6 +73,6 @@ struct FormView: View {
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
-        FormView(step: .constant(CreateViewStep()))
+        FormView(step: .constant(Step()))
     }
 }

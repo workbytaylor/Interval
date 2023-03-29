@@ -11,7 +11,7 @@ struct DetailView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
-    @ObservedObject var workout: Workout
+    @ObservedObject var workout: CoreDataWorkout
     @State private var showDeleteAlert: Bool = false
     @State private var showSheet: Bool = false
     
@@ -85,7 +85,7 @@ struct DetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationStack {
-            DetailView(workout: Workout())
+            DetailView(workout: CoreDataWorkout())
         }
     }
 }

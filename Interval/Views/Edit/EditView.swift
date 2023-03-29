@@ -12,15 +12,15 @@ import CoreData
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
-    @ObservedObject private var workout: Workout
-    @FetchRequest private var steps: FetchedResults<Step>
+    @ObservedObject private var workout: CoreDataWorkout
+    @FetchRequest private var steps: FetchedResults<CoreDataStep>
     
-    init(workout: Workout) {
+    init(workout: CoreDataWorkout) {
         self.workout = workout
         _steps = FetchRequest(
-            entity: Step.entity(),
+            entity: CoreDataStep.entity(),
             sortDescriptors: [
-                NSSortDescriptor(keyPath: \Step.index, ascending: true)
+                NSSortDescriptor(keyPath: \CoreDataStep.index, ascending: true)
             ],
             predicate: NSPredicate(format: "workout == %@", workout)
         )
@@ -95,7 +95,7 @@ struct EditView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        EditView(workout: Workout())
+        EditView(workout: CoreDataWorkout())
     }
 }
 

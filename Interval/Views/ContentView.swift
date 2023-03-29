@@ -14,7 +14,7 @@ struct SearchConfig: Equatable {
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(fetchRequest: Workout.all()) private var workouts
+    @FetchRequest(fetchRequest: CoreDataWorkout.all()) private var workouts
     @State private var searchConfig: SearchConfig = .init()
     @State private var showSheet: Bool = false
     
@@ -43,7 +43,7 @@ struct ContentView: View {
         .searchable(text: $searchConfig.query)
         .navigationTitle("Workouts")
         .onChange(of: searchConfig) { newValue in
-            workouts.nsPredicate = Workout.filter(newValue.query)
+            workouts.nsPredicate = CoreDataWorkout.filter(newValue.query)
         }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

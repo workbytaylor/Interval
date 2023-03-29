@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailRowView: View {
-    var step: Step
+    var step: CoreDataStep
     
     var body: some View {
         HStack {
@@ -33,7 +33,7 @@ struct DetailRowView: View {
 struct DetailRowView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            DetailRowView(step: Step())
+            DetailRowView(step: CoreDataStep())
         }
     }
 }
