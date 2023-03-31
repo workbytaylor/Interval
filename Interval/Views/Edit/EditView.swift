@@ -22,7 +22,7 @@ struct EditView: View {
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \CoreDataStep.index, ascending: true)
             ],
-            predicate: NSPredicate(format: "workout == %@", workout)
+            predicate: NSPredicate(format: "cdWorkout == %@", workout)
         )
     }
     

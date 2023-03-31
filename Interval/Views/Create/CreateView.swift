@@ -32,32 +32,38 @@ struct CreateView: View {
                 Section {
                     // list all steps in new workout
                     ForEach($newSteps, id: \.id, editActions: .all) { $step in
-                        NavigationLink {
-                            FormView(step: $step)
-                        } label: {
-                            HStack {
-                                // TODO: Replace with function later
-                                switch step.type {
-                                case "distance":
-                                    Image(systemName: "lines.measurement.horizontal")
-                                case "time":
-                                    Image(systemName: "stopwatch")
-                                default:
-                                    Image(systemName: "xmark")
-                                }
-                                
-                                VStack(alignment: .leading) {
-                                    Text("\(step.magnitude) \(step.unit)")
+                        HStack {
+                            NavigationLink {
+                                FormView(step: $step)
+                            } label: {
+                                HStack {
+                                    // TODO: Replace with function later
+                                    switch step.type {
+                                    case "distance":
+                                        Image(systemName: "lines.measurement.horizontal")
+                                    case "time":
+                                        Image(systemName: "stopwatch")
+                                    default:
+                                        Image(systemName: "xmark")
+                                    }
                                     
-                                    let paceMinutes = step.pace/60
-                                    let paceSeconds = step.pace%60
-                                    
-                                    Text("\(paceMinutes).\(paceSeconds) /km")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                    VStack(alignment: .leading) {
+                                        Text("\(step.magnitude) \(step.unit)")
+                                        
+                                        let paceMinutes = step.pace/60
+                                        let paceSeconds = step.pace%60
+                                        
+                                        Text("\(paceMinutes).\(paceSeconds) /km")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
                                 }
                             }
+                            
+                            Image(systemName: "line.3.horizontal").foregroundStyle(.secondary)
                         }
+                        
+                        
                         .deleteDisabled(newSteps.count < 2)
                     }
                 } header: {
