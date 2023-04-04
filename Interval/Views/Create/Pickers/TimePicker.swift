@@ -24,8 +24,6 @@ struct TimePicker: View {
             }
             .pickerStyle(.wheel)
             */
-            Text("Length")
-            Spacer()
             TextField("Magnitude", text: $magnitude)
                 .frame(width: 100)
                 .keyboardType(.numberPad)   // is this the right keyboard?
@@ -36,7 +34,6 @@ struct TimePicker: View {
                 }
             }
             .labelsHidden()
-            //.pickerStyle(.wheel)
         }
     }
 }
