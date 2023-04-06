@@ -22,7 +22,7 @@ struct FormView: View {
     
     //@State var lengthPicker: Bool = false
     @State var paceToggle: Bool = false
-    @State var lengthToggle: Bool = false
+    @State var magnitudeToggle: Bool = false
     
     var body: some View {
         List {
@@ -34,24 +34,38 @@ struct FormView: View {
                     }
                 }
                 
-                
                 LabeledContent {
+                    // tap to reveal picker
                     Button {
                         withAnimation {
                             if paceToggle == true {
                                 paceToggle = false
                             }
-                            lengthToggle.toggle()
+                            magnitudeToggle.toggle()
                         }
                     } label: {
-                        Text("\(step.magnitude) \(step.unit)")
+                        switch step.type {
+                        case "distance":
+                            Text("\(step.magnitude) \(step.unit)")
+                        case "time":
+                            let hours = step.magnitude/3600
+                            let minutes = (step.magnitude%3600)/60
+                            let seconds = (step.magnitude%3600)%60
+                            
+                            Text("\(hours)h \(minutes)m \(seconds)s")
+                        default:
+                            Text("Unknown Error")
+                        }
+                        
+                        
+                        
                     }
                     .buttonStyle(.bordered)
-                    .foregroundColor(lengthToggle == true ? .accentColor : .primary)
+                    .foregroundColor(magnitudeToggle == true ? .accentColor : .primary)
                 } label: {
                     Text("Length")
                 }
-                if lengthToggle == true {
+                if magnitudeToggle == true {
                     switch step.type {
                     case "distance":
                         DistancePicker(step: $step)
@@ -62,14 +76,29 @@ struct FormView: View {
                     }
                 }
                 
+                LabeledContent {
+                    Button {
+                        withAnimation {
+                            if magnitudeToggle == true {
+                                magnitudeToggle = false
+                            }
+                        }
+                        paceToggle.toggle()
+                    } label: {
+                        Text("Pace")
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(magnitudeToggle == true ? .accentColor : .primary)
+                } label: {
+                    Text("Pace")
+                }
+                if paceToggle == true {
+                    PacePicker()
+                }
                 
-                // length picker
-                // repeat button
-                //
+                
                 
             }
-            
-            //TimePicker(step: $step)
         }
     }
 }

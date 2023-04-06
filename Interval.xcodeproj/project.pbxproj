@@ -29,6 +29,7 @@
 		95BE040829C94AA800EDD8CE /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BE040729C94AA800EDD8CE /* FormView.swift */; };
 		95CABB04292E8C33006E7AAE /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CABB03292E8C33006E7AAE /* EditView.swift */; };
 		95D04F29299F1F2F00839875 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D04F28299F1F2F00839875 /* CreateView.swift */; };
+		95D1365129DED9B0002412FE /* PacePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1365029DED9B0002412FE /* PacePicker.swift */; };
 		95DE46A1297E40DD0061E507 /* NoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DE46A0297E40DD0061E507 /* NoDataView.swift */; };
 		95ECF4822944F2F70021CCD1 /* Interval.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 95ECF4802944F2F70021CCD1 /* Interval.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		95BE040729C94AA800EDD8CE /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		95CABB03292E8C33006E7AAE /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		95D04F28299F1F2F00839875 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		95D1365029DED9B0002412FE /* PacePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacePicker.swift; sourceTree = "<group>"; };
 		95DE46A0297E40DD0061E507 /* NoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataView.swift; sourceTree = "<group>"; };
 		95ECF4812944F2F70021CCD1 /* Interval.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Interval.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 			children = (
 				95281FC229D3ECD300DE7ED1 /* TimePicker.swift */,
 				95281FC529D3ED3600DE7ED1 /* DistancePicker.swift */,
+				95D1365029DED9B0002412FE /* PacePicker.swift */,
 			);
 			path = Pickers;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				95D04F29299F1F2F00839875 /* CreateView.swift in Sources */,
 				95281FC129D3CDEB00DE7ED1 /* Step.swift in Sources */,
 				95281FC629D3ED3600DE7ED1 /* DistancePicker.swift in Sources */,
+				95D1365129DED9B0002412FE /* PacePicker.swift in Sources */,
 				9506F83529328F0200E20F83 /* DetailView.swift in Sources */,
 				95615796295EA50C00EBD61D /* EditStepView.swift in Sources */,
 				959FFC0B29854B440049136E /* DetailRowView.swift in Sources */,
