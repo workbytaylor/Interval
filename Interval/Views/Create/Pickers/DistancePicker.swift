@@ -10,23 +10,46 @@ import SwiftUI
 struct DistancePicker: View {
     
     @Binding var step: Step
-    var distanceRange = Int16(1)...Int16(1000)
+    var hundredsRange = Int16(0)...Int16(100)
+    var tensRange = Int16(0)...Int16(99)
     var distanceUnits: [String] = ["kilometers", "meters"]
+    
+    @State var hundreds: Int16 = 0
+    @State var tens: Int16 = 0
+    //@State var unit: String = "Unknown unit"
     
     var body: some View {
         HStack(spacing: .zero) {
-            Picker("Magnitude", selection: $step.magnitude) {
-                ForEach(distanceRange, id: \.self) { magnitude in
-                    Text(String(magnitude))
+            
+            Picker("Magnitude", selection: $hundreds) {
+                ForEach(hundredsRange, id: \.self) {
+                    Text(String($0))
                 }
             }
             .pickerStyle(.wheel)
+            
+            Picker("Magnitude", selection: $tens) {
+                ForEach(tensRange, id: \.self) {
+                    $0 < 10 ? Text("0\($0)") : Text(String($0))
+                }
+            }
+            .pickerStyle(.wheel)
+            
             Picker("Unit", selection: $step.unit) {
-                ForEach(distanceUnits, id: \.self) { unit in
-                    Text(unit)
+                ForEach(distanceUnits, id: \.self) {
+                    Text($0)
                 }
             }
             .pickerStyle(.wheel)
+        }.onAppear {
+            hundreds = step.magnitude/100
+            tens = step.magnitude%100
+        }
+        .onChange(of: [hundreds, tens]) { newValue in
+            step.magnitude = Int16(hundreds*100+tens)
+        }
+        .onDisappear {
+            //TODO: check sole earlier project
         }
     }
 }

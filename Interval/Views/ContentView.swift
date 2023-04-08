@@ -57,7 +57,9 @@ struct ContentView: View {
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 CreateView()
+                    .interactiveDismissDisabled()
             }
+            
         }
     }
 }
