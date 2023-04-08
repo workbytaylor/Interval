@@ -31,6 +31,7 @@ struct TimePicker: View {
                 }
                 .pickerStyle(.wheel)
                 Text("         h")   //8 spaces
+                    .foregroundStyle(.secondary)
             }
             
             ZStack {

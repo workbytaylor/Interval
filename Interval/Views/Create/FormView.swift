@@ -56,9 +56,6 @@ struct FormView: View {
                         default:
                             Text("Unknown Error")
                         }
-                        
-                        
-                        
                     }
                     .buttonStyle(.bordered)
                     .foregroundColor(magnitudeToggle == true ? .accentColor : .primary)
@@ -88,7 +85,7 @@ struct FormView: View {
                         Text("Pace")
                     }
                     .buttonStyle(.bordered)
-                    .foregroundColor(magnitudeToggle == true ? .accentColor : .primary)
+                    .foregroundColor(paceToggle == true ? .accentColor : .primary)
                 } label: {
                     Text("Pace")
                 }
