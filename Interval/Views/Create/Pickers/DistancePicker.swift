@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DistancePicker: View {
     
-    @ObservedObject var step: Step
+    @Binding var step: Step
     var hundredsRange = Int16(0)...Int16(100)
     var tensRange = Int16(0)...Int16(99)
     var distanceUnits: [String] = ["kilometers", "meters"]
@@ -41,12 +41,14 @@ struct DistancePicker: View {
                 }
             }
             .pickerStyle(.wheel)
-        }.onAppear {
-            hundreds = step.magnitude/100
-            tens = step.magnitude%100
+        }
+        //
+        .onAppear {
+            hundreds = step.length/100
+            tens = step.length%100
         }
         .onChange(of: [hundreds, tens]) { newValue in
-            step.magnitude = Int16(hundreds*100+tens)
+            step.length = Int16(hundreds*100+tens)
         }
         .onDisappear {
             //TODO: check sole earlier project
@@ -56,6 +58,6 @@ struct DistancePicker: View {
 
 struct DistancePicker_Previews: PreviewProvider {
     static var previews: some View {
-        DistancePicker(step: Step())
+        DistancePicker(step: .constant(Step()))
     }
 }

@@ -9,12 +9,8 @@ import SwiftUI
 
 struct TimePicker: View {
     
-    @ObservedObject var step: Step
-    
-    @State var hours: Int16 = 0
-    @State var minutes: Int16 = 0
-    @State var seconds: Int16 = 0
-    
+    @Binding var step: Step
+     
     var hourRange = Int16(0)...Int16(24)
     var minuteRange = Int16(0)...Int16(60)
     var secondRange = Int16(0)...Int16(60)
@@ -24,34 +20,37 @@ struct TimePicker: View {
         HStack(spacing: .zero) {
             
             ZStack {
-                Picker("Hours", selection: $hours) {
+                Picker("Hours", selection: $step.hours) {
                     ForEach(hourRange, id: \.self) { hours in
                         Text(String(hours))
                     }
                 }
                 .pickerStyle(.wheel)
-                Text("         h")   //8 spaces
+                Text("           h")   //10 spaces
                     .foregroundStyle(.secondary)
+                    .monospacedDigit()
             }
             
             ZStack {
-                Picker("Minutes", selection: $minutes) {
+                Picker("Minutes", selection: $step.minutes) {
                     ForEach(minuteRange, id: \.self) { minutes in
                         Text(String(minutes))
                     }
                 }
                 .pickerStyle(.wheel)
-                Text("        m")
-            }//.monospacedDigit()   // an attempt to make spacing regular
+                Text("          m")
+                    .foregroundStyle(.secondary)
+            }
             
             ZStack {
-                Picker("Seconds", selection: $seconds) {
+                Picker("Seconds", selection: $step.seconds) {
                     ForEach(secondRange, id: \.self) { seconds in
                         Text(String(seconds))
                     }
                 }
                 .pickerStyle(.wheel)
-                Text("        s")
+                Text("          s")
+                    .foregroundStyle(.secondary)
             }
             
             

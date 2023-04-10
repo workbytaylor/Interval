@@ -11,7 +11,7 @@ struct FormView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject var step: Step
+    @Binding var step: Step
     
     var types: [String] = ["distance", "time"]
     var distanceUnits: [String] = ["kilometers", "meters"]
@@ -24,16 +24,14 @@ struct FormView: View {
     
     var body: some View {
         List {
-            Section {
-                // select step type
+            Section {   // select step type
                 Picker("Type", selection: $step.type) {
                     ForEach(types, id: \.self) {
                         Text($0.capitalized)
                     }
                 }
                 
-                LabeledContent {
-                    // tap to reveal picker
+                LabeledContent {    // button for distance/time picker, based on type
                     Button {
                         withAnimation {
                             if paceToggle == true {
@@ -44,15 +42,15 @@ struct FormView: View {
                     } label: {
                         switch step.type {
                         case "distance":
-                            Text("\(step.magnitude) \(step.unit)")
+                            Text("\(step.length) \(step.unit)")
                         case "time":
-                            let hours = step.magnitude/3600
-                            let minutes = (step.magnitude%3600)/60
-                            let seconds = (step.magnitude%3600)%60
-                            
-                            Text("\(hours)h \(minutes)m \(seconds)s")
+                            HStack {
+                                step.hours>0 ? Text("\(step.hours)h") : nil
+                                step.minutes>0 ? Text("\(step.minutes)m") : nil
+                                step.seconds>0 ? Text("\(step.seconds)s") : nil
+                            }
                         default:
-                            Text("Unknown Error")
+                            Text("Unknown step type")
                         }
                     }
                     .buttonStyle(.bordered)
@@ -63,9 +61,9 @@ struct FormView: View {
                 if magnitudeToggle == true {
                     switch step.type {
                     case "distance":
-                        DistancePicker(step: step)
+                        DistancePicker(step: $step)
                     case "time":
-                        TimePicker(step: step)
+                        TimePicker(step: $step)
                     default:
                         Text("Invalid step type")
                     }
@@ -111,6 +109,6 @@ struct FormView: View {
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
-        FormView(step: Step())
+        FormView(step: .constant(Step()))
     }
 }

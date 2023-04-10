@@ -13,16 +13,14 @@ struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
-    @ObservedObject var workout: Workout = Workout()
-    
-    //@State private var title: String = ""
-    //@State var newSteps: [Step] = [Step()]
+    @State private var title: String = ""
+    @State var steps: [Step] = [Step()]
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             List {
                 Section {
-                    TextField("Add Title", text: $workout.title)
+                    TextField("Add Title", text: $title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                         .onAppear {
@@ -34,13 +32,13 @@ struct CreateView: View {
                 
                 Section {
                     // list all steps in new workout
-                    ForEach(workout.steps, id: \.id/*, editActions: .all*/) { step in
+                    ForEach($steps, id: \.id, editActions: .all) { $step in
                         HStack {
                             NavigationLink {
-                                FormView(step: step)
+                                FormView(step: $step)
                             } label: {
                                 HStack {
-                                    // TODO: Replace with function later
+                                    // TODO: Replace with reusable view later
                                     switch step.type {
                                     case "distance":
                                         Image(systemName: "lines.measurement.horizontal")
@@ -51,12 +49,21 @@ struct CreateView: View {
                                     }
                                     
                                     VStack(alignment: .leading) {
-                                        Text("\(step.magnitude) \(step.unit)")
+                                        //magnitude + unit
+                                        switch step.type {
+                                        case "distance":
+                                            Text("\(step.length) \(step.unit)")
+                                        case "time":
+                                            HStack {
+                                                step.hours>0 ? Text("\(step.hours)h") : nil
+                                                step.minutes>0 ? Text("\(step.minutes)m") : nil
+                                                step.seconds>0 ? Text("\(step.seconds)s") : nil
+                                            }
+                                        default:
+                                            Text("Unknown step type")
+                                        }
                                         
-                                        let paceMinutes = step.pace/60
-                                        let paceSeconds = step.pace%60
-                                        
-                                        Text("\(paceMinutes).\(paceSeconds) /km")
+                                        Text("\(step.paceMinutes).\(step.paceSeconds) /km")
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
                                     }
@@ -65,9 +72,7 @@ struct CreateView: View {
                             
                             Image(systemName: "line.3.horizontal").foregroundStyle(.secondary)
                         }
-                        
-                        
-                        .deleteDisabled(workout.steps.count < 2)
+                        .deleteDisabled(steps.count < 2)
                     }
                 } header: {
                     Text("Steps")
@@ -75,7 +80,7 @@ struct CreateView: View {
             }
             
             Button {
-                workout.steps.append(Step())
+                steps.append(Step())
             } label: {
                 Image(systemName: "plus")
                     .foregroundColor(.white)
@@ -104,7 +109,7 @@ struct CreateView: View {
                 } label: {
                     Text("Save")
                 }
-                .disabled(workout.title.isEmpty)
+                .disabled(title.isEmpty)
             }
         }
     }
@@ -112,7 +117,7 @@ struct CreateView: View {
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateView(workout: Workout())
+        CreateView()
     }
 }
 
@@ -123,16 +128,17 @@ extension CreateView {
     private func saveNewWorkout() {
         let newWorkout = CoreDataWorkout(context: moc)
         newWorkout.id = UUID()
-        newWorkout.title = workout.title
+        newWorkout.title = title
         var index: Int16 = 0
         
         // add steps to new workout in CoreData
-        for step in workout.steps {
+        for step in steps {
             let newStep = CoreDataStep(context: moc)
             newStep.id = step.id
             index += 1
             newStep.index = index
-            newStep.magnitude = step.magnitude
+            // TODO: Change this for each type -> switch statement?
+            newStep.magnitude = step.length
             newStep.pace = step.pace
             newStep.type = step.type
             newStep.unit = step.unit
