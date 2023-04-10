@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimePicker: View {
     
-    @Binding var step: Step
+    @ObservedObject var step: Step
     
     @State var hours: Int16 = 0
     @State var minutes: Int16 = 0

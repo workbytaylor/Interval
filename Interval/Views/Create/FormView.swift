@@ -11,7 +11,7 @@ struct FormView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    @Binding var step: Step
+    @ObservedObject var step: Step
     
     var types: [String] = ["distance", "time"]
     var distanceUnits: [String] = ["kilometers", "meters"]
@@ -19,8 +19,6 @@ struct FormView: View {
     var magnitudeRange = Int16(1)...Int16(1000)
     
     @State var magnitude: Int16 = 10
-    
-    //@State var lengthPicker: Bool = false
     @State var paceToggle: Bool = false
     @State var magnitudeToggle: Bool = false
     
@@ -65,9 +63,9 @@ struct FormView: View {
                 if magnitudeToggle == true {
                     switch step.type {
                     case "distance":
-                        DistancePicker(step: $step)
+                        DistancePicker(step: step)
                     case "time":
-                        TimePicker(step: $step)
+                        TimePicker(step: step)
                     default:
                         Text("Invalid step type")
                     }
@@ -97,11 +95,22 @@ struct FormView: View {
                 
             }
         }
+        .onChange(of: step.type) { newValue in
+            switch step.type {
+            case "distance":
+                step.unit = "kilometers"
+            case "time":
+                step.unit = "minutes"
+            default:
+                step.unit = "Unknown unit"
+                
+            }
+        }
     }
 }
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
-        FormView(step: .constant(Step()))
+        FormView(step: Step())
     }
 }

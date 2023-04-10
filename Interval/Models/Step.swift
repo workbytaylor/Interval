@@ -16,7 +16,4 @@ public class Step: ObservableObject, Identifiable {
     
     //TODO: Add methods here to calculate hours, minutes, seconds if type == time?
     
-    
-    
-    
 }

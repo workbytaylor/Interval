@@ -12,7 +12,6 @@
 		95281FC329D3ECD300DE7ED1 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95281FC229D3ECD300DE7ED1 /* TimePicker.swift */; };
 		95281FC629D3ED3600DE7ED1 /* DistancePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95281FC529D3ED3600DE7ED1 /* DistancePicker.swift */; };
 		95368A32297B82DF0056C5B9 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95368A31297B82DF0056C5B9 /* DataController.swift */; };
-		95615796295EA50C00EBD61D /* EditStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95615795295EA50C00EBD61D /* EditStepView.swift */; };
 		959FFC0B29854B440049136E /* DetailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959FFC0A29854B440049136E /* DetailRowView.swift */; };
 		95A29FAD29668F88002DFA8B /* CoreDataStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A29FA929668F88002DFA8B /* CoreDataStep.swift */; };
 		95A29FAF29668F88002DFA8B /* CoreDataWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A29FAB29668F88002DFA8B /* CoreDataWorkout.swift */; };
@@ -27,6 +26,7 @@
 		95ACF5252922027100E9B2AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95ACF5242922027100E9B2AF /* Assets.xcassets */; };
 		95ACF5282922027100E9B2AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95ACF5272922027100E9B2AF /* Preview Assets.xcassets */; };
 		95BE040829C94AA800EDD8CE /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BE040729C94AA800EDD8CE /* FormView.swift */; };
+		95C9D46929E2710D00705BDA /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C9D46829E2710D00705BDA /* Workout.swift */; };
 		95CABB04292E8C33006E7AAE /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CABB03292E8C33006E7AAE /* EditView.swift */; };
 		95D04F29299F1F2F00839875 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D04F28299F1F2F00839875 /* CreateView.swift */; };
 		95D1365129DED9B0002412FE /* PacePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1365029DED9B0002412FE /* PacePicker.swift */; };
@@ -64,7 +64,6 @@
 		95281FC229D3ECD300DE7ED1 /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		95281FC529D3ED3600DE7ED1 /* DistancePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistancePicker.swift; sourceTree = "<group>"; };
 		95368A31297B82DF0056C5B9 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		95615795295EA50C00EBD61D /* EditStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepView.swift; sourceTree = "<group>"; };
 		959FFC0A29854B440049136E /* DetailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRowView.swift; sourceTree = "<group>"; };
 		95A29FA929668F88002DFA8B /* CoreDataStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStep.swift; sourceTree = "<group>"; };
 		95A29FAB29668F88002DFA8B /* CoreDataWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataWorkout.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		95ACF5242922027100E9B2AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95ACF5272922027100E9B2AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		95BE040729C94AA800EDD8CE /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		95C9D46829E2710D00705BDA /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		95CABB03292E8C33006E7AAE /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		95D04F28299F1F2F00839875 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		95D1365029DED9B0002412FE /* PacePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacePicker.swift; sourceTree = "<group>"; };
@@ -194,6 +194,7 @@
 				95A29FA929668F88002DFA8B /* CoreDataStep.swift */,
 				95A29FAB29668F88002DFA8B /* CoreDataWorkout.swift */,
 				95281FC029D3CDEB00DE7ED1 /* Step.swift */,
+				95C9D46829E2710D00705BDA /* Workout.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,7 +211,6 @@
 			isa = PBXGroup;
 			children = (
 				95D04F28299F1F2F00839875 /* CreateView.swift */,
-				95615795295EA50C00EBD61D /* EditStepView.swift */,
 				95BE040729C94AA800EDD8CE /* FormView.swift */,
 				95281FC429D3ED0300DE7ED1 /* Pickers */,
 			);
@@ -329,12 +329,12 @@
 				95281FC629D3ED3600DE7ED1 /* DistancePicker.swift in Sources */,
 				95D1365129DED9B0002412FE /* PacePicker.swift in Sources */,
 				9506F83529328F0200E20F83 /* DetailView.swift in Sources */,
-				95615796295EA50C00EBD61D /* EditStepView.swift in Sources */,
 				959FFC0B29854B440049136E /* DetailRowView.swift in Sources */,
 				95368A32297B82DF0056C5B9 /* DataController.swift in Sources */,
 				95DE46A1297E40DD0061E507 /* NoDataView.swift in Sources */,
 				95ECF4822944F2F70021CCD1 /* Interval.xcdatamodeld in Sources */,
 				95281FC329D3ECD300DE7ED1 /* TimePicker.swift in Sources */,
+				95C9D46929E2710D00705BDA /* Workout.swift in Sources */,
 				95A29FAF29668F88002DFA8B /* CoreDataWorkout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,14 +12,17 @@ import SwiftUI
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
-    @State private var title: String = ""
-    @State var newSteps: [Step] = [Step()]
+    
+    @ObservedObject var workout: Workout = Workout()
+    
+    //@State private var title: String = ""
+    //@State var newSteps: [Step] = [Step()]
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             List {
                 Section {
-                    TextField("Add Title", text: $title)
+                    TextField("Add Title", text: $workout.title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                         .onAppear {
@@ -31,10 +34,10 @@ struct CreateView: View {
                 
                 Section {
                     // list all steps in new workout
-                    ForEach($newSteps, id: \.id, editActions: .all) { $step in
+                    ForEach(workout.steps, id: \.id/*, editActions: .all*/) { step in
                         HStack {
                             NavigationLink {
-                                FormView(step: $step)
+                                FormView(step: step)
                             } label: {
                                 HStack {
                                     // TODO: Replace with function later
@@ -64,7 +67,7 @@ struct CreateView: View {
                         }
                         
                         
-                        .deleteDisabled(newSteps.count < 2)
+                        .deleteDisabled(workout.steps.count < 2)
                     }
                 } header: {
                     Text("Steps")
@@ -72,7 +75,7 @@ struct CreateView: View {
             }
             
             Button {
-                newSteps.append(Step())
+                workout.steps.append(Step())
             } label: {
                 Image(systemName: "plus")
                     .foregroundColor(.white)
@@ -101,7 +104,7 @@ struct CreateView: View {
                 } label: {
                     Text("Save")
                 }
-                .disabled(title.isEmpty)
+                .disabled(workout.title.isEmpty)
             }
         }
     }
@@ -109,7 +112,7 @@ struct CreateView: View {
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateView()
+        CreateView(workout: Workout())
     }
 }
 
@@ -120,11 +123,11 @@ extension CreateView {
     private func saveNewWorkout() {
         let newWorkout = CoreDataWorkout(context: moc)
         newWorkout.id = UUID()
-        newWorkout.title = title
+        newWorkout.title = workout.title
         var index: Int16 = 0
         
         // add steps to new workout in CoreData
-        for step in newSteps {
+        for step in workout.steps {
             let newStep = CoreDataStep(context: moc)
             newStep.id = step.id
             index += 1
