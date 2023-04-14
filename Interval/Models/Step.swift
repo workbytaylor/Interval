@@ -4,6 +4,8 @@
 //
 //  Created by Nilakshi Roy on 2023-03-28.
 //
+// a struct
+
 
 import Foundation
 
