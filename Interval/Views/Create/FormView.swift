@@ -88,12 +88,12 @@ struct FormView: View {
                 if paceToggle == true {
                     PacePicker()
                 }
-                
-                
-                
             }
         }
-        .onChange(of: step.type) { newValue in
+        .onChange(of: step.type) { _ in
+            step.changeUnit()
+            
+            /*
             switch step.type {
             case "distance":
                 step.unit = "kilometers"
@@ -103,6 +103,7 @@ struct FormView: View {
                 step.unit = "Unknown unit"
                 
             }
+             */
         }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 public class Step: ObservableObject, Identifiable {
     public let id: UUID = UUID()
-    @Published var type: String = "time"
+    @Published var type: String = "distance"
     
     // time properties
     @Published var hours: Int16 = 0
@@ -20,21 +20,35 @@ public class Step: ObservableObject, Identifiable {
     // should only have non-zero value if type == distance
     @Published var length: Int16 = 0
     
-    @Published var unit: String = "minutes"
+    @Published var unit: String = "kilometers"
     @Published var pace: Int16 = 330   // seconds per km
     
-    // computed property for total time in seconds, used when running in progress
+    // computed property for total time in seconds
     var totalSeconds: Int16 {
         hours*3600 + minutes*60 + seconds
     }
     
-    // computer property for pace minutes + seconds
+    // computed property for pace minutes + seconds
     var paceMinutes: Int16 {
         pace/60
     }
     var paceSeconds: Int16 {
         pace%60
     }
+    
+    
+    // changeUnit
+    func changeUnit() {
+        switch type {
+        case "distance":
+            unit = "kilometers"
+        case "time":
+            unit = "minutes"
+        default:
+            unit = "Unknown unit"
+        }
+    }
+    
     
     /*
     // no longer needed

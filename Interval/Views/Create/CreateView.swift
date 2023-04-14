@@ -74,6 +74,7 @@ struct CreateView: View {
                         }
                         .deleteDisabled(steps.count < 2)
                     }
+                    
                 } header: {
                     Text("Steps")
                 }
