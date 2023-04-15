@@ -6,31 +6,31 @@
 //
 // a struct
 
-
+//TODO: Make it a struct
 import Foundation
 
-public class Step: ObservableObject, Identifiable {
+struct Step: Identifiable {
     public let id: UUID = UUID()
-    @Published var type: String = "distance"
+    var type: String = "distance"
     
-    // time properties
-    @Published var hours: Int16 = 0
-    @Published var minutes: Int16 = 20
-    @Published var seconds: Int16 = 30
+    // Time properties
+    var hours: Int16 = 0
+    var minutes: Int16 = 20
+    var seconds: Int16 = 30
     
-    // distance properties
-    // should only have non-zero value if type == distance
-    @Published var length: Int16 = 0
+    // Distance properties
+    // Should only have non-zero value if type == distance
+    var length: Int16 = 0
     
-    @Published var unit: String = "kilometers"
-    @Published var pace: Int16 = 330   // seconds per km
+    var unit: String = "kilometers"
+    var pace: Int16 = 330   // seconds per km
     
-    // computed property for total time in seconds
+    // Computed property for total time in seconds
     var totalSeconds: Int16 {
         hours*3600 + minutes*60 + seconds
     }
     
-    // computed property for pace minutes + seconds
+    // Computed property for pace minutes + seconds
     var paceMinutes: Int16 {
         pace/60
     }
@@ -40,7 +40,7 @@ public class Step: ObservableObject, Identifiable {
     
     
     // changeUnit
-    func changeUnit() {
+    mutating func changeUnit() {
         switch type {
         case "distance":
             unit = "kilometers"
@@ -50,31 +50,5 @@ public class Step: ObservableObject, Identifiable {
             unit = "Unknown unit"
         }
     }
-    
-    
-    /*
-    // no longer needed
-    func hours() -> Int16 {
-    return magnitude/3600
-    }
-    func minutes() -> Int16 {
-    return (magnitude%3600)/60
-    }
-    func seconds() -> Int16 {
-    return (magnitude%3600)%60
-    }
-    
-    
-    var hours: Int16 {
-        magnitude/3600
-    }
-    var minutes: Int16 {
-        magnitude%3600/60
-    }
-    var seconds: Int16 {
-        magnitude%3600%60
-    }
-    */
-    
     
 }

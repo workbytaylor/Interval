@@ -13,14 +13,14 @@ struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
-    @State private var title: String = ""
-    @State var steps: [Step] = [Step()]
+    //@State private var title: String = ""
+    @ObservedObject var workout: Workout
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             List {
                 Section {
-                    TextField("Add Title", text: $title)
+                    TextField("Add Title", text: $workout.title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
                         .onAppear {
@@ -32,7 +32,7 @@ struct CreateView: View {
                 
                 Section {
                     // list all steps in new workout
-                    ForEach($steps, id: \.id, editActions: .all) { $step in
+                    ForEach($workout.steps, id: \.id, editActions: .all) { $step in
                         HStack {
                             NavigationLink {
                                 FormView(step: $step)
@@ -55,16 +55,16 @@ struct CreateView: View {
                                             Text("\(step.length) \(step.unit)")
                                         case "time":
                                             HStack {
-                                                step.hours>0 ? Text("\(step.hours)h") : nil
-                                                step.minutes>0 ? Text("\(step.minutes)m") : nil
-                                                step.seconds>0 ? Text("\(step.seconds)s") : nil
+                                                step.hours>0 ? Text("\(step.hours) hr") : nil
+                                                step.minutes>0 ? Text("\(step.minutes) min") : nil
+                                                step.seconds>0 ? Text("\(step.seconds) sec") : nil
                                             }
                                         default:
                                             Text("Unknown step type")
                                         }
-                                        
+                                            
                                         Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                                            .font(.caption)
+                                            .font(.subheadline)
                                             .foregroundStyle(.secondary)
                                     }
                                 }
@@ -72,7 +72,7 @@ struct CreateView: View {
                             
                             Image(systemName: "line.3.horizontal").foregroundStyle(.secondary)
                         }
-                        .deleteDisabled(steps.count < 2)
+                        .deleteDisabled(workout.steps.count < 2)
                     }
                     
                 } header: {
@@ -81,7 +81,7 @@ struct CreateView: View {
             }
             
             Button {
-                steps.append(Step())
+                workout.steps.append(Step())
             } label: {
                 Image(systemName: "plus")
                     .foregroundColor(.white)
@@ -110,7 +110,7 @@ struct CreateView: View {
                 } label: {
                     Text("Save")
                 }
-                .disabled(title.isEmpty)
+                .disabled(workout.title.isEmpty)
             }
         }
     }
@@ -118,7 +118,7 @@ struct CreateView: View {
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateView()
+        CreateView(workout: Workout(steps: [Step()], title: ""))
     }
 }
 
@@ -129,11 +129,11 @@ extension CreateView {
     private func saveNewWorkout() {
         let newWorkout = CoreDataWorkout(context: moc)
         newWorkout.id = UUID()
-        newWorkout.title = title
+        newWorkout.title = workout.title
         var index: Int16 = 0
         
         // add steps to new workout in CoreData
-        for step in steps {
+        for step in workout.steps {
             let newStep = CoreDataStep(context: moc)
             newStep.id = step.id
             index += 1

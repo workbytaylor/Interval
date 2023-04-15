@@ -7,4 +7,14 @@
 
 import Foundation
 
-// a class
+public class Workout: ObservableObject, Identifiable {
+    public let id: UUID = UUID()
+    @Published var title: String = ""
+    @Published var steps: [Step]
+    
+    init(steps: [Step], title: String) {
+        self.steps = steps
+        self.title = title
+    }
+    
+}

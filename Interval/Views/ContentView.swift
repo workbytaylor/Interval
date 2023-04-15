@@ -56,7 +56,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showSheet) {
             NavigationStack {
-                CreateView()
+                CreateView(workout: Workout(steps: [Step()], title: ""))
                     .interactiveDismissDisabled()
             }
             

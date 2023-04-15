@@ -191,10 +191,10 @@
 		95ACF5342922050B00E9B2AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				95A29FA929668F88002DFA8B /* CoreDataStep.swift */,
 				95A29FAB29668F88002DFA8B /* CoreDataWorkout.swift */,
-				95281FC029D3CDEB00DE7ED1 /* Step.swift */,
+				95A29FA929668F88002DFA8B /* CoreDataStep.swift */,
 				95FC2AC829E917C600580005 /* Workout.swift */,
+				95281FC029D3CDEB00DE7ED1 /* Step.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
