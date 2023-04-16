@@ -19,11 +19,7 @@ struct DetailRowView: View {
                     .font(.title2)
                 VStack(alignment: .leading) {
                     Text("\(step.length) \(step.unit)")
-                    
-                    // TODO: replace below constants with calculated properties
-                    //let paceMinutes = step.pace/60
-                    //let paceSeconds = step.pace%60
-                    Text("\(paceMinutes).\(paceSeconds) /km")
+                    Text("\(step.paceMinutes).\(step.paceSeconds) /km")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -40,10 +36,7 @@ struct DetailRowView: View {
                         minutes > 0 ? Text("\(minutes)m") : nil
                         seconds > 0 ? Text("\(seconds)s") : nil
                     }
-                    
-                    let paceMinutes = step.pace/60
-                    let paceSeconds = step.pace%60
-                    Text("\(paceMinutes).\(paceSeconds) /km")
+                    Text("\(step.paceMinutes).\(step.paceSeconds) /km")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
