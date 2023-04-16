@@ -13,7 +13,6 @@ struct CreateView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
-    //@State private var title: String = ""
     @ObservedObject var workout: Workout
     
     var body: some View {
@@ -23,7 +22,7 @@ struct CreateView: View {
                     TextField("Add Title", text: $workout.title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                        .onAppear {
+                        .onAppear { // Funny, this applies to child views as well
                             UITextField.appearance().clearButtonMode = .whileEditing
                         }
                 } header: {
@@ -42,8 +41,10 @@ struct CreateView: View {
                                     switch step.type {
                                     case "distance":
                                         Image(systemName: "lines.measurement.horizontal")
+                                            .font(.title2)
                                     case "time":
                                         Image(systemName: "stopwatch")
+                                            .font(.title2)
                                     default:
                                         Image(systemName: "xmark")
                                     }
@@ -55,15 +56,18 @@ struct CreateView: View {
                                             Text("\(step.length) \(step.unit)")
                                         case "time":
                                             HStack {
-                                                step.hours>0 ? Text("\(step.hours) hr") : nil
-                                                step.minutes>0 ? Text("\(step.minutes) min") : nil
-                                                step.seconds>0 ? Text("\(step.seconds) sec") : nil
+                                                step.hours>0 ? Text("\(step.hours)hr") : nil
+                                                step.minutes>0 ? Text("\(step.minutes)min") : nil
+                                                step.seconds>0 ? Text("\(step.seconds)sec") : nil
                                             }
                                         default:
                                             Text("Unknown step type")
                                         }
-                                            
-                                        Text("\(step.paceMinutes).\(step.paceSeconds) /km")
+                                        
+                                        // TODO: Add option for no pace Text("No pace")
+                                        // TODO: Add leading zero for 0 seconds option
+                                        
+                                        Text("\(step.paceMinutesKeep).\(step.paceSecondsKeep) /km")
                                             .font(.subheadline)
                                             .foregroundStyle(.secondary)
                                     }

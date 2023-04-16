@@ -10,11 +10,9 @@ import SwiftUI
 struct TimePicker: View {
     
     @Binding var step: Step
-     
-    var hourRange = Int16(0)...Int16(24)
-    var minuteRange = Int16(0)...Int16(60)
-    var secondRange = Int16(0)...Int16(60)
-    @State var magnitude: String = "0"
+    let hourRange = Int16(0)...Int16(24)
+    let minuteRange = Int16(0)...Int16(60)
+    let secondRange = Array(stride(from: Int16(0), through: Int16(60), by: Int16.Stride(Int16(5))))
     
     var body: some View {
         HStack(spacing: .zero) {

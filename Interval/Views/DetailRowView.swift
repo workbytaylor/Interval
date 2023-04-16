@@ -20,6 +20,7 @@ struct DetailRowView: View {
                 VStack(alignment: .leading) {
                     Text("\(step.magnitude) \(step.wrappedUnit)")
                     
+                    // TODO: replace below constants with calculated properties
                     let paceMinutes = step.pace/60
                     let paceSeconds = step.pace%60
                     Text("\(paceMinutes).\(paceSeconds) /km")

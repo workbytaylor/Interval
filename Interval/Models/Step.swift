@@ -20,10 +20,14 @@ struct Step: Identifiable {
     
     // Distance properties
     // Should only have non-zero value if type == distance
-    var length: Int16 = 0
-    
-    var unit: String = "kilometers"
+    var length: Int16 = 5
+    var unit: String = "kilometers" // only needed for distance now
     var pace: Int16 = 330   // seconds per km
+    
+    //Pace properties
+    // TODO: refactor after computed properties changed
+    var paceMinutesKeep: Int16 = 5
+    var paceSecondsKeep: Int16 = 30
     
     // Computed property for total time in seconds
     var totalSeconds: Int16 {
@@ -38,17 +42,5 @@ struct Step: Identifiable {
         pace%60
     }
     
-    
-    // changeUnit
-    mutating func changeUnit() {
-        switch type {
-        case "distance":
-            unit = "kilometers"
-        case "time":
-            unit = "minutes"
-        default:
-            unit = "Unknown unit"
-        }
-    }
     
 }

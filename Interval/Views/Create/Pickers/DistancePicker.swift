@@ -10,17 +10,14 @@ import SwiftUI
 struct DistancePicker: View {
     
     @Binding var step: Step
+    @State var hundreds: Int16 = 0
+    @State var tens: Int16 = 0
     var hundredsRange = Int16(0)...Int16(100)
     var tensRange = Int16(0)...Int16(99)
     var distanceUnits: [String] = ["kilometers", "meters"]
     
-    @State var hundreds: Int16 = 0
-    @State var tens: Int16 = 0
-    //@State var unit: String = "Unknown unit"
-    
     var body: some View {
         HStack(spacing: .zero) {
-            
             Picker("Magnitude", selection: $hundreds) {
                 ForEach(hundredsRange, id: \.self) {
                     Text(String($0))
@@ -36,9 +33,8 @@ struct DistancePicker: View {
             .pickerStyle(.wheel)
             
             Picker("Unit", selection: $step.unit) {
-                ForEach(distanceUnits, id: \.self) {
-                    Text($0)
-                }
+                Text("km").tag("kilometers")
+                Text("m").tag("meters")
             }
             .pickerStyle(.wheel)
         }
