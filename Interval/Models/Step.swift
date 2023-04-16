@@ -22,24 +22,16 @@ struct Step: Identifiable {
     // Should only have non-zero value if type == distance
     var length: Int16 = 5
     var unit: String = "kilometers" // only needed for distance now
-    var pace: Int16 = 330   // seconds per km
+    var pace: Int16 = 330   // seconds per km   // TODO: to be removed
     
     //Pace properties
     // TODO: refactor after computed properties changed
-    var paceMinutesKeep: Int16 = 5
-    var paceSecondsKeep: Int16 = 30
+    var paceMinutes: Int16 = 5
+    var paceSeconds: Int16 = 30
     
     // Computed property for total time in seconds
     var totalSeconds: Int16 {
         hours*3600 + minutes*60 + seconds
-    }
-    
-    // Computed property for pace minutes + seconds
-    var paceMinutes: Int16 {
-        pace/60
-    }
-    var paceSeconds: Int16 {
-        pace%60
     }
     
     

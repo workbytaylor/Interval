@@ -22,7 +22,7 @@ struct CreateView: View {
                     TextField("Add Title", text: $workout.title)
                         .autocorrectionDisabled(false)
                         .autocapitalization(.sentences)
-                        .onAppear { // Funny, this applies to child views as well
+                        .onAppear { // Funny, this applies to all child views as well
                             UITextField.appearance().clearButtonMode = .whileEditing
                         }
                 } header: {
@@ -67,7 +67,7 @@ struct CreateView: View {
                                         // TODO: Add option for no pace Text("No pace")
                                         // TODO: Add leading zero for 0 seconds option
                                         
-                                        Text("\(step.paceMinutesKeep).\(step.paceSecondsKeep) /km")
+                                        Text("\(step.paceMinutes).\(step.paceSeconds) /km")
                                             .font(.subheadline)
                                             .foregroundStyle(.secondary)
                                     }
@@ -143,8 +143,9 @@ extension CreateView {
             index += 1
             newStep.index = index
             // TODO: Change this for each type -> switch statement?
-            newStep.magnitude = step.length
-            newStep.pace = step.pace
+            newStep.length = step.length
+            newStep.paceMinutes = step.paceMinutes
+            newStep.paceSeconds = step.paceSeconds
             newStep.type = step.type
             newStep.unit = step.unit
             newStep.cdWorkout = newWorkout

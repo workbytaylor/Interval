@@ -18,11 +18,11 @@ struct DetailRowView: View {
                 Image(systemName: "lines.measurement.horizontal")
                     .font(.title2)
                 VStack(alignment: .leading) {
-                    Text("\(step.magnitude) \(step.wrappedUnit)")
+                    Text("\(step.length) \(step.unit)")
                     
                     // TODO: replace below constants with calculated properties
-                    let paceMinutes = step.pace/60
-                    let paceSeconds = step.pace%60
+                    //let paceMinutes = step.pace/60
+                    //let paceSeconds = step.pace%60
                     Text("\(paceMinutes).\(paceSeconds) /km")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -32,9 +32,9 @@ struct DetailRowView: View {
                     .font(.title2)
                 VStack(alignment: .leading) {
                     HStack {
-                        let hours = step.magnitude/3600
-                        let minutes = (step.magnitude%3600)/60
-                        let seconds = (step.magnitude%3600)%60
+                        let hours = step.length/3600
+                        let minutes = (step.length%3600)/60
+                        let seconds = (step.length%3600)%60
                         
                         hours > 0 ? Text("\(hours)h") : nil
                         minutes > 0 ? Text("\(minutes)m") : nil

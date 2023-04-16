@@ -14,22 +14,19 @@ import CoreData
 public class CoreDataStep: NSManagedObject, Identifiable {
 
     @NSManaged public var id: UUID?
+    @NSManaged public var type: String//?   // why is this needed?
     @NSManaged public var index: Int16
-    @NSManaged public var magnitude: Int16
-    @NSManaged public var pace: Int16
-    @NSManaged public var type: String?
-    @NSManaged public var unit: String?
+    @NSManaged public var length: Int16
+    @NSManaged public var paceSeconds: Int16
+    @NSManaged public var paceMinutes: Int16
+    @NSManaged public var unit: String//?   // why is this needed?
     @NSManaged public var cdWorkout: CoreDataWorkout?
+    @NSManaged public var hours: Int16  // added later
+    @NSManaged public var minutes: Int16  // added later
+    @NSManaged public var seconds: Int16  // added later
     
-    public override func awakeFromInsert() {    // default values
-        super.awakeFromInsert()
-        setPrimitiveValue(UUID(), forKey: "id")
-        setPrimitiveValue(5, forKey: "magnitude")
-        setPrimitiveValue(315, forKey: "pace")
-        setPrimitiveValue("distance", forKey: "type")
-        setPrimitiveValue("meters", forKey: "unit")
-    }
     
+    /*  // why is this needed?
     public var wrappedType: String {
         type ?? "Unknown type"
     }
@@ -37,6 +34,7 @@ public class CoreDataStep: NSManagedObject, Identifiable {
     public var wrappedUnit: String {
         unit ?? "Unknown unit"
     }
+     */
 }
 
 

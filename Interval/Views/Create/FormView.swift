@@ -14,7 +14,6 @@ struct FormView: View {
     @Binding var step: Step
     @State var magnitudeButton: Bool = false
     @State var paceButton: Bool = false
-    @State var pace: Bool = false
     
     let types: [String] = ["distance", "time"]
     
@@ -31,9 +30,7 @@ struct FormView: View {
                 LabeledContent {
                     Button {
                         withAnimation {
-                            if paceButton == true {
-                                paceButton = false
-                            }
+                            paceButton = false
                             magnitudeButton.toggle()
                         }
                     } label: {
@@ -66,43 +63,29 @@ struct FormView: View {
                     }
                 }
                 
-                Toggle(isOn: $pace) {
-                    Text("Pace Target")
-                }
-                
-                
-                if pace {
-                    // select pace, if any?
-                    LabeledContent {
-                        Button {
-                            withAnimation {
-                                if magnitudeButton == true {
-                                    magnitudeButton = false
-                                }
-                            }
+                // select pace, if any?
+                // wrap in if statement when adding toggle
+                LabeledContent {
+                    Button {
+                        withAnimation {
+                            magnitudeButton = false
                             paceButton.toggle()
-                        } label: {
-                            if step.paceSecondsKeep < 10 {
-                                Text("\(step.paceMinutesKeep).0\(step.paceSecondsKeep) /km")
-                            } else {
-                                Text("\(step.paceMinutesKeep).\(step.paceSecondsKeep) /km")
-                            }
-                            
-                            
-                            
                         }
-                        .buttonStyle(.bordered)
-                        .foregroundColor(paceButton == true ? .accentColor : .primary)
                     } label: {
-                        Text("Pace")
+                        if step.paceSeconds < 10 {
+                            Text("\(step.paceMinutes).0\(step.paceSeconds) /km")
+                        } else {
+                            Text("\(step.paceMinutes).\(step.paceSeconds) /km")
+                        }
                     }
-                    if paceButton == true {
-                        PacePicker(step: $step)
-                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(paceButton == true ? .accentColor : .primary)
+                } label: {
+                    Text("Pace")
                 }
-                
-                
-                
+                if paceButton {
+                    PacePicker(step: $step)
+                }
                 
             }
         }

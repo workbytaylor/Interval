@@ -16,13 +16,6 @@ public class CoreDataWorkout: NSManagedObject, Identifiable {
     @NSManaged public var title: String //making title optional prevents textfield from working
     @NSManaged public var coreDataSteps: NSMutableSet?//NSSet?
     
-    /*
-    public override func awakeFromInsert() {    // adds default value for id property
-        super.awakeFromInsert()
-        setPrimitiveValue(UUID(), forKey: "id")
-    }
-     */
-    
     public var stepArray: [CoreDataStep] {  // order steps based on index
         let setOfSteps = coreDataSteps as? Set<CoreDataStep> ?? []
         return setOfSteps.sorted {

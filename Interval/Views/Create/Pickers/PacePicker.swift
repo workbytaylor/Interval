@@ -19,7 +19,7 @@ struct PacePicker: View {
             ZStack {
                 // text behind picker?
                 Text("            min") // 12 spaces
-                Picker("Minutes", selection: $step.paceMinutesKeep) {
+                Picker("Minutes", selection: $step.paceMinutes) {
                     ForEach(minuteRange, id: \.self) { minute in
                         Text(String(minute))
                     }
@@ -30,7 +30,7 @@ struct PacePicker: View {
             
             ZStack {
                 Text("              sec") // 14 spaces
-                Picker("Seconds", selection: $step.paceSecondsKeep) {
+                Picker("Seconds", selection: $step.paceSeconds) {
                     ForEach(secondRange, id: \.self) { second in
                         if second < 10 {
                             Text("0\(second)")
