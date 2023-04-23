@@ -29,11 +29,13 @@ struct ContentView: View {
                             DetailView(workout: workout)
                         } label: {
                             LabeledContent {
+                                //TODO: Change to goal time + distance
                                 let stepCount = workout.stepArray.count
                                 let stringCount = String(stepCount)
                                 Text(stepCount > 1 ? stringCount+" steps" : stringCount+" step")
                             } label: {
                                 Text(workout.title)
+                                    .font(.headline)
                             }
                         }
                     }

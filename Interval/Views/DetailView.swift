@@ -13,7 +13,7 @@ struct DetailView: View {
     
     @ObservedObject var workout: CoreDataWorkout
     @State private var showDeleteAlert: Bool = false
-    @State private var showSheet: Bool = false
+    //@State private var showSheet: Bool = false
     
     var body: some View {
         List {
@@ -35,35 +35,26 @@ struct DetailView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Menu {
-                    Section {
-                        Button(role: .destructive) {
-                            showDeleteAlert = true
-                        } label: {
-                            Label("Delete Workout", systemImage: "trash")
-                        }
-                    }
-                    Section {
-                        Button {
-                            showSheet.toggle()
-                        } label: {
-                            Label("Edit", systemImage: "square.and.pencil")
-                        }
+                    Button(role: .destructive) {
+                        showDeleteAlert = true
+                    } label: {
+                        Label("Delete Workout", systemImage: "trash")
                     }
                 } label: {
-                    Image(systemName: "square.and.pencil")
-                } primaryAction: {
-                    showSheet.toggle()
+                    Image(systemName: "ellipsis")
                 }
             }
         }
+        /*
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 EditView(workout: workout)
-                    //.environment(\.managedObjectContext, moc) //I think sheets inherit the parent environment, no need to pass
+                    //.environment(\.managedObjectContext, moc)
             }
         }
+         */
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
-            Button("Delete", role: .destructive) {
+            Button("Yup", role: .destructive) {
                 do {
                     try deleteSteps()   // deletes all steps in the workout to prevent stray steps
                     try deleteWorkout() // deletes the workout
@@ -73,7 +64,7 @@ struct DetailView: View {
                     print(error)
                 }
             }
-            Button("Cancel", role: .cancel) {  }
+            Button("Nope", role: .cancel) {  }
         } message: {
             Text("Are you sure?")
         }
