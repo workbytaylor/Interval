@@ -10,11 +10,6 @@ import SwiftUI
 struct WatchDetailView: View {
     var body: some View {
         List {
-            Section {
-                Text("40' Marathon Pace")
-                    .font(.title3)
-            }
-
             Section(header: Text("Steps")) {
                 ForEach(1..<5) { workout in
                     HStack {
@@ -32,6 +27,7 @@ struct WatchDetailView: View {
             }
         }
         .listStyle(.plain)
+        .navigationTitle("40' Marathon Pace")
     }
 }
 

@@ -27,6 +27,8 @@ struct DetailView: View {
                 }
             } header: {
                 Text("Steps")
+            } footer: {
+                Text("To start a workout, continue on Apple Watch.")
             }
             
         }

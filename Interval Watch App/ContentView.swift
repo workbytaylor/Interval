@@ -12,7 +12,7 @@ struct ContentView: View {
         List {
             ForEach(1..<5, id: \.self) { item in
                 NavigationLink {
-                    
+                    WatchDetailView()
                 } label: {
                     Text("Item \(item)")
                 }
@@ -20,6 +20,7 @@ struct ContentView: View {
             
         }
         .navigationTitle("Workouts")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
