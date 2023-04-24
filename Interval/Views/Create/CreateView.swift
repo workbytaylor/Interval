@@ -54,12 +54,14 @@ struct CreateView: View {
                                         switch step.type {
                                         case "distance":
                                             Text("\(step.length) \(step.unit)")
+                                                .font(.headline)
                                         case "time":
                                             HStack {
                                                 step.hours>0 ? Text("\(step.hours)hr") : nil
                                                 step.minutes>0 ? Text("\(step.minutes)min") : nil
                                                 step.seconds>0 ? Text("\(step.seconds)sec") : nil
                                             }
+                                            .font(.headline)
                                         default:
                                             Text("Unknown step type")
                                         }
@@ -143,6 +145,9 @@ extension CreateView {
             index += 1
             newStep.index = index
             // TODO: Change this for each type -> switch statement?
+            newStep.hours = step.hours
+            newStep.minutes = step.minutes
+            newStep.seconds = step.seconds
             newStep.length = step.length
             newStep.paceMinutes = step.paceMinutes
             newStep.paceSeconds = step.paceSeconds

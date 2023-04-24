@@ -54,7 +54,7 @@ struct DetailView: View {
         }
          */
         .alert("Delete Workout", isPresented: $showDeleteAlert) {
-            Button("Yup", role: .destructive) {
+            Button("Yes", role: .destructive) {
                 do {
                     try deleteSteps()   // deletes all steps in the workout to prevent stray steps
                     try deleteWorkout() // deletes the workout

@@ -12,36 +12,36 @@ struct DetailRowView: View {
     
     var body: some View {
         HStack {
-            
             switch step.type {
             case "distance":
                 Image(systemName: "lines.measurement.horizontal")
-                    .font(.title2)
-                VStack(alignment: .leading) {
-                    Text("\(step.length) \(step.unit)")
-                    Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
             case "time":
                 Image(systemName: "stopwatch")
                     .font(.title2)
-                VStack(alignment: .leading) {
-                    HStack {
-                        let hours = step.length/3600
-                        let minutes = (step.length%3600)/60
-                        let seconds = (step.length%3600)%60
-                        
-                        hours > 0 ? Text("\(hours)h") : nil
-                        minutes > 0 ? Text("\(minutes)m") : nil
-                        seconds > 0 ? Text("\(seconds)s") : nil
-                    }
-                    Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
             default:
-                Text("?")
+                Image(systemName: "xmark")
+            }
+            
+            VStack(alignment: .leading) {
+                // magnitude + unit
+                switch step.type {
+                case "distance":
+                        Text("\(step.length) \(step.unit)")
+                            .font(.headline)
+                case "time":
+                    HStack {
+                        step.hours>0 ? Text("\(step.hours)hr") : nil
+                        step.minutes>0 ? Text("\(step.minutes)min") : nil
+                        step.seconds>0 ? Text("\(step.seconds)sec") : nil
+                    }
+                    .font(.headline)
+                default:
+                    Text("Unknown step type")
+                }
+                
+                Text("\(step.paceMinutes).\(step.paceSeconds) /km")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
             
             
