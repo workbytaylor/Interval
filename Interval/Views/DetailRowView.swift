@@ -17,11 +17,34 @@ struct DetailRowView: View {
                 Image(systemName: "lines.measurement.horizontal")
             case "time":
                 Image(systemName: "stopwatch")
-                    .font(.title2)
             default:
                 Image(systemName: "xmark")
             }
             
+            
+            LabeledContent {
+             Text("\(step.paceMinutes).\(step.paceSeconds) /km")
+                 .font(.subheadline)
+                 .foregroundStyle(.secondary)
+            } label: {
+             switch step.type {
+             case "distance":
+                     Text("\(step.length) \(step.unit)")
+                         //.font(.headline)
+             case "time":
+                 HStack {
+                     step.hours>0 ? Text("\(step.hours) Hr") : nil
+                     step.minutes>0 ? Text("\(step.minutes) Min") : nil
+                     step.seconds>0 ? Text("\(step.seconds) Sec") : nil
+                 }
+                 //.font(.headline)
+             default:
+                 Text("Unknown step type")
+             }
+            }
+             
+            
+            /*
             VStack(alignment: .leading) {
                 // magnitude + unit
                 switch step.type {
@@ -43,7 +66,7 @@ struct DetailRowView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
-            
+            */
             
         }
     }

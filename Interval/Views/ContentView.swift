@@ -28,15 +28,23 @@ struct ContentView: View {
                         NavigationLink {
                             DetailView(workout: workout)
                         } label: {
-                            LabeledContent {
-                                //TODO: Change to goal time + distance
-                                let stepCount = workout.stepArray.count
-                                let stringCount = String(stepCount)
-                                Text(stepCount > 1 ? stringCount+" steps" : stringCount+" step")
-                            } label: {
+                            
+                            VStack(alignment: .leading) {
                                 Text(workout.title)
                                     .font(.headline)
+                                Text("20 Min | 5 km")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
                             }
+                            
+                            /*
+                            LabeledContent {
+                                
+                            } label: {
+                                Text(workout.title)
+                                Text("20 Min | 5 km")
+                            }
+                            */
                         }
                     }
                 }

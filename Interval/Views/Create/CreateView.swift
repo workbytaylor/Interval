@@ -41,10 +41,8 @@ struct CreateView: View {
                                     switch step.type {
                                     case "distance":
                                         Image(systemName: "lines.measurement.horizontal")
-                                            .font(.title2)
                                     case "time":
                                         Image(systemName: "stopwatch")
-                                            .font(.title2)
                                     default:
                                         Image(systemName: "xmark")
                                     }
@@ -75,8 +73,6 @@ struct CreateView: View {
                                     }
                                 }
                             }
-                            
-                            Image(systemName: "line.3.horizontal").foregroundStyle(.secondary)
                         }
                         .deleteDisabled(workout.steps.count < 2)
                     }
