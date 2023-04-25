@@ -47,6 +47,27 @@ struct CreateView: View {
                                         Image(systemName: "xmark")
                                     }
                                     
+                                    LabeledContent {
+                                        Text("\(step.paceMinutes).\(step.paceSeconds) /km")
+                                    } label: {
+                                        switch step.type {
+                                        case "distance":
+                                            Text("\(step.length) \(step.unit)")
+                                                //.font(.headline)
+                                        case "time":
+                                            HStack {
+                                                step.hours>0 ? Text("\(step.hours)hr") : nil
+                                                step.minutes>0 ? Text("\(step.minutes)min") : nil
+                                                step.seconds>0 ? Text("\(step.seconds)sec") : nil
+                                            }
+                                            //.font(.headline)
+                                        default:
+                                            Text("Unknown step type")
+                                        }
+                                    }
+                                    
+                                    
+                                    /*
                                     VStack(alignment: .leading) {
                                         //magnitude + unit
                                         switch step.type {
@@ -71,6 +92,7 @@ struct CreateView: View {
                                             .font(.subheadline)
                                             .foregroundStyle(.secondary)
                                     }
+                                     */
                                 }
                             }
                         }

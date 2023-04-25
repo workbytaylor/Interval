@@ -23,9 +23,9 @@ struct DetailRowView: View {
             
             
             LabeledContent {
-             Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                 .font(.subheadline)
-                 .foregroundStyle(.secondary)
+                Text("\(step.paceMinutes).\(step.paceSeconds) /km")
+                 //.font(.subheadline)
+                 //.foregroundStyle(.secondary)
             } label: {
              switch step.type {
              case "distance":
