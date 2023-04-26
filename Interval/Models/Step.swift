@@ -21,7 +21,7 @@ struct Step: Identifiable {
     // Distance properties
     // Should only have non-zero value if type == distance
     var length: Int16 = 5
-    var unit: String = "kilometers" // only needed for distance now
+    var unit: String = "km" // only needed for distance now
     var pace: Int16 = 330   // seconds per km   // TODO: to be removed
     
     //Pace properties

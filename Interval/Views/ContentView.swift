@@ -32,7 +32,7 @@ struct ContentView: View {
                             VStack(alignment: .leading) {
                                 Text(workout.title)
                                     .font(.headline)
-                                Text("20 Min | 5 km")
+                                Text("Distance 20 Min · Time 5 km")
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                             }

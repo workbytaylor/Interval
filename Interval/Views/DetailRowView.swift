@@ -14,18 +14,23 @@ struct DetailRowView: View {
         HStack {
             switch step.type {
             case "distance":
-                Image(systemName: "lines.measurement.horizontal")
+                Image(systemName: "waveform.circle.fill")
+                    .font(.title)
+                    .padding(3)
+                    .symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(Color.accentColor)
             case "time":
-                Image(systemName: "stopwatch")
+                Image(systemName: "hourglass.circle.fill")
+                    .font(.title)
+                    .padding(3)
+                    .symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(Color.accentColor)
             default:
                 Image(systemName: "xmark")
             }
             
-            
             LabeledContent {
                 Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                 //.font(.subheadline)
-                 //.foregroundStyle(.secondary)
             } label: {
              switch step.type {
              case "distance":
@@ -33,42 +38,17 @@ struct DetailRowView: View {
                          //.font(.headline)
              case "time":
                  HStack {
-                     step.hours>0 ? Text("\(step.hours) Hr") : nil
-                     step.minutes>0 ? Text("\(step.minutes) Min") : nil
-                     step.seconds>0 ? Text("\(step.seconds) Sec") : nil
+                     step.hours>0 ? Text("\(step.hours)hr") : nil
+                     step.minutes>0 ? Text("\(step.minutes)min") : nil
+                     step.seconds>0 ? Text("\(step.seconds)sec") : nil
                  }
                  //.font(.headline)
              default:
                  Text("Unknown step type")
-             }
-            }
-             
-            
-            /*
-            VStack(alignment: .leading) {
-                // magnitude + unit
-                switch step.type {
-                case "distance":
-                        Text("\(step.length) \(step.unit)")
-                            .font(.headline)
-                case "time":
-                    HStack {
-                        step.hours>0 ? Text("\(step.hours)hr") : nil
-                        step.minutes>0 ? Text("\(step.minutes)min") : nil
-                        step.seconds>0 ? Text("\(step.seconds)sec") : nil
-                    }
-                    .font(.headline)
-                default:
-                    Text("Unknown step type")
                 }
-                
-                Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
             }
-            */
-            
         }
+        
     }
 }
 

@@ -40,9 +40,17 @@ struct CreateView: View {
                                     // TODO: Replace with reusable view later
                                     switch step.type {
                                     case "distance":
-                                        Image(systemName: "lines.measurement.horizontal")
+                                        Image(systemName: "waveform.circle.fill")
+                                            .font(.title)
+                                            .padding(3)
+                                            .symbolRenderingMode(.hierarchical)
+                                            .foregroundStyle(Color.accentColor)
                                     case "time":
-                                        Image(systemName: "stopwatch")
+                                        Image(systemName: "hourglass.circle.fill")
+                                            .font(.title)
+                                            .padding(3)
+                                            .symbolRenderingMode(.hierarchical)
+                                            .foregroundStyle(Color.accentColor)
                                     default:
                                         Image(systemName: "xmark")
                                     }
@@ -65,34 +73,6 @@ struct CreateView: View {
                                             Text("Unknown step type")
                                         }
                                     }
-                                    
-                                    
-                                    /*
-                                    VStack(alignment: .leading) {
-                                        //magnitude + unit
-                                        switch step.type {
-                                        case "distance":
-                                            Text("\(step.length) \(step.unit)")
-                                                .font(.headline)
-                                        case "time":
-                                            HStack {
-                                                step.hours>0 ? Text("\(step.hours)hr") : nil
-                                                step.minutes>0 ? Text("\(step.minutes)min") : nil
-                                                step.seconds>0 ? Text("\(step.seconds)sec") : nil
-                                            }
-                                            .font(.headline)
-                                        default:
-                                            Text("Unknown step type")
-                                        }
-                                        
-                                        // TODO: Add option for no pace Text("No pace")
-                                        // TODO: Add leading zero for 0 seconds option
-                                        
-                                        Text("\(step.paceMinutes).\(step.paceSeconds) /km")
-                                            .font(.subheadline)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                     */
                                 }
                             }
                         }
@@ -110,6 +90,7 @@ struct CreateView: View {
                 Image(systemName: "plus")
                     .foregroundColor(.white)
                     .font(.headline)
+                    .symbolRenderingMode(.hierarchical)
             }
             .frame(width: 60, height: 60)
             .background(Color.accentColor)

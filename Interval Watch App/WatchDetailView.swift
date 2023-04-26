@@ -10,7 +10,7 @@ import SwiftUI
 struct WatchDetailView: View {
     var body: some View {
         List {
-            Section(header: Text("Steps")) {
+            Section {
                 ForEach(1..<5) { workout in
                     HStack {
                         Image(systemName: "stopwatch")

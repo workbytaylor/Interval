@@ -14,7 +14,7 @@ struct DistancePicker: View {
     @State var tens: Int16 = 0
     var hundredsRange = Int16(0)...Int16(100)
     var tensRange = Int16(0)...Int16(99)
-    var distanceUnits: [String] = ["kilometers", "meters"]
+    var distanceUnits: [String] = ["km", "m"]
     
     var body: some View {
         HStack(spacing: .zero) {
@@ -33,8 +33,8 @@ struct DistancePicker: View {
             .pickerStyle(.wheel)
             
             Picker("Unit", selection: $step.unit) {
-                Text("km").tag("kilometers")
-                Text("m").tag("meters")
+                Text("km").tag("km")
+                Text("m").tag("m")
             }
             .pickerStyle(.wheel)
         }
