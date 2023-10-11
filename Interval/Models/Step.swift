@@ -4,9 +4,7 @@
 //
 //  Created by Nilakshi Roy on 2023-03-28.
 //
-// a struct
 
-//TODO: Make it a struct
 import Foundation
 
 struct Step: Identifiable {
